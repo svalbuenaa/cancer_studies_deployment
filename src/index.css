@@ -1,3 +1,13 @@
+/* ------------------------ */
+/* Tailwind base styles     */
+/* ------------------------ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------ */
+/* Your custom styles       */
+/* ------------------------ */
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
