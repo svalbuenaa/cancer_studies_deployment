@@ -24,6 +24,56 @@ const colorMapping = {
   'Penile cancer': '#a6cee3',  
 };
 
+// Comprehensive mapping of country names to ISO-3 codes
+const countryCodeMap = {
+  "Afghanistan": "AFG", "Albania": "ALB", "Algeria": "DZA", "Angola": "AGO",
+  "Argentina": "ARG", "Armenia": "ARM", "Australia": "AUS", "Austria": "AUT",
+  "Azerbaijan": "AZE", "Bahamas": "BHS", "Bahrain": "BHR", "Bangladesh": "BGD",
+  "Barbados": "BRB", "Belarus": "BLR", "Belgium": "BEL", "Belize": "BLZ",
+  "Benin": "BEN", "Bhutan": "BTN", "Bolivia": "BOL", "Bosnia and Herzegovina": "BIH",
+  "Botswana": "BWA", "Brazil": "BRA", "Brunei Darussalam": "BRN", "Bulgaria": "BGR",
+  "Burkina Faso": "BFA", "Burundi": "BDI", "Cabo Verde": "CPV", "Cambodia": "KHM",
+  "Cameroon": "CMR", "Canada": "CAN", "Central African Republic": "CAF", "Chad": "TCD",
+  "Chile": "CHL", "China": "CHN", "Colombia": "COL", "Comoros": "COM",
+  "Congo Republic": "COG", "Costa Rica": "CRI", "Cote d'Ivoire": "CIV", "Croatia": "HRV",
+  "Cuba": "CUB", "Cyprus": "CYP", "Czechia": "CZE", "DR Congo": "COD",
+  "Denmark": "DNK", "Djibouti": "DJI", "Dominican Republic": "DOM", "Ecuador": "ECU",
+  "Egypt": "EGY", "El Salvador": "SLV", "Eritrea": "ERI", "Estonia": "EST",
+  "Eswatini": "SWZ", "Ethiopia": "ETH", "Fiji": "FJI", "Finland": "FIN",
+  "France": "FRA", "French Guiana": "GUF", "French Polynesia": "PYF", "Gabon": "GAB",
+  "Gambia": "GMB", "Georgia": "GEO", "Germany": "DEU", "Ghana": "GHA",
+  "Greece": "GRC", "Guadeloupe": "GLP", "Guam": "GUM", "Guatemala": "GTM",
+  "Guinea": "GIN", "Guinea-Bissau": "GNB", "Guyana": "GUY", "Haiti": "HTI",
+  "Honduras": "HND", "Hungary": "HUN", "Iceland": "ISL", "India": "IND",
+  "Indonesia": "IDN", "Iran": "IRN", "Iraq": "IRQ", "Ireland": "IRL",
+  "Israel": "ISR", "Italy": "ITA", "Jamaica": "JAM", "Japan": "JPN",
+  "Jordan": "JOR", "Kazakhstan": "KAZ", "Kenya": "KEN", "Kuwait": "KWT",
+  "Kyrgyz Republic": "KGZ", "Laos": "LAO", "Latvia": "LVA", "Lebanon": "LBN",
+  "Lesotho": "LSO", "Liberia": "LBR", "Libya": "LBY", "Lithuania": "LTU",
+  "Luxembourg": "LUX", "Madagascar": "MDG", "Malawi": "MWI", "Malaysia": "MYS",
+  "Maldives": "MDV", "Mali": "MLI", "Malta": "MLT", "Martinique": "MTQ",
+  "Mauritania": "MRT", "Mauritius": "MUS", "Mexico": "MEX", "Micronesia, Fed. Sts.": "FSM",
+  "Moldova": "MDA", "Mongolia": "MNG", "Montenegro": "MNE", "Morocco": "MAR",
+  "Mozambique": "MOZ", "Myanmar": "MMR", "Namibia": "NAM", "Nepal": "NPL",
+  "Netherlands": "NLD", "New Caledonia": "NCL", "New Zealand": "NZL", "Nicaragua": "NIC",
+  "Niger": "NER", "Nigeria": "NGA", "North Korea": "PRK", "North Macedonia": "MKD",
+  "Norway": "NOR", "Oman": "OMN", "Pakistan": "PAK", "Palestine": "PSE",
+  "Panama": "PAN", "Papua New Guinea": "PNG", "Paraguay": "PRY", "Peru": "PER",
+  "Philippines": "PHL", "Poland": "POL", "Portugal": "PRT", "Puerto Rico": "PRI",
+  "Qatar": "QAT", "Reunion": "REU", "Romania": "ROU", "Russia": "RUS",
+  "Rwanda": "RWA", "Samoa": "WSM", "Sao Tome and Principe": "STP", "Saudi Arabia": "SAU",
+  "Senegal": "SEN", "Serbia": "SRB", "Sierra Leone": "SLE", "Singapore": "SGP",
+  "Slovakia": "SVK", "Slovenia": "SVN", "Solomon Islands": "SLB", "Somalia": "SOM",
+  "South Africa": "ZAF", "South Korea": "KOR", "South Sudan": "SSD", "Spain": "ESP",
+  "Sri Lanka": "LKA", "St. Lucia": "LCA", "Sudan": "SDN", "Suriname": "SUR",
+  "Sweden": "SWE", "Switzerland": "CHE", "Syria": "SYR", "Tajikistan": "TJK",
+  "Tanzania": "TZA", "Thailand": "THA", "Timor-Leste": "TLS", "Togo": "TGO",
+  "Trinidad and Tobago": "TTO", "Tunisia": "TUN", "Turkmenistan": "TKM", "Türkiye": "TUR",
+  "Uganda": "UGA", "Ukraine": "UKR", "United Arab Emirates": "ARE", "United Kingdom": "GBR",
+  "United States": "USA", "Uruguay": "URY", "Uzbekistan": "UZB", "Vanuatu": "VUT",
+  "Venezuela": "VEN", "Vietnam": "VNM", "Yemen": "YEM", "Zambia": "ZMB", "Zimbabwe": "ZWE",
+};
+
 const MapMostStudied = ({ csvPath }) => {
   const [data, setData] = useState([]);
 
@@ -49,14 +99,14 @@ const MapMostStudied = ({ csvPath }) => {
     const color = colorMapping[cancerType] || '#999999';
     return {
       type: "choropleth",
-      locations: categoryData.map(d => d.Country),
+      locations: categoryData.map(d => countryCodeMap[d.Country]), // <- ISO-3 codes
       z: categoryData.map(d => parseFloat(d.Articles)),
       text: categoryData.map(d => d.Country),
       name: cancerType,
       showlegend: true,
       showscale: false,
       marker: { line: { color: "white", width: 0.5 } },
-      locationmode: "country names",
+      locationmode: "ISO-3", // <- use ISO-3 instead of "country names"
       colorscale: [[0, color], [1, color]],
       hovertemplate: `<b>%{text}</b><br>Most Studied Cancer: ${cancerType}<br>Articles: %{z}<extra></extra>`,
     };
@@ -67,10 +117,7 @@ const MapMostStudied = ({ csvPath }) => {
       'zoomInGeo', 'zoomOutGeo', 'panGeo', 'select2d', 'lasso2d', 'autoScaleGeo', 'hoverClosestGeo', 'hoverCompareGeo', 'zoom2d', 'pan2d', 'resetViews', 'select', 'lasso', 'hoverClosest', 'hoverCompare', 'toggleSpikelines', 'sendDataToCloud',
     ],
     displaylogo: false,
-    modeBar: {
-      bgcolor: 'rgba(255, 255, 255, 0)',
-      orientation: 'h',
-    }
+    modeBar: { bgcolor: 'rgba(255, 255, 255, 0)', orientation: 'h' }
   };
 
   return (
@@ -93,7 +140,7 @@ const MapMostStudied = ({ csvPath }) => {
         useResizeHandler={true}
         className="plotly-responsive-plot"
       />
-            <style jsx>{`
+      <style jsx>{`
         .modebar {
           top: auto !important;
           bottom: -50px !important;

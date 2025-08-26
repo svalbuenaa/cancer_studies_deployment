@@ -1,19 +1,226 @@
 import React, { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
-import Papa from "papaparse";
 
 const MapNumeric = ({ csvPath }) => {
   const [data, setData] = useState([]);
 
+  // Comprehensive mapping of country names to ISO-3 codes for Plotly
+  const countryCodeMap = {
+    "Afghanistan": "AFG",
+    "Albania": "ALB",
+    "Algeria": "DZA",
+    "Angola": "AGO",
+    "Argentina": "ARG",
+    "Armenia": "ARM",
+    "Australia": "AUS",
+    "Austria": "AUT",
+    "Azerbaijan": "AZE",
+    "Bahamas": "BHS",
+    "Bahrain": "BHR",
+    "Bangladesh": "BGD",
+    "Barbados": "BRB",
+    "Belarus": "BLR",
+    "Belgium": "BEL",
+    "Belize": "BLZ",
+    "Benin": "BEN",
+    "Bhutan": "BTN",
+    "Bolivia": "BOL",
+    "Bosnia and Herzegovina": "BIH",
+    "Botswana": "BWA",
+    "Brazil": "BRA",
+    "Brunei Darussalam": "BRN",
+    "Bulgaria": "BGR",
+    "Burkina Faso": "BFA",
+    "Burundi": "BDI",
+    "Cabo Verde": "CPV",
+    "Cambodia": "KHM",
+    "Cameroon": "CMR",
+    "Canada": "CAN",
+    "Central African Republic": "CAF",
+    "Chad": "TCD",
+    "Chile": "CHL",
+    "China": "CHN",
+    "Colombia": "COL",
+    "Comoros": "COM",
+    "Congo Republic": "COG",
+    "Costa Rica": "CRI",
+    "Cote d'Ivoire": "CIV",
+    "Croatia": "HRV",
+    "Cuba": "CUB",
+    "Cyprus": "CYP",
+    "Czechia": "CZE",
+    "DR Congo": "COD",
+    "Denmark": "DNK",
+    "Djibouti": "DJI",
+    "Dominican Republic": "DOM",
+    "Ecuador": "ECU",
+    "Egypt": "EGY",
+    "El Salvador": "SLV",
+    "Eritrea": "ERI",
+    "Estonia": "EST",
+    "Eswatini": "SWZ",
+    "Ethiopia": "ETH",
+    "Fiji": "FJI",
+    "Finland": "FIN",
+    "France": "FRA",
+    "French Guiana": "GUF",
+    "French Polynesia": "PYF",
+    "Gabon": "GAB",
+    "Gambia": "GMB",
+    "Georgia": "GEO",
+    "Germany": "DEU",
+    "Ghana": "GHA",
+    "Greece": "GRC",
+    "Guadeloupe": "GLP",
+    "Guam": "GUM",
+    "Guatemala": "GTM",
+    "Guinea": "GIN",
+    "Guinea-Bissau": "GNB",
+    "Guyana": "GUY",
+    "Haiti": "HTI",
+    "Honduras": "HND",
+    "Hungary": "HUN",
+    "Iceland": "ISL",
+    "India": "IND",
+    "Indonesia": "IDN",
+    "Iran": "IRN",
+    "Iraq": "IRQ",
+    "Ireland": "IRL",
+    "Israel": "ISR",
+    "Italy": "ITA",
+    "Jamaica": "JAM",
+    "Japan": "JPN",
+    "Jordan": "JOR",
+    "Kazakhstan": "KAZ",
+    "Kenya": "KEN",
+    "Kuwait": "KWT",
+    "Kyrgyz Republic": "KGZ",
+    "Laos": "LAO",
+    "Latvia": "LVA",
+    "Lebanon": "LBN",
+    "Lesotho": "LSO",
+    "Liberia": "LBR",
+    "Libya": "LBY",
+    "Lithuania": "LTU",
+    "Luxembourg": "LUX",
+    "Madagascar": "MDG",
+    "Malawi": "MWI",
+    "Malaysia": "MYS",
+    "Maldives": "MDV",
+    "Mali": "MLI",
+    "Malta": "MLT",
+    "Martinique": "MTQ",
+    "Mauritania": "MRT",
+    "Mauritius": "MUS",
+    "Mexico": "MEX",
+    "Micronesia, Fed. Sts.": "FSM",
+    "Moldova": "MDA",
+    "Mongolia": "MNG",
+    "Montenegro": "MNE",
+    "Morocco": "MAR",
+    "Mozambique": "MOZ",
+    "Myanmar": "MMR",
+    "Namibia": "NAM",
+    "Nepal": "NPL",
+    "Netherlands": "NLD",
+    "New Caledonia": "NCL",
+    "New Zealand": "NZL",
+    "Nicaragua": "NIC",
+    "Niger": "NER",
+    "Nigeria": "NGA",
+    "North Korea": "PRK",
+    "North Macedonia": "MKD",
+    "Norway": "NOR",
+    "Oman": "OMN",
+    "Pakistan": "PAK",
+    "Palestine": "PSE",
+    "Panama": "PAN",
+    "Papua New Guinea": "PNG",
+    "Paraguay": "PRY",
+    "Peru": "PER",
+    "Philippines": "PHL",
+    "Poland": "POL",
+    "Portugal": "PRT",
+    "Puerto Rico": "PRI",
+    "Qatar": "QAT",
+    "Reunion": "REU",
+    "Romania": "ROU",
+    "Russia": "RUS",
+    "Rwanda": "RWA",
+    "Samoa": "WSM",
+    "Sao Tome and Principe": "STP",
+    "Saudi Arabia": "SAU",
+    "Senegal": "SEN",
+    "Serbia": "SRB",
+    "Sierra Leone": "SLE",
+    "Singapore": "SGP",
+    "Slovakia": "SVK",
+    "Slovenia": "SVN",
+    "Solomon Islands": "SLB",
+    "Somalia": "SOM",
+    "South Africa": "ZAF",
+    "South Korea": "KOR",
+    "South Sudan": "SSD",
+    "Spain": "ESP",
+    "Sri Lanka": "LKA",
+    "St. Lucia": "LCA",
+    "Sudan": "SDN",
+    "Suriname": "SUR",
+    "Sweden": "SWE",
+    "Switzerland": "CHE",
+    "Syria": "SYR",
+    "Tajikistan": "TJK",
+    "Tanzania": "TZA",
+    "Thailand": "THA",
+    "Timor-Leste": "TLS",
+    "Togo": "TGO",
+    "Trinidad and Tobago": "TTO",
+    "Tunisia": "TUN",
+    "Turkmenistan": "TKM",
+    "Türkiye": "TUR",
+    "Uganda": "UGA",
+    "Ukraine": "UKR",
+    "United Arab Emirates": "ARE",
+    "United Kingdom": "GBR",
+    "United States": "USA",
+    "Uruguay": "URY",
+    "Uzbekistan": "UZB",
+    "Vanuatu": "VUT",
+    "Venezuela": "VEN",
+    "Vietnam": "VNM",
+    "Yemen": "YEM",
+    "Zambia": "ZMB",
+    "Zimbabwe": "ZWE",
+  };
+
+
   useEffect(() => {
-    Papa.parse(csvPath, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        const validData = results.data.filter(d => d.ASR && !isNaN(parseFloat(d.ASR)));
-        setData(validData);
-      },
-    });
+    const fetchData = async () => {
+      try {
+        const response = await fetch(csvPath);
+        const text = await response.text();
+
+        const lines = text.split('\n').filter(line => line.trim() !== '');
+        if (lines.length > 1) {
+          const header = lines[0].split(',').map(h => h.trim());
+          const parsedData = lines.slice(1).map(line => {
+            const values = line.split(',');
+            if (values.length === header.length) {
+              return header.reduce((obj, key, index) => {
+                obj[key] = values[index].trim();
+                return obj;
+              }, {});
+            }
+            return null;
+          }).filter(d => d && d.ASR && !isNaN(parseFloat(d.ASR)));
+
+          setData(parsedData);
+        }
+      } catch (error) {
+        console.error("Error fetching or parsing CSV:", error);
+      }
+    };
+    fetchData();
   }, [csvPath]);
 
   if (data.length === 0) {
@@ -39,7 +246,8 @@ const MapNumeric = ({ csvPath }) => {
 
   const plotData = {
     type: "choropleth",
-    locations: data.map(d => d.Country),
+    // Use ISO-3 country codes for locations
+    locations: data.map(d => countryCodeMap[d.Country]), 
     z: asrValues,
     text: data.map(d => d.Country),
     colorscale: [
@@ -55,7 +263,8 @@ const MapNumeric = ({ csvPath }) => {
         width: 0.5,
       },
     },
-    locationmode: "country names",
+    // Change locationmode to use ISO-3 codes
+    locationmode: "ISO-3",
     colorbar: {
       title: {
         text: "Incidence<br>(per 100,000)",
@@ -76,15 +285,11 @@ const MapNumeric = ({ csvPath }) => {
     },
     hovertemplate:
       "<b>%{text}</b><br>Incidence: %{z} per 100,000<extra></extra>",
-    // Add the hover property for the marker line
     hoverlabel: {
       bordercolor: 'rgba(255, 255, 255, 0.7)',
       bgcolor: 'rgba(0, 0, 0, 0.7)',
       font: { color: 'white' }
     },
-    // The most effective way to add a hover effect to a choropleth map
-    // is to use `hovertemplate` and a marker line with a prominent color.
-    // Plotly doesn't have a direct 'hovercolor' property for the fill.
   };
 
   const config = {
