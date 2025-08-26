@@ -1,42 +1,83 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+/* ------------------------ */
+/* Global and Base Styles   */
+/* ------------------------ */
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background-color: #242424;
+  color: white;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+  margin: 0;
+  color: white;
+}
+
+p {
+  color: white;
+}
+
+/* ------------------------ */
+/* Page and Section Layout  */
+/* ------------------------ */
+.content-section {
+  width: 100%;
+  max-width: 1200px;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text-content {
   text-align: center;
+  padding: 1rem 0;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* ------------------------ */
+/* Plotly Specific Styles   */
+/* ------------------------ */
+.plotly-responsive-plot-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.plotly-responsive-plot {
+  width: 1000px; /* Increased width for a larger map */
+  height: 650px; /* Increased height for a larger map */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+/* Responsive styles for smaller screens */
+@media (max-width: 1024px) {
+  .plotly-responsive-plot {
+    width: 95vw;
+    height: 60vh;
   }
 }
 
-.card {
-  padding: 2em;
+.plotly .modebar-btn {
+  font-size: 20px !important;
 }
 
-.read-the-docs {
-  color: #888;
+.plotly-responsive-plot-container .modebar {
+  top: auto !important;
+  bottom: -60px !important;
+  right: 7% !important;
+  transform: translateX(50%);
 }
