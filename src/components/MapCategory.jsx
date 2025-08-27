@@ -141,7 +141,7 @@ const MapCategory = ({ csvPath }) => {
         data={plotTraces}
         layout={{
           title: {
-            text: "Predominant Cancer Type per Country",
+            text: "Most common cancer -by incidence- per country",
             x: 0.5,
             xanchor: "center",
             font: { size: 22, color: "white" },
