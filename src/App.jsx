@@ -10,7 +10,7 @@ function App() {
   const categoryCsvPath = "data/Globocan_dataset_max_ASR_country.csv";
   const articlesCsvPath = "data/articles_year.csv";
   const articlesMostStudiedCsvPath = "data/articles_cancer_most_studied_country.csv";
-  const selectedCountryCancerCsvPath = "data/articles_country_year_cancer.csv"; // <- new CSV
+  const selectedCountryCancerCsvPath = "data/articles_country_year_cancer.csv"; 
 
   return (
     <div
