@@ -29,6 +29,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          publish_branch: gh-pages
+          publish_branch: master
           user_name: 'Sergio Valbuena'
           user_email: 'svalbuenaa@gmail.com'
