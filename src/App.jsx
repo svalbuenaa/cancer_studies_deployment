@@ -2,7 +2,8 @@ import MapNumeric from "./components/MapNumeric";
 import MapCategory from "./components/MapCategory";
 import ArticlesYear from "./components/ArticlesYear";
 import MapMostStudied from "./components/MapMostStudied";
-import StudiesSelectedCountryCancer from "./components/StudiesSelectedCountryCancer"; // <- new import
+import StudiesSelectedCountryCancer from "./components/StudiesSelectedCountryCancer";
+import SelectCancerShowCountries from "./components/SelectCancerShowCountries";
 import "./App.css";
 
 function App() {
@@ -66,8 +67,7 @@ function App() {
         </div>
         <MapMostStudied csvPath={articlesMostStudiedCsvPath} />
       </div>
-
-      {/* New section for selected country cancer studies */}
+	  
       <div className="content-section">
         <div className="text-content">
           <h1>Selected Country Cancer Studies</h1>
@@ -77,6 +77,17 @@ function App() {
         </div>
         <StudiesSelectedCountryCancer csvPath={selectedCountryCancerCsvPath} />
       </div>
+	  
+	  <div className="content-section">
+		<div className="text-content">
+			<h1>Top Contributing Countries per Cancer per Year</h1>
+			<p>
+			Select a cancer type to see the top 5 countries contributing the most research articles for that cancer each year.
+			</p>
+		</div>
+		<SelectCancerShowCountries csvPath="data/articles_country_year_cancer.csv" />
+	  </div>
+	  
     </div>
   );
 }
