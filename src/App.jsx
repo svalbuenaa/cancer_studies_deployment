@@ -1,9 +1,12 @@
+import { useState } from "react";
 import MapNumeric from "./components/MapNumeric";
 import MapCategory from "./components/MapCategory";
 import ArticlesYear from "./components/ArticlesYear";
 import MapMostStudied from "./components/MapMostStudied";
 import StudiesSelectedCountryCancer from "./components/StudiesSelectedCountryCancer";
 import SelectCancerShowCountries from "./components/SelectCancerShowCountries";
+import SelectCancerShowCountriesLines from "./components/SelectCancerShowCountriesLines";
+import SelectCountryShowCancers from "./components/SelectCountryShowCancers";
 import "./App.css";
 
 function App() {
@@ -11,7 +14,10 @@ function App() {
   const categoryCsvPath = "data/Globocan_dataset_max_ASR_country.csv";
   const articlesCsvPath = "data/articles_year.csv";
   const articlesMostStudiedCsvPath = "data/articles_cancer_most_studied_country.csv";
-  const selectedCountryCancerCsvPath = "data/articles_country_year_cancer.csv"; 
+  const selectedCountryCancerCsvPath = "data/articles_country_year_cancer.csv";
+
+  // Lift the selectedCancer state up here
+  const [selectedCancer, setSelectedCancer] = useState("Breast cancer");
 
   return (
     <div
@@ -67,7 +73,17 @@ function App() {
         </div>
         <MapMostStudied csvPath={articlesMostStudiedCsvPath} />
       </div>
-	  
+
+      <div className="content-section">
+        <div className="text-content">
+          <h1>Top Cancers per Selected Country</h1>
+          <p>
+            Select a country to see the top 5 cancers studied over the years and the total number of studies for that country.
+          </p>
+        </div>
+        <SelectCountryShowCancers csvPath="data/articles_country_year_cancer.csv" />
+      </div>
+
       <div className="content-section">
         <div className="text-content">
           <h1>Selected Country Cancer Studies</h1>
@@ -77,17 +93,32 @@ function App() {
         </div>
         <StudiesSelectedCountryCancer csvPath={selectedCountryCancerCsvPath} />
       </div>
-	  
-	  <div className="content-section">
-		<div className="text-content">
-			<h1>Top Contributing Countries per Cancer per Year</h1>
-			<p>
-			Select a cancer type to see the top 5 countries contributing the most research articles for that cancer each year.
-			</p>
-		</div>
-		<SelectCancerShowCountries csvPath="data/articles_country_year_cancer.csv" />
-	  </div>
-	  
+
+      <div className="content-section">
+        <div className="text-content">
+          <h1>Top Contributing Countries per Cancer per Year</h1>
+          <p>
+            Select a cancer type to see the top 5 countries contributing the most research articles for that cancer each year.
+          </p>
+        </div>
+        <SelectCancerShowCountries
+          csvPath="data/articles_country_year_cancer.csv"
+          selectedCancer={selectedCancer}
+          setSelectedCancer={setSelectedCancer}
+        />
+      </div>
+
+      <div className="content-section">
+        <div className="text-content">
+          <p>
+            This line chart shows trends over time for the top 5 contributing countries for the selected cancer type.
+          </p>
+        </div>
+        <SelectCancerShowCountriesLines
+          csvPath="data/articles_country_year_cancer.csv"
+          selectedCancer={selectedCancer}
+        />
+      </div>
     </div>
   );
 }
