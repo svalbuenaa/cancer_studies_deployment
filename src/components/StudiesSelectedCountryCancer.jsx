@@ -73,7 +73,7 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
     type: "bar",
     name: `Total ${selectedCancer} studies`,
     marker: {
-      color: "#99badd",
+      color: "#4682B4",
       opacity: 0.7,
     },
     hovertemplate: `<b>Year:</b> %{x}<br><b>Total ${selectedCancer} studies:</b> %{y}<extra></extra>`,
