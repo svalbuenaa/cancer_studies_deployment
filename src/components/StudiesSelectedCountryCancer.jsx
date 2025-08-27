@@ -74,7 +74,7 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
     name: `Total ${selectedCancer} studies`,
     marker: {
       color: "#4682B4",
-      opacity: 0.7,
+      opacity: 1,
     },
     hovertemplate: `<b>Year:</b> %{x}<br><b>Total ${selectedCancer} studies:</b> %{y}<extra></extra>`,
   };
