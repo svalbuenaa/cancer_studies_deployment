@@ -125,7 +125,7 @@ const MapMostStudied = ({ csvPath }) => {
       <Plot
         data={plotTraces}
         layout={{
-          title: { text: "Most Studied Cancer Type per Country", x: 0.5, xanchor: "center", font: { size: 22, color: "white" }, y: 0.96 },
+          title: { text: "Most studied cancer type per country", x: 0.5, xanchor: "center", font: { size: 22, color: "white" }, y: 0.96 },
           geo: { projection: { type: "natural earth" }, showframe: false, showcoastlines: true, coastlinecolor: "gray", oceancolor: "#242424", landcolor: "#242424", bgcolor: "#242424", domain: { x: [0,1], y: [0,1] } },
           margin: { t: 40, b: 100, l: 40, r: 40 },
           paper_bgcolor: "#242424",
