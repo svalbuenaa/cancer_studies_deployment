@@ -7,6 +7,7 @@ import StudiesSelectedCountryCancer from "./components/StudiesSelectedCountryCan
 import SelectCancerShowCountries from "./components/SelectCancerShowCountries";
 import SelectCancerShowCountriesLines from "./components/SelectCancerShowCountriesLines";
 import SelectCountryShowCancers from "./components/SelectCountryShowCancers";
+import SelectCancerMap from "./components/SelectCancerMap";   // ⬅️ new import
 import "./App.css";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
   const articlesCsvPath = "data/articles_year.csv";
   const articlesMostStudiedCsvPath = "data/articles_cancer_most_studied_country.csv";
   const selectedCountryCancerCsvPath = "data/articles_country_year_cancer.csv";
+  const selectCancerMapCsvPath = "data/Globocan_dataset_ready_lite.csv";   // ⬅️ new path
 
   // Lift the selectedCancer state up here
   const [selectedCancer, setSelectedCancer] = useState("Breast cancer");
@@ -52,6 +54,16 @@ function App() {
           </p>
         </div>
         <MapCategory csvPath={categoryCsvPath} />
+      </div>
+
+      <div className="content-section">
+        <div className="text-content">
+          <h1>Cancer Incidence per Country by Selected Cancer</h1>
+          <p>
+            Select a cancer type to visualize its age-standardized incidence rate (ASR) across countries. This interactive map highlights regional differences for the chosen cancer.
+          </p>
+        </div>
+        <SelectCancerMap csvPath={selectCancerMapCsvPath} />
       </div>
 
       <div className="content-section">
