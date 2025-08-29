@@ -7,8 +7,9 @@ import StudiesSelectedCountryCancer from "./components/StudiesSelectedCountryCan
 import SelectCancerShowCountries from "./components/SelectCancerShowCountries";
 import SelectCancerShowCountriesLines from "./components/SelectCancerShowCountriesLines";
 import SelectCountryShowCancers from "./components/SelectCountryShowCancers";
-import SelectCancerMap from "./components/SelectCancerMap";   
+import SelectCancerMap from "./components/SelectCancerMap";
 import ScatterASRArticlesCancerCountry from "./components/ScatterASRArticlesCancerCountry";
+import ScatterASRArticlesCountryCancer from "./components/ScatterASRArticlesCountryCancer";
 import "./App.css";
 
 function App() {
@@ -18,9 +19,10 @@ function App() {
   const articlesMostStudiedCsvPath = "data/articles_cancer_most_studied_country.csv";
   const selectedCountryCancerCsvPath = "data/articles_country_year_cancer.csv";
   const selectCancerMapCsvPath = "data/Globocan_dataset_ready_lite.csv";
-  const scatterCsvPath = "data/articles_ASR_country_cancer.csv";  // ⬅️ new path
+  const scatterCsvPath = "data/articles_ASR_country_cancer.csv"; // For ScatterASRArticlesCancerCountry
+  const scatterCancerCsvPath = "data/articles_ASR_country_cancer.csv"; // For ScatterASRArticlesCountryCancer
 
-  // Lift the selectedCancer state up here
+  // Lift the selectedCancer state
   const [selectedCancer, setSelectedCancer] = useState("Breast cancer");
 
   return (
@@ -95,7 +97,7 @@ function App() {
             Select a country to see the top 5 cancers studied over the years and the total number of studies for that country.
           </p>
         </div>
-        <SelectCountryShowCancers csvPath="data/articles_country_year_cancer.csv" />
+        <SelectCountryShowCancers csvPath={selectedCountryCancerCsvPath} />
       </div>
 
       <div className="content-section">
@@ -116,7 +118,7 @@ function App() {
           </p>
         </div>
         <SelectCancerShowCountries
-          csvPath="data/articles_country_year_cancer.csv"
+          csvPath={selectedCountryCancerCsvPath}
           selectedCancer={selectedCancer}
           setSelectedCancer={setSelectedCancer}
         />
@@ -129,7 +131,7 @@ function App() {
           </p>
         </div>
         <SelectCancerShowCountriesLines
-          csvPath="data/articles_country_year_cancer.csv"
+          csvPath={selectedCountryCancerCsvPath}
           selectedCancer={selectedCancer}
         />
       </div>
@@ -142,6 +144,20 @@ function App() {
           </p>
         </div>
         <ScatterASRArticlesCancerCountry csvPath={scatterCsvPath} />
+      </div>
+
+      <div className="content-section">
+        <div className="text-content">
+          <h1>ASR vs Articles per Country for Selected Cancer</h1>
+          <p>
+            Select a cancer type to see how incidence rates (ASR) relate to the number of published research articles across countries. Top 5 countries are labeled.
+          </p>
+        </div>
+        <ScatterASRArticlesCountryCancer
+          csvPath={scatterCancerCsvPath}
+          selectedCancer={selectedCancer}
+          setSelectedCancer={setSelectedCancer}
+        />
       </div>
     </div>
   );
