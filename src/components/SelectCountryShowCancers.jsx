@@ -29,7 +29,6 @@ const SelectCountryShowCancers = ({ csvPath }) => {
             })
             // Filter out unwanted cancer types during data parsing
             .filter((d) => d && d.Year && d.Articles && d.Country && d.Cancer && 
-              d.Cancer !== "Undetermined_Cancer" && 
               d.Cancer !== "Undetermined cancer" && 
               d.Cancer !== "Other cancer");
 
