@@ -7,7 +7,7 @@ import StudiesSelectedCountryCancer from "./components/StudiesSelectedCountryCan
 import SelectCancerShowCountries from "./components/SelectCancerShowCountries";
 import SelectCancerShowCountriesLines from "./components/SelectCancerShowCountriesLines";
 import SelectCountryShowCancers from "./components/SelectCountryShowCancers";
-import SelectCancerMap from "./components/SelectCancerMap";   // ⬅️ new import
+import SelectCancerMap from "./components/SelectCancerMap";   
 import "./App.css";
 
 function App() {
