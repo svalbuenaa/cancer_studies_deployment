@@ -39,6 +39,11 @@ Vulvar cancer,192,Italy
 Vulvar cancer,163,Germany
 Vulvar cancer,136,United Kingdom
 Vulvar cancer,122,Netherlands
+Undetermined cancer,553186,United States
+Undetermined cancer,229181,China
+Undetermined cancer,120033,Japan
+Undetermined cancer,108542,United Kingdom
+Undetermined cancer,76477,Germany
 Testicular cancer,1540,United States
 Testicular cancer,432,Germany
 Testicular cancer,417,United Kingdom
@@ -109,11 +114,6 @@ Vaginal cancer,49,China
 Vaginal cancer,49,Japan
 Vaginal cancer,47,Italy
 Vaginal cancer,33,Germany
-Undetermined_Cancer,553186,United States
-Undetermined_Cancer,229181,China
-Undetermined_Cancer,120033,Japan
-Undetermined_Cancer,108542,United Kingdom
-Undetermined_Cancer,76477,Germany
 Salivary gland cancer,197,United States
 Salivary gland cancer,67,Japan
 Salivary gland cancer,50,Germany
