@@ -6,6 +6,28 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
   const [uniqueCountries, setUniqueCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("Switzerland");
 
+  const colorMapping = {
+    'Breast cancer': '#377eb8',
+    'Prostate cancer': '#4daf4a',
+    'Lung cancer': '#984ea3',
+    'Colorectal cancer': '#66c2a5',
+    'Liver cancer': '#f781bf',
+    'Stomach cancer': '#8da0cb',
+    'Cervical cancer': '#e78ac3',
+    'Leukemia': '#a65628',
+    'Esophageal cancer': '#ffbaba',
+    'Skin cancer': '#ff7f00',
+    'Anal cancer': '#b15928',
+    'Brain cancer': '#1f78b4',
+    'Mesothelioma': '#33a02c',
+    'Kidney cancer': '#6a3d9a',
+    'Multiple myeloma': '#e31a1c',
+    'Laryngeal cancer': '#fdbf6f',
+    'Ovarian cancer': '#cab2d6',
+    'Colon cancer': '#ffff99',
+    'Penile cancer': '#a6cee3',
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,24 +80,26 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
   const sortedByArticles = [...filteredData].sort(
     (a, b) => parseInt(b.Articles) - parseInt(a.Articles)
   );
-  const top5 = sortedByArticles.slice(0, 5);
-  const others = sortedByArticles.slice(5);
+  // Changed from 5 to 3
+  const top3 = sortedByArticles.slice(0, 3);
+  const others = sortedByArticles.slice(3);
 
   // Format cancer names with line breaks for multiple words
   const formatCancerName = (name) => name.replace(/ /g, "<br>");
 
-  // Top 5 cancers → colored, with labels
+  // Top 3 cancers → colored, with labels
   const topTrace = {
-    x: top5.map((d) => parseFloat(d.ASR)),
-    y: top5.map((d) => parseInt(d.Articles)),
-    text: top5.map((d) => formatCancerName(d.Cancer)),
+    x: top3.map((d) => parseFloat(d.ASR)),
+    y: top3.map((d) => parseInt(d.Articles)),
+    text: top3.map((d) => formatCancerName(d.Cancer)),
     mode: "markers+text",
     type: "scatter",
     textposition: "top center",
     textfont: { color: "white" },
     marker: {
       size: 14,
-      color: ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd"],
+      // Use colorMapping for consistent colors
+      color: top3.map(d => colorMapping[d.Cancer] || '#d3d3d3'), // Default to light grey
       opacity: 0.9,
     },
     hovertemplate:
@@ -83,7 +107,8 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
       "<b>Cancer:</b> %{text}<br>" +
       "<b>Incidence:</b> %{x}<br>" +
       "<b>Articles:</b> %{y}<extra></extra>",
-    name: "Top 5 cancers",
+    // Updated name to reflect the change
+    name: "Top 3 cancers",
   };
 
   // Other cancers → grey, no labels (only hover)
@@ -96,6 +121,7 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
     marker: {
       size: 10,
       color: "grey",
+      // Opacity changed back to 0.5 to make dots dimmer
       opacity: 0.5,
     },
     hovertemplate:
@@ -168,10 +194,10 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
               x1: 1,
               y1: 1,
               line: {
-                color: '#808080', // Grey color
+                color: '#808080',
                 width: 2,
                 dash: 'dash',
-                opacity: 0.5 // Added transparency
+                opacity: 0.5
               }
             }
           ]
