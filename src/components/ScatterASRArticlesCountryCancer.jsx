@@ -92,7 +92,7 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
     mode: "markers+text",
     type: "scatter",
     textposition: "top center",
-    textfont: { color: "white" },
+    textfont: { color: "black" },
     marker: {
       size: 14,
       color: top5.map(d => getCountryColor(d.Country)), // colored
@@ -125,6 +125,11 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
       `<b>Cancer:</b> ${selectedCancer}<br>` +
       `<b>Incidence:</b> %{x}<br>` +
       `<b>Articles:</b> %{y}<extra></extra>`,
+	hoverlabel: {
+      bordercolor: 'rgba(0, 0, 0, 0.7)',
+      bgcolor: 'rgba(255, 255, 255, 0.7)',
+      font: { color: 'black' }
+    },
     showlegend: false,
   };
 
@@ -146,28 +151,30 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
             text: `ASR vs Articles for <b>${selectedCancer}</b>`,
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "white" },
+            font: { size: 22, color: "black" },
           },
           xaxis: {
-            title: { text: "Incidence (ASR)", font: { color: "white", size: 16 } },
+            title: { text: "Incidence (ASR)", font: { color: "black", size: 16 } },
             showgrid: true,
             zeroline: false,
-            linecolor: "white",
-            gridcolor: "rgba(255,255,255,0.2)",
-            tickfont: { color: "white" },
+            linecolor: "black",
+			linewidth: 1.5,
+            gridcolor: "rgba(0,0,0,0.2)",
+            tickfont: { color: "black" },
           },
           yaxis: {
-            title: { text: "Number of Articles", font: { color: "white", size: 16 } },
+            title: { text: "Number of Articles", font: { color: "black", size: 16 } },
             showgrid: true,
             zeroline: false,
-            linecolor: "white",
-            gridcolor: "rgba(255,255,255,0.2)",
-            tickfont: { color: "white" },
+            linecolor: "black",
+			linewidth: 1.5,
+            gridcolor: "rgba(0,0,0,0.2)",
+            tickfont: { color: "black" },
             tickformat: "~s"
           },
           margin: { t: 60, b: 60, l: 80, r: 40 },
-          paper_bgcolor: "#242424",
-          plot_bgcolor: "#242424",
+          paper_bgcolor: "#f6f8fa",
+          plot_bgcolor: "#f6f8fa",
           hovermode: "closest",
           showlegend: false,
           width: 700,
@@ -188,7 +195,7 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
         config={config}
       />
 
-      <div style={{ marginTop: "20px", color: "white", textAlign: "center" }}>
+      <div style={{ marginTop: "20px", color: "black", textAlign: "center" }}>
         <label htmlFor="cancer-select" style={{ marginRight: "10px" }}>Cancer:</label>
         <select
           id="cancer-select"
@@ -196,9 +203,9 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
           style={{
             padding: "5px 10px",
             borderRadius: "5px",
-            border: "1px solid white",
-            backgroundColor: "#333",
-            color: "white",
+            border: "1px solid black",
+            backgroundColor: "white",
+            color: "black",
           }}
           value={selectedCancer}
         >

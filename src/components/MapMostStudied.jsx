@@ -89,7 +89,7 @@ const MapMostStudied = ({ csvPath }) => {
   }, [csvPath]);
 
   if (data.length === 0) {
-    return <div style={{ color: "white", textAlign: "center", marginTop: "50px" }}><p>Loading map data...</p></div>;
+    return <div style={{ color: "black", textAlign: "center", marginTop: "50px" }}><p>Loading map data...</p></div>;
   }
 
   const uniqueCancers = [...new Set(data.map(d => d.Cancer))].sort();
@@ -105,10 +105,15 @@ const MapMostStudied = ({ csvPath }) => {
       name: cancerType,
       showlegend: true,
       showscale: false,
-      marker: { line: { color: "white", width: 0.5 } },
+      marker: { line: { color: "black", width: 0.5 } },
       locationmode: "ISO-3", // <- use ISO-3 instead of "country names"
       colorscale: [[0, color], [1, color]],
       hovertemplate: `<b>%{text}</b><br>Most Studied Cancer: ${cancerType}<br>Articles: %{z}<extra></extra>`,
+	  hoverlabel: {
+      bordercolor: 'rgba(0, 0, 0, 0.7)',
+      bgcolor: 'rgba(255, 255, 255, 0.7)',
+      font: { color: 'black' }
+    },	  
     };
   });
 
@@ -125,14 +130,14 @@ const MapMostStudied = ({ csvPath }) => {
       <Plot
         data={plotTraces}
         layout={{
-          title: { text: "Most studied cancer type per country", x: 0.5, xanchor: "center", font: { size: 22, color: "white" }, y: 0.96 },
-          geo: { projection: { type: "natural earth" }, showframe: false, showcoastlines: true, coastlinecolor: "gray", oceancolor: "#242424", landcolor: "#242424", bgcolor: "#242424", domain: { x: [0,1], y: [0,1] } },
+          title: { text: "Most studied cancer type per country", x: 0.5, xanchor: "center", font: { size: 22, color: "black" }, y: 0.96 },
+          geo: { projection: { type: "natural earth" }, showframe: false, showcoastlines: true, coastlinecolor: "gray", oceancolor: "#f6f8fa", landcolor: "#f6f8fa", bgcolor: "#f6f8fa", domain: { x: [0,1], y: [0,1] } },
           margin: { t: 40, b: 100, l: 40, r: 40 },
-          paper_bgcolor: "#242424",
-          plot_bgcolor: "#242424",
+          paper_bgcolor: "#f6f8fa",
+          plot_bgcolor: "#f6f8fa",
           autosize: true,
           showlegend: true,
-          legend: { x: 0.5, y: -0.02, xanchor: "center", yanchor: "top", orientation: "h", bgcolor: "rgba(255, 255, 255, 0)", font: { color: "white" } },
+          legend: { x: 0.5, y: -0.02, xanchor: "center", yanchor: "top", orientation: "h", bgcolor: "rgba(255, 255, 255, 0)", font: { color: "black" } },
           legenditemclick: false,
           legenditemdoubleclick: false
         }}

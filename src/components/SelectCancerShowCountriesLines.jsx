@@ -107,34 +107,34 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
             text: `Countries with the highest number of <b>${selectedCancer}</b> studies`,
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "white" },
+            font: { size: 22, color: "black" },
             y: 0.95,
           },
           xaxis: {
-            title: { text: "Year", font: { color: "white", size: 16 } },
+            title: { text: "Year", font: { color: "black", size: 16 } },
             tickmode: "array",
             tickvals: years,
             ticktext: years,
             tickangle: -90,
             showgrid: false,
             zeroline: false,
-            linecolor: "white",
-            tickfont: { color: "white" },
+            linecolor: "black",
+            tickfont: { color: "black" },
 			range: [Math.min(...years)-0.5, Math.max(...years)]
           },
           yaxis: {
-			title: { text: "Number of articles", font: { color: "white", size: 16 }, standoff: 20 },
+			title: { text: "Number of articles", font: { color: "black", size: 16 }, standoff: 20 },
 			showgrid: true,
 			zeroline: false,
 			showline: false,
-			linecolor: "white",
-			gridcolor: "rgba(255,255,255,0.2)",
-			tickfont: { color: "white" },
+			linecolor: "black",
+			gridcolor: "rgba(0,0,0,0.075)",
+			tickfont: { color: "black" },
 			range: [0, maxVal * 1.2],
-			tickformat: "~s" // <-- compact number format: 1K, 1M, etc.
+			tickformat: "~s" // 
 			},
-          paper_bgcolor: "#242424",
-          plot_bgcolor: "#242424",
+          paper_bgcolor: "#f6f8fa",
+          plot_bgcolor: "#f6f8fa",
           autosize: true,
           hovermode: "x",
           legend: {
@@ -142,8 +142,8 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
             y: -0.2,
             xanchor: "center",
             orientation: "h",
-            font: { color: "white" },
-            traceorder: "reversed", // <-- reverse legend order only
+            font: { color: "black" },
+            traceorder: "reversed", 
           },
         }}
         config={config}

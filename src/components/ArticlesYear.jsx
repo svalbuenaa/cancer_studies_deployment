@@ -37,7 +37,7 @@ const ArticlesYear = ({ csvPath }) => {
   yshift: 35,
   showarrow: false,
   font: {
-    color: 'white',
+    color: 'black',
     size: 12,
   },
   textangle: -90, // Rotate the text vertically
@@ -58,7 +58,7 @@ const ArticlesYear = ({ csvPath }) => {
     responsive: true,
     displaylogo: false,
     modeBarButtonsToRemove: [
-      'zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d', 'hoverClosestCartesian', 'hoverCompareCartesian'
+      'zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'hoverClosestCartesian', 'hoverCompareCartesian'
     ],
   };
 
@@ -71,13 +71,13 @@ const ArticlesYear = ({ csvPath }) => {
             text: "Number of studies per year",
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "white" },
+            font: { size: 22, color: "black" },
             y: 0.95,
           },
           xaxis: {
             title: {
               text: "Year",
-              font: { color: "white",
+              font: { color: "black",
 					  size: 16},
             },
             tickmode: 'array',
@@ -86,28 +86,27 @@ const ArticlesYear = ({ csvPath }) => {
             tickangle: -90,
             showgrid: false,
             zeroline: false,
-            linecolor: "white",
-            gridcolor: "rgba(255, 255, 255, 0.2)",
-            tickfont: { color: "white" },
+            linecolor: "black",
+            tickfont: { color: "black" },
           },
           yaxis: {
             title: {
               text: "Number of studies",
-              font: { color: "white",
+              font: { color: "black",
 					  size: 16},
             },
             showgrid: true,
             zeroline: false,
             // Remove the y-axis line
             showline: false,
-            linecolor: "white",
-            gridcolor: "rgba(255, 255, 255, 0.2)",
-            tickfont: { color: "white" },
+            linecolor: "black",
+            gridcolor: "rgba(0, 0, 0, 0.075)",
+            tickfont: { color: "black" },
 			range: [0, Math.max(...articles) * 1.25],
           },
           margin: { t: 60, b: 150, l: 60, r: 60 },
-          paper_bgcolor: "#242424",
-          plot_bgcolor: "#242424",
+          paper_bgcolor: "#f6f8fa",
+          plot_bgcolor: "#f6f8fa",
           autosize: true,
           annotations: annotations,
         }}

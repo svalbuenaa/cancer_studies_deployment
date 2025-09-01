@@ -83,7 +83,7 @@ const SelectCancerMap = ({ csvPath }) => {
 
   if (data.length === 0 || !selectedCancer) {
     return (
-      <div style={{ color: "white", textAlign: "center", marginTop: "50px" }}>
+      <div style={{ color: "black", textAlign: "center", marginTop: "50px" }}>
         <p>Loading cancer map...</p>
       </div>
     );
@@ -117,13 +117,13 @@ const SelectCancerMap = ({ csvPath }) => {
       [1, "#800000"]
     ],
     marker: {
-      line: { color: "white", width: 0.5 },
+      line: { color: "black", width: 0.5 },
     },
     locationmode: "ISO-3",
     colorbar: {
       title: {
         text: "Incidence<br>(per 100,000)",
-        font: { color: "white" }
+        font: { color: "black" }
       },
       thickness: 10,
       len: 0.5,
@@ -136,14 +136,14 @@ const SelectCancerMap = ({ csvPath }) => {
       orientation: "h",
       tickvals: tickValues,
       ticktext: tickValues.map(String),
-      tickfont: { color: "white" },
+      tickfont: { color: "black" },
     },
     hovertemplate:
       `<b>%{text}</b><br>${selectedCancer}<br>Incidence: %{z} per 100,000<extra></extra>`,
     hoverlabel: {
-      bordercolor: 'rgba(255, 255, 255, 0.7)',
-      bgcolor: 'rgba(0, 0, 0, 0.7)',
-      font: { color: 'white' }
+      bordercolor: 'rgba(0, 0, 0, 0.7)',
+      bgcolor: 'rgba(255, 255, 255, 0.7)',
+      font: { color: 'black' }
     },
   };
 
@@ -166,7 +166,7 @@ const SelectCancerMap = ({ csvPath }) => {
             text: `Incidence of <b>${selectedCancer}</b> per country`,
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "white" },
+            font: { size: 22, color: "black" },
             y: 0.93,
           },
           geo: {
@@ -174,21 +174,21 @@ const SelectCancerMap = ({ csvPath }) => {
             showframe: false,
             showcoastlines: true,
             coastlinecolor: "gray",
-            oceancolor: "#242424",
-            landcolor: "#242424",
-            bgcolor: "#242424",
+            oceancolor: "#f6f8fa",
+            landcolor: "#f6f8fa",
+            bgcolor: "#f6f8fa",
             domain: { x: [0, 1], y: [0, 1] },
           },
           margin: { t: 40, b: 80, l: 40, r: 40 },
-          paper_bgcolor: "#242424",
-          plot_bgcolor: "#242424",
+          paper_bgcolor: "#f6f8fa",
+          plot_bgcolor: "#f6f8fa",
           autosize: true,
         }}
         config={config}
         useResizeHandler={true}
         className="plotly-responsive-plot"
       />
-      <div style={{ display: "flex", gap: "20px", marginTop: "20px", color: "white" }}>
+      <div style={{ display: "flex", gap: "20px", marginTop: "20px", color: "black" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <label htmlFor="cancer-select">Cancer:</label>
           <select
@@ -197,9 +197,9 @@ const SelectCancerMap = ({ csvPath }) => {
             style={{
               padding: "5px",
               borderRadius: "5px",
-              border: "1px solid white",
-              backgroundColor: "#333",
-              color: "white"
+              border: "1px solid black",
+              backgroundColor: "white",
+              color: "black"
             }}
             value={selectedCancer}
           >

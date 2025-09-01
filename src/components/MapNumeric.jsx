@@ -225,7 +225,7 @@ const MapNumeric = ({ csvPath }) => {
 
   if (data.length === 0) {
     return (
-      <div style={{ color: "white", textAlign: "center", marginTop: "50px" }}>
+      <div style={{ color: "black", textAlign: "center", marginTop: "50px" }}>
         <p>Loading map data...</p>
       </div>
     );
@@ -259,7 +259,7 @@ const MapNumeric = ({ csvPath }) => {
     ],
     marker: {
       line: {
-        color: "white",
+        color: "black",
         width: 0.5,
       },
     },
@@ -268,7 +268,7 @@ const MapNumeric = ({ csvPath }) => {
     colorbar: {
       title: {
         text: "Incidence<br>(per 100,000)",
-        font: { color: "white" }
+        font: { color: "black" }
       },
       thickness: 10,
       len: 0.5,
@@ -281,14 +281,14 @@ const MapNumeric = ({ csvPath }) => {
       orientation: "h",
       tickvals: tickValues,
       ticktext: tickValues.map(String),
-      tickfont: { color: "white" },
+      tickfont: { color: "black" },
     },
     hovertemplate:
       "<b>%{text}</b><br>Incidence: %{z} per 100,000<extra></extra>",
     hoverlabel: {
-      bordercolor: 'rgba(255, 255, 255, 0.7)',
-      bgcolor: 'rgba(0, 0, 0, 0.7)',
-      font: { color: 'white' }
+      bordercolor: 'rgba(0, 0, 0, 0.7)',
+      bgcolor: 'rgba(255, 255, 255, 0.7)',
+      font: { color: 'black' }
     },
   };
 
@@ -312,7 +312,7 @@ const MapNumeric = ({ csvPath }) => {
             text: "Cancer incidence per country",
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "white" },
+            font: { size: 22, color: "black" },
             y: 0.93,
           },
           geo: {
@@ -320,14 +320,14 @@ const MapNumeric = ({ csvPath }) => {
             showframe: false,
             showcoastlines: true,
             coastlinecolor: "gray",
-            oceancolor: "#242424",
-            landcolor: "#242424",
-            bgcolor: "#242424",
+            oceancolor: "#f6f8fa",
+            landcolor: "#f6f8fa",
+            bgcolor: "#f6f8fa",
             domain: { x: [0, 1], y: [0, 1] },
           },
           margin: { t: 40, b: 80, l: 40, r: 40 },
-          paper_bgcolor: "#242424",
-          plot_bgcolor: "#242424",
+          paper_bgcolor: "#f6f8fa",
+          plot_bgcolor: "#f6f8fa",
           autosize: true,
         }}
         config={config}

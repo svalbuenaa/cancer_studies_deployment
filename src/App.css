@@ -1,34 +1,26 @@
 /* ------------------------ */
-/* Global and Base Styles   */
+/* Global Styles & Layout   */
 /* ------------------------ */
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: dark;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 body {
   margin: 0;
   min-width: 320px;
-  background-color: #242424;
-  color: white;
   min-height: 100vh;
+  background-color: #f6f8fa;
+  color: black;
+}
+
+h1, h2, h3 {
+  color: black;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
   margin: 0;
-  color: white;
 }
 
 p {
-  color: white;
+  color: black;
 }
 
 /* ------------------------ */
@@ -37,11 +29,13 @@ p {
 .content-section {
   width: 100%;
   max-width: 1200px;
+  margin: 0 auto;         /* center content */
   padding-top: 1rem;
   padding-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: #f6f8fa; /* matches page background */
 }
 
 .text-content {
@@ -60,11 +54,12 @@ p {
   display: flex;
   justify-content: center;
   width: 100%;
+  background-color: #f6f8fa; /* ensures sides of plot match background */
 }
 
 .plotly-responsive-plot {
-  width: 1000px; /* Increased width for a larger map */
-  height: 650px; /* Increased height for a larger map */
+  width: 1000px; /* fixed size for plot */
+  height: 650px;
 }
 
 /* Responsive styles for smaller screens */
@@ -85,3 +80,4 @@ p {
   right: 7% !important;
   transform: translateX(50%);
 }
+

@@ -95,7 +95,7 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
     mode: "markers+text",
     type: "scatter",
     textposition: "top center",
-    textfont: { color: "white" },
+    textfont: { color: "black" },
     marker: {
       size: 14,
       // Use colorMapping for consistent colors
@@ -129,6 +129,11 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
       "<b>Cancer:</b> %{text}<br>" +
       "<b>ASR:</b> %{x}<br>" +
       "<b>Articles:</b> %{y}<extra></extra>",
+	hoverlabel: {
+      bordercolor: 'rgba(0, 0, 0, 0.7)',
+      bgcolor: 'rgba(255, 255, 255, 0.7)',
+      font: { color: 'black' }
+    },
     name: "Other cancers",
   };
 
@@ -158,28 +163,30 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
             text: `Cancer research vs incidence in <b>${selectedCountry}</b>`,
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "white" },
+            font: { size: 22, color: "black" },
           },
           xaxis: {
-            title: { text: "Incidence", font: { color: "white", size: 16 } },
+            title: { text: "Incidence", font: { color: "black", size: 16 } },
             showgrid: true,
             zeroline: false,
-            linecolor: "white",
+            linecolor: "black",
+			linewidth: 1.5,
             gridcolor: "rgba(255,255,255,0.2)",
-            tickfont: { color: "white" },
+            tickfont: { color: "black" },
           },
           yaxis: {
-            title: { text: "Number of Articles", font: { color: "white", size: 16 } },
+            title: { text: "Number of Articles", font: { color: "black", size: 16 } },
             showgrid: true,
             zeroline: false,
-            linecolor: "white",
-            gridcolor: "rgba(255,255,255,0.2)",
-            tickfont: { color: "white" },
+            linecolor: "black",
+			linewidth: 1.5,
+            gridcolor: "rgba(0,0,0,0.075)",
+            tickfont: { color: "black" },
             tickformat: "~s"
           },
           margin: { t: 60, b: 60, l: 80, r: 40 },
-          paper_bgcolor: "#242424",
-          plot_bgcolor: "#242424",
+          paper_bgcolor: "#f6f8fa",
+          plot_bgcolor: "#f6f8fa",
           hovermode: "closest",
           showlegend: false,
           width: 700,
@@ -206,7 +213,7 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
       />
 
       {/* Country Selector */}
-      <div style={{ marginTop: "20px", color: "white", textAlign: "center" }}>
+      <div style={{ marginTop: "20px", color: "black", textAlign: "center" }}>
         <label htmlFor="country-select" style={{ marginRight: "10px" }}>Country:</label>
         <select
           id="country-select"
@@ -214,9 +221,9 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
           style={{
             padding: "5px 10px",
             borderRadius: "5px",
-            border: "1px solid white",
-            backgroundColor: "#333",
-            color: "white",
+            border: "1px solid black",
+            backgroundColor: "white",
+            color: "black",
           }}
           value={selectedCountry}
         >

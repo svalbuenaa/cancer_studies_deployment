@@ -93,7 +93,7 @@ const MapCategory = ({ csvPath }) => {
 
   if (data.length === 0) {
     return (
-      <div style={{ color: "white", textAlign: "center", marginTop: "50px" }}>
+      <div style={{ color: "black", textAlign: "center", marginTop: "50px" }}>
         <p>Loading map data...</p>
       </div>
     );
@@ -116,14 +116,19 @@ const MapCategory = ({ csvPath }) => {
     name: cancerType,
     showscale: false,
     showlegend: true,
-    marker: { line: { color: "white", width: 0.5 } },
+    marker: { line: { color: "black", width: 0.5 } },
     locationmode: "ISO-3",
     colorscale: [[0, color], [1, color]],
     hovertemplate:
       `<b>%{text}</b><br>` +
       `Predominant Cancer: ${cancerType}<br>` +
       `Incidence: %{customdata} per 100,000<extra></extra>`,
-    customdata: categoryData.map(d => parseFloat(d.ASR)), // Add ASR values
+	 hoverlabel: {
+      bordercolor: 'rgba(0, 0, 0, 0.7)',
+      bgcolor: 'rgba(255, 255, 255, 0.7)',
+      font: { color: 'black' }
+    },
+    customdata: categoryData.map(d => parseFloat(d.ASR)), 
   };
 });
 
@@ -144,7 +149,7 @@ const MapCategory = ({ csvPath }) => {
             text: "Most common cancer -by incidence- per country",
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "white" },
+            font: { size: 22, color: "black" },
             y: 0.96,
           },
           geo: {
@@ -152,13 +157,13 @@ const MapCategory = ({ csvPath }) => {
             showframe: false,
             showcoastlines: true,
             coastlinecolor: "gray",
-            oceancolor: "#242424",
-            landcolor: "#242424",
-            bgcolor: "#242424",
+            oceancolor: "#f6f8fa",
+            landcolor: "#f6f8fa",
+            bgcolor: "#f6f8fa",
           },
           margin: { t: 40, b: 100, l: 40, r: 40 },
-          paper_bgcolor: "#242424",
-          plot_bgcolor: "#242424",
+          paper_bgcolor: "#f6f8fa",
+          plot_bgcolor: "#f6f8fa",
           autosize: true,
           showlegend: true,
           legend: {
@@ -168,7 +173,7 @@ const MapCategory = ({ csvPath }) => {
             yanchor: "top",
             orientation: "h",
             bgcolor: "rgba(255, 255, 255, 0)",
-            font: { color: "white" },
+            font: { color: "black" },
           },
           legenditemclick: false,
           legenditemdoubleclick: false,

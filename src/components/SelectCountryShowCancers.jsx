@@ -124,7 +124,7 @@ const SelectCountryShowCancers = ({ csvPath }) => {
     xanchor: "center",
     yanchor: "bottom",
     showarrow: false,
-    font: { color: "white", size: 12 },
+    font: { color: "black", size: 12 },
     textangle: -90,
   }));
 
@@ -150,7 +150,7 @@ const SelectCountryShowCancers = ({ csvPath }) => {
     displaylogo: false,
     modeBarButtonsToRemove: [
       "zoom2d","pan2d","select2d","lasso2d","zoomIn2d","zoomOut2d",
-      "autoScale2d","resetScale2d","hoverClosestCartesian","hoverCompareCartesian",
+      "autoScale2d","hoverClosestCartesian","hoverCompareCartesian",
     ],
   };
 
@@ -159,41 +159,41 @@ const SelectCountryShowCancers = ({ csvPath }) => {
       <Plot
         data={plotData}
         layout={{
-          title: { text: plotTitle, x: 0.5, xanchor: "center", font: { size: 22, color: "white" }, y: 0.95 },
-          xaxis: { title: { text: "Year", font: { color: "white", size: 16 } }, tickmode: "array", tickvals: years, ticktext: years, tickangle: -90, showgrid: false, zeroline: false, linecolor: "white", gridcolor: "rgba(255, 255, 255, 0.2)", tickfont: { color: "white" } },
+          title: { text: plotTitle, x: 0.5, xanchor: "center", font: { size: 22, color: "black" }, y: 0.95 },
+          xaxis: { title: { text: "Year", font: { color: "black", size: 16 } }, tickmode: "array", tickvals: years, ticktext: years, tickangle: -90, showgrid: false, zeroline: false, linecolor: "black", gridcolor: "rgba(255, 255, 255, 0.2)", tickfont: { color: "black" } },
           yaxis: { 
-            title: { text: "Number of articles", font: { color: "white", size: 16 }, standoff: 20 },
+            title: { text: "Number of articles", font: { color: "black", size: 16 }, standoff: 20 },
             showgrid: true,
             zeroline: false,
             showline: false,
-            linecolor: "white",
-            gridcolor: "rgba(255,255,255,0.2)",
-            tickfont: { color: "white" },
+            linecolor: "black",
+            gridcolor: "rgba(0,0,0,0.075)",
+            tickfont: { color: "black" },
             range: [0, maxBarValue * 1.2],
             tickmode: "array",
             tickvals: tickvals,
             ticktext: tickvals.map(formatCompact)
           },
           margin: { t: 60, b: 150, l: 60, r: 60 },
-          paper_bgcolor: "#242424",
-          plot_bgcolor: "#242424",
+          paper_bgcolor: "#f6f8fa",
+          plot_bgcolor: "#f6f8fa",
           autosize: true,
           barmode: "stack",
           hovermode: "x",
           annotations: allCancersAnnotations,
-          legend: { x: 0.5, y: -0.2, xanchor: "center", orientation: "h", font: { color: "white" } },
+          legend: { x: 0.5, y: -0.2, xanchor: "center", orientation: "h", font: { color: "black" } },
         }}
         config={config}
         useResizeHandler={true}
         className="plotly-responsive-plot"
       />
-      <div style={{ display: "flex", gap: "20px", marginTop: "20px", color: "white" }}>
+      <div style={{ display: "flex", gap: "20px", marginTop: "20px", color: "black" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <label htmlFor="country-select">Country:</label>
           <select
             id="country-select"
             onChange={handleCountryChange}
-            style={{ padding: "5px", borderRadius: "5px", border: "1px solid white", backgroundColor: "#333", color: "white" }}
+            style={{ padding: "5px", borderRadius: "5px", border: "1px solid black", backgroundColor: "white", color: "black" }}
             value={selectedCountry}
           >
             {uniqueCountries.map((country) => <option key={country} value={country}>{country}</option>)}

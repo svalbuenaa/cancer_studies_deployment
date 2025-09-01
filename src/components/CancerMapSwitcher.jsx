@@ -14,7 +14,7 @@ const CancerMapSwitcher = ({ numericCsvPath, selectCancerCsvPath }) => {
           id="map-select"
           value={mapType}
           onChange={(e) => setMapType(e.target.value)}
-          style={{ padding: "5px", borderRadius: "5px", border: "1px solid white", backgroundColor: "#333", color: "white" }}
+          style={{ padding: "5px", borderRadius: "5px", border: "1px solid black", backgroundColor: "white", color: "black" }}
         >
           <option value="cumulative">Cumulative cancer incidence</option>
           <option value="selected">Selected cancer incidence</option>

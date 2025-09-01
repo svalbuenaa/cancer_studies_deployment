@@ -26,7 +26,7 @@ function App() {
   return (
     <div
       style={{
-        backgroundColor: "#242424",
+        backgroundColor: "#f6f8fa",
         color: "white",
         minHeight: "100vh",
         display: "flex",
