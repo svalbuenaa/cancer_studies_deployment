@@ -40,6 +40,11 @@ function App() {
         width: "100%",
       }}
     >
+	// Title
+	
+	
+	
+	// Global cancer incidende, all cancers
       <div className="content-section">
         <div className="text-content">
           <h1>Global Cancer Incidence</h1>
@@ -50,6 +55,7 @@ function App() {
         <MapNumeric csvPath={numericCsvPath} />
       </div>
 
+	// Most frequent cancer per country
       <div className="content-section">
         <div className="text-content">
           <h1>Predominant Cancer Type by Country</h1>
@@ -59,7 +65,8 @@ function App() {
         </div>
         <MapCategory csvPath={categoryCsvPath} />
       </div>
-
+	
+	// Incidence pre country for selected cancer
       <div className="content-section">
         <div className="text-content">
           <h1>Cancer Incidence per Country by Selected Cancer</h1>
@@ -69,7 +76,8 @@ function App() {
         </div>
         <SelectCancerMap csvPath={selectCancerMapCsvPath} />
       </div>
-
+	
+	// Number of cancer studies over time
       <div className="content-section">
         <div className="text-content">
           <h1>Published Cancer Studies</h1>
@@ -80,6 +88,7 @@ function App() {
         <ArticlesYear csvPath={articlesCsvPath} />
       </div>
 
+	// Most studied cancer per country
       <div className="content-section">
         <div className="text-content">
           <h1>Most Studied Cancer Type per Country</h1>
@@ -90,6 +99,7 @@ function App() {
         <MapMostStudied csvPath={articlesMostStudiedCsvPath} />
       </div>
 
+	// Top studied cancers for selected country per year
       <div className="content-section">
         <div className="text-content">
           <h1>Top Cancers per Selected Country</h1>
@@ -100,6 +110,7 @@ function App() {
         <SelectCountryShowCancers csvPath={selectedCountryCancerCsvPath} />
       </div>
 
+	// Select country and cancer, show studies over time
       <div className="content-section">
         <div className="text-content">
           <h1>Selected Country Cancer Studies</h1>
@@ -110,6 +121,7 @@ function App() {
         <StudiesSelectedCountryCancer csvPath={selectedCountryCancerCsvPath} />
       </div>
 
+	// Top contributing countries per cancer and year
       <div className="content-section">
         <div className="text-content">
           <h1>Top Contributing Countries per Cancer per Year</h1>
@@ -124,6 +136,7 @@ function App() {
         />
       </div>
 
+	// Top contributing countries per cancer and year, line plot
       <div className="content-section">
         <div className="text-content">
           <p>
@@ -136,6 +149,7 @@ function App() {
         />
       </div>
 
+	// Incidence vs number of articles for selected country
       <div className="content-section">
         <div className="text-content">
           <h1>ASR vs Articles per Cancer for Selected Country</h1>
@@ -146,6 +160,7 @@ function App() {
         <ScatterASRArticlesCancerCountry csvPath={scatterCsvPath} />
       </div>
 
+	// Incidence vs number of articles for selected cancer
       <div className="content-section">
         <div className="text-content">
           <h1>ASR vs Articles per Country for Selected Cancer</h1>
