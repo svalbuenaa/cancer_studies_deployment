@@ -63,10 +63,6 @@ function App() {
 			version of the <a href="https://gco.iarc.who.int/media/globocan/factsheets/populations/900-world-fact-sheet.pdf" target="_blank" rel="noopener noreferrer">"Cancer Today"</a> dataset of Globocan. Data about cancer incidence are correlated with numbers of cancer studies in each country.
 		  </p>
         </div>
-        <CancerMapSwitcher
-          numericCsvPath={numericCsvPath}
-          selectCancerCsvPath={selectCancerMapCsvPath}
-        />
       </div>
 	  
 	  
