@@ -19,10 +19,10 @@ function App() {
   const articlesMostStudiedCsvPath = "data/articles_cancer_most_studied_country.csv";
   const selectedCountryCancerCsvPath = "data/articles_country_year_cancer.csv";
   const selectCancerMapCsvPath = "data/Globocan_dataset_ready_lite.csv";
-  const scatterCsvPath = "data/articles_ASR_country_cancer.csv"; // For ScatterASRArticlesCancerCountry
-  const scatterCancerCsvPath = "data/articles_ASR_country_cancer.csv"; // For ScatterASRArticlesCountryCancer
+  const scatterCsvPath = "data/articles_ASR_country_cancer.csv"; 
+  const scatterCancerCsvPath = "data/articles_ASR_country_cancer.csv";
 
-  // Lift the selectedCancer state
+
   const [selectedCancer, setSelectedCancer] = useState("Breast cancer");
 
   return (
