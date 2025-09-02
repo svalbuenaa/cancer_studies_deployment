@@ -284,7 +284,7 @@ const MapNumeric = ({ csvPath }) => {
       tickfont: { color: "black" },
     },
     hovertemplate:
-      "<b>%{text}</b><br>Incidence: %{z} per 100,000<extra></extra>",
+      "<b>%{text}</b><br>Cummulative incidence: %{z} per 100,000<extra></extra>",
     hoverlabel: {
       bordercolor: 'rgba(0, 0, 0, 0.7)',
       bgcolor: 'rgba(255, 255, 255, 0.7)',

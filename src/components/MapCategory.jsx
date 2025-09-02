@@ -121,7 +121,7 @@ const MapCategory = ({ csvPath }) => {
     colorscale: [[0, color], [1, color]],
     hovertemplate:
       `<b>%{text}</b><br>` +
-      `Predominant Cancer: ${cancerType}<br>` +
+      `Highest incidence cancer: ${cancerType}<br>` +
       `Incidence: %{customdata} per 100,000<extra></extra>`,
 	 hoverlabel: {
       bordercolor: 'rgba(0, 0, 0, 0.7)',
