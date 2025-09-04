@@ -108,7 +108,7 @@ const MapMostStudied = ({ csvPath }) => {
       marker: { line: { color: "black", width: 0.5 } },
       locationmode: "ISO-3", // <- use ISO-3 instead of "country names"
       colorscale: [[0, color], [1, color]],
-      hovertemplate: `<b>%{text}</b><br>Most Studied Cancer: ${cancerType}<br>Articles: %{z}<extra></extra>`,
+      hovertemplate: `<b>%{text}</b><br>Most Studied Cancer: ${cancerType}<br>Articles: %{z:d}<extra></extra>`,
 	  hoverlabel: {
       bordercolor: 'rgba(0, 0, 0, 0.7)',
       bgcolor: 'rgba(255, 255, 255, 0.7)',
@@ -130,7 +130,7 @@ const MapMostStudied = ({ csvPath }) => {
       <Plot
         data={plotTraces}
         layout={{
-          title: { text: "Most studied cancer type per country", x: 0.5, xanchor: "center", font: { size: 22, color: "black" }, y: 0.96 },
+          title: { text: "Most studied cancer type per country", x: 0.5, xanchor: "center", font: { size: 18, color: "black" }, y: 0.96 },
           geo: { projection: { type: "natural earth" }, showframe: false, showcoastlines: true, coastlinecolor: "gray", oceancolor: "#f6f8fa", landcolor: "#f6f8fa", bgcolor: "#f6f8fa", domain: { x: [0,1], y: [0,1] } },
           margin: { t: 40, b: 100, l: 40, r: 40 },
           paper_bgcolor: "#f6f8fa",
