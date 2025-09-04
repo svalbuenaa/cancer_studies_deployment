@@ -23,6 +23,9 @@ const countryColors = {
 // All other countries will be grey
 const defaultColor = "grey";
 
+// Helper to split long country names into two lines for the plot text
+const formatCountryText = (country) => country.replace(/ /g, "<br>");
+
 const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedCancer }) => {
   const [data, setData] = useState([]);
   const [uniqueCancers, setUniqueCancers] = useState([]);
@@ -67,40 +70,31 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
 
   const handleCancerChange = (event) => setSelectedCancer(event.target.value);
 
-  // Memoize filtered and sorted data
-  const filteredData = useMemo(
-    () => data.filter(d => d.Cancer === selectedCancer),
-    [data, selectedCancer]
-  );
-
-  const sortedByArticles = useMemo(
-    () => [...filteredData].sort((a, b) => b.Articles - a.Articles),
-    [filteredData]
-  );
-
+  const filteredData = useMemo(() => data.filter(d => d.Cancer === selectedCancer), [data, selectedCancer]);
+  const sortedByArticles = useMemo(() => [...filteredData].sort((a, b) => b.Articles - a.Articles), [filteredData]);
   const top5 = useMemo(() => sortedByArticles.slice(0, 5), [sortedByArticles]);
   const others = useMemo(() => sortedByArticles.slice(5), [sortedByArticles]);
 
-  // Assign colors by country
   const getCountryColor = (country) => countryColors[country] || defaultColor;
 
   // Top 5 countries → colored
   const topTrace = {
     x: top5.map(d => d.ASR),
     y: top5.map(d => d.Articles),
-    text: top5.map(d => d.Country),
+    text: top5.map(d => formatCountryText(d.Country)), // split into 2 lines
+    customdata: top5.map(d => d.Country), // hover: single line
     mode: "markers+text",
     type: "scatter",
     textposition: "top center",
     textfont: { color: "black" },
     marker: {
       size: 14,
-      color: top5.map(d => getCountryColor(d.Country)), // colored
+      color: top5.map(d => getCountryColor(d.Country)),
       opacity: 0.9,
       line: { width: 1, color: "#333" }
     },
     hovertemplate:
-      `<b>Country:</b> %{text}<br>` +
+      `<b>Country:</b> %{customdata}<br>` +
       `<b>Cancer:</b> ${selectedCancer}<br>` +
       `<b>Incidence:</b> %{x}<br>` +
       `<b>Articles:</b> %{y}<extra></extra>`,
@@ -111,21 +105,22 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
   const othersTrace = {
     x: others.map(d => d.ASR),
     y: others.map(d => d.Articles),
-    text: others.map(d => d.Country),
+    text: others.map(d => ""), // no plot text
+    customdata: others.map(d => d.Country), // hover: single line
     mode: "markers",
     type: "scatter",
     marker: {
       size: 10,
-      color: defaultColor, // grey
+      color: defaultColor,
       opacity: 0.75,
       line: { width: 1, color: "#333" }
     },
     hovertemplate:
-      `<b>Country:</b> %{text}<br>` +
+      `<b>Country:</b> %{customdata}<br>` +
       `<b>Cancer:</b> ${selectedCancer}<br>` +
       `<b>Incidence:</b> %{x}<br>` +
       `<b>Articles:</b> %{y}<extra></extra>`,
-	hoverlabel: {
+    hoverlabel: {
       bordercolor: 'rgba(0, 0, 0, 0.7)',
       bgcolor: 'rgba(255, 255, 255, 0.7)',
       font: { color: 'black' }
@@ -151,15 +146,15 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
             text: `ASR vs Articles for <b>${selectedCancer}</b>`,
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "black" },
+            font: { size: 18, color: "black" },
           },
           xaxis: {
             title: { text: "Incidence (ASR)", font: { color: "black", size: 16 } },
             showgrid: true,
             zeroline: false,
             linecolor: "black",
-			linewidth: 1.5,
-            gridcolor: "rgba(0,0,0,0.2)",
+            linewidth: 1.5,
+            gridcolor: "rgba(0,0,0,0.075)",
             tickfont: { color: "black" },
           },
           yaxis: {
@@ -167,8 +162,8 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
             showgrid: true,
             zeroline: false,
             linecolor: "black",
-			linewidth: 1.5,
-            gridcolor: "rgba(0,0,0,0.2)",
+            linewidth: 1.5,
+            gridcolor: "rgba(0,0,0,0.075)",
             tickfont: { color: "black" },
             tickformat: "~s"
           },
