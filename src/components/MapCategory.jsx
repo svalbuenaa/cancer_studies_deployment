@@ -8,9 +8,9 @@ const colorMapping = {
   'Prostate cancer': '#4daf4a',    
   'Lung cancer': '#984ea3',        
   'Colorectal cancer': '#66c2a5',  
-  'Liver cancer': '#f781bf',       
+  'Liver cancer': '#fdbf6f',       
   'Stomach cancer': '#8da0cb',     
-  'Cervical cancer': '#e78ac3',    
+  'Cervical cancer': '#f781bf',    
   'Leukemia': '#a65628',           
   'Esophageal cancer': '#ffbaba',
   'Skin cancer': '#ff7f00',
@@ -19,9 +19,9 @@ const colorMapping = {
   'Mesothelioma': '#33a02c', 
   'Kidney cancer': '#6a3d9a', 
   'Multiple myeloma': '#e31a1c', 
-  'Laryngeal cancer': '#fdbf6f', 
+  'Laryngeal cancer': '#e78ac3', 
   'Ovarian cancer': '#cab2d6',
-  'Colon cancer': '#ffff99', 
+  'Colon cancer': '#ffff99',
   'Penile cancer': '#a6cee3',  
 };
 
@@ -149,7 +149,7 @@ const MapCategory = ({ csvPath }) => {
             text: "Most common cancer -by incidence- per country",
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "black" },
+            font: { size: 18, color: "black" },
             y: 0.96,
           },
           geo: {
