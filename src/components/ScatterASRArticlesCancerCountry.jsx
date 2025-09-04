@@ -76,60 +76,64 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
 
   const filteredData = data.filter((d) => d.Country === selectedCountry);
 
+  // Find max value across x and y for scaling
+  const maxValue = Math.max(
+    ...filteredData.map((d) => parseFloat(d.ASR)),
+    ...filteredData.map((d) => parseFloat(d.Articles))
+  );
+
   // Sort cancers by number of studies
   const sortedByArticles = [...filteredData].sort(
-    (a, b) => parseInt(b.Articles) - parseInt(a.Articles)
+    (a, b) => parseFloat(b.Articles) - parseFloat(a.Articles)
   );
-  // Changed from 5 to 3
   const top3 = sortedByArticles.slice(0, 3);
   const others = sortedByArticles.slice(3);
 
-  // Format cancer names with line breaks for multiple words
+  // Format cancer names with line breaks for marker text
   const formatCancerName = (name) => name.replace(/ /g, "<br>");
 
   // Top 3 cancers → colored, with labels
   const topTrace = {
     x: top3.map((d) => parseFloat(d.ASR)),
-    y: top3.map((d) => parseInt(d.Articles)),
-    text: top3.map((d) => formatCancerName(d.Cancer)),
+    y: top3.map((d) => parseFloat(d.Articles)),
+    text: top3.map((d) => formatCancerName(d.Cancer)), // for on-plot text
+    customdata: top3.map((d) => d.Cancer), // clean name for hover
     mode: "markers+text",
     type: "scatter",
     textposition: "top center",
     textfont: { color: "black" },
     marker: {
       size: 14,
-      // Use colorMapping for consistent colors
-      color: top3.map(d => colorMapping[d.Cancer] || '#d3d3d3'), // Default to light grey
+      color: top3.map((d) => colorMapping[d.Cancer] || '#d3d3d3'),
       opacity: 0.9,
     },
     hovertemplate:
       "<b>Country:</b> " + selectedCountry + "<br>" +
-      "<b>Cancer:</b> %{text}<br>" +
-      "<b>Incidence:</b> %{x}<br>" +
-      "<b>Articles:</b> %{y}<extra></extra>",
-    // Updated name to reflect the change
+      "<b>Cancer:</b> %{customdata}<br>" + // use clean name
+      "<b>Incidence:</b> %{x:.2f}% of all cancers<br>" +
+      "<b>Articles:</b> %{y:.2f}% of all studies<extra></extra>",
     name: "Top 3 cancers",
   };
 
   // Other cancers → grey, no labels (only hover)
   const othersTrace = {
     x: others.map((d) => parseFloat(d.ASR)),
-    y: others.map((d) => parseInt(d.Articles)),
-    text: others.map((d) => d.Cancer),
+    y: others.map((d) => parseFloat(d.Articles)),
+    text: others.map((d) => ""), // no labels on plot
+    customdata: others.map((d) => d.Cancer), // clean name for hover
     mode: "markers",
     type: "scatter",
     marker: {
       size: 10,
       color: "grey",
-      // Opacity changed back to 0.5 to make dots dimmer
       opacity: 0.5,
     },
     hovertemplate:
       "<b>Country:</b> " + selectedCountry + "<br>" +
-      "<b>Cancer:</b> %{text}<br>" +
-      "<b>ASR:</b> %{x}<br>" +
-      "<b>Articles:</b> %{y}<extra></extra>",
-	hoverlabel: {
+      "<b>Cancer:</b> %{customdata}<br>" +
+      "<b>Incidence:</b> %{x:.2f}% of all cancers<br>" +
+      "<b>Articles:</b> %{y:.2f}% of all studies<extra></extra>",
+    hoverlabel: {
       bordercolor: 'rgba(0, 0, 0, 0.7)',
       bgcolor: 'rgba(255, 255, 255, 0.7)',
       font: { color: 'black' }
@@ -163,26 +167,29 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
             text: `Cancer research vs incidence in <b>${selectedCountry}</b>`,
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "black" },
+            font: { size: 18, color: "black" },
           },
           xaxis: {
-            title: { text: "Incidence", font: { color: "black", size: 16 } },
+            title: { text: "Incidence (%)", font: { color: "black", size: 16 } },
             showgrid: true,
             zeroline: false,
             linecolor: "black",
-			linewidth: 1.5,
-            gridcolor: "rgba(255,255,255,0.2)",
-            tickfont: { color: "black" },
-          },
-          yaxis: {
-            title: { text: "Number of Articles", font: { color: "black", size: 16 } },
-            showgrid: true,
-            zeroline: false,
-            linecolor: "black",
-			linewidth: 1.5,
+            linewidth: 1.5,
             gridcolor: "rgba(0,0,0,0.075)",
             tickfont: { color: "black" },
-            tickformat: "~s"
+            ticksuffix: "%",
+            range: [0, maxValue * 1.08],
+          },
+          yaxis: {
+            title: { text: "Articles (%)", font: { color: "black", size: 16 } },
+            showgrid: true,
+            zeroline: false,
+            linecolor: "black",
+            linewidth: 1.5,
+            gridcolor: "rgba(0,0,0,0.075)",
+            tickfont: { color: "black" },
+            ticksuffix: "%",
+            range: [0, maxValue * 1.08],
           },
           margin: { t: 60, b: 60, l: 80, r: 40 },
           paper_bgcolor: "#f6f8fa",
@@ -194,12 +201,12 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
           shapes: [
             {
               type: 'line',
-              xref: 'paper',
-              yref: 'paper',
+              xref: 'x',
+              yref: 'y',
               x0: 0,
               y0: 0,
-              x1: 1,
-              y1: 1,
+              x1: maxValue * 1.08,
+              y1: maxValue * 1.08,
               line: {
                 color: '#808080',
                 width: 2,
