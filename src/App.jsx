@@ -9,6 +9,7 @@ import SelectCancerShowCountriesLines from "./components/SelectCancerShowCountri
 import SelectCountryShowCancers from "./components/SelectCountryShowCancers";
 import ScatterASRArticlesCancerCountry from "./components/ScatterASRArticlesCancerCountry";
 import ScatterASRArticlesCountryCancer from "./components/ScatterASRArticlesCountryCancer";
+import DataProcessing from "/Schema_data_processing.svg";
 import "./App.css";
 
 function App() {
@@ -53,14 +54,15 @@ function App() {
           </p>
 		  <p>
 			This project explores published scientific articles with the aim of understanding how cancer research has evolved over time, which cancer types receive more scientific attention, and how different countries contribute to cancer research. The entry point for the project is a
-			dataset containing <b>over 4 million scientific articles</b> obtained from <a href="https://pubmed.ncbi.nlm.nih.gov/about" target="_blank" rel="noopener noreferrer">PubMed</a>, the scientific research database of the United States National Institutes of Health. The current version of this webpage contains scientific
+			dataset containing <b>over 4 million scientific articles</b>, built from <a href="https://pubmed.ncbi.nlm.nih.gov/about" target="_blank" rel="noopener noreferrer">PubMed</a>, the scientific research database of the United States National Institutes of Health. The current version of this webpage contains scientific
 			articles pulished between 1984 and July 2024 (with some exceptions) and will be updated soon to include every article on cancer available in PubMed. 
 		  </p>
 		  
 		  <p>
 			The curation of the dataset involved extracting information from the title, abstract and keywords of each scientific publication, the cancer type studied in the article (if available) and the country where the institution of the last author of the article resides. 
-			In parallel, a second dataset containing data about incidence for 33 cancer types was obtained from the <a href="https://gco.iarc.fr/en" target="_blank" rel="noopener noreferrer">Global Cancer Observatory</a> (Globocan). Data displayed in this page correspond to the 2022 
+			In parallel, a second dataset containing data about incidence for 37 cancer types in 185 countries was obtained from the <a href="https://gco.iarc.fr/en" target="_blank" rel="noopener noreferrer">Global Cancer Observatory</a> (Globocan). Data displayed in this page correspond to the 2022 
 			version of the <a href="https://gco.iarc.who.int/media/globocan/factsheets/populations/900-world-fact-sheet.pdf" target="_blank" rel="noopener noreferrer">"Cancer Today"</a> dataset of Globocan. Data about cancer incidence are correlated with numbers of cancer studies in each country.
+			More information about the data preparation process can be found in the <a href="#data-preparation">Data retrieval and preparation</a> section of this page.
 		  </p>
         </div>
       </div>
@@ -72,9 +74,9 @@ function App() {
         <div className="text-content">
           <h2>Global Cancer Incidence</h2>
           <p>
-            This interactive map visualizes either the cumulative age-standardized cancer incidence rate (ASR) 
-            per 100,000 people across different countries, or the incidence of a selected cancer type. 
-            Use the selector above the map to switch views.
+            Cancer incidence varies with age, cancer type and is different in different countries. <b>All data shown in this page correspond to </b><a href="https://www.statcan.gc.ca/en/dai/btd/asr" target="_blank" rel="noopener noreferrer"><b>Age-Standardized incidence Rates (ASR)</b></a><b>, normalized by 100K people </b>. ASR
+			values compensate for differences in age structures between countries and, therefore, allow comparisons to be made in a more precise way. In the map below you can visualize either the cummulative incidence values for all cancers combined or selected country. Use the 
+		    the selector above the map to switch views. In the <i>Selected cancer incidende</i> view, you can use the dropdown at the bottom of the map to choose the cancer type of your interest.
           </p>
         </div>
         <CancerMapSwitcher
@@ -199,6 +201,23 @@ function App() {
           setSelectedCancer={setSelectedCancer}
         />
       </div>
+	  
+	  {/* Data retrieval and preparation */}
+	  <div id="data-preparation" className="content-section">
+        <div className="text-content">
+          <h2>Data retrieval and preparation</h2>
+          <p>
+            Select a cancer type to see how incidence rates (ASR) relate to the number of 
+            published research articles across countries. Top 5 countries are labeled.
+          </p>
+		  <img
+			src={DataProcessing} 
+			alt="Data retrieval and preparation schema" 
+		  />
+        </div>
+        
+      </div>
+	  
     </div>
   );
 }
