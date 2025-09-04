@@ -309,7 +309,7 @@ const MapNumeric = ({ csvPath }) => {
         data={[plotData]}
         layout={{
           title: {
-            text: "Cancer incidence per country",
+            text: "Cancer incidence (<b>all cancer types combined</b>) per country",
             x: 0.5,
             xanchor: "center",
             font: { size: 22, color: "black" },
