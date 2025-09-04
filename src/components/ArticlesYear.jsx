@@ -40,7 +40,7 @@ const ArticlesYear = ({ csvPath }) => {
     color: 'black',
     size: 12,
   },
-  textangle: -90, // Rotate the text vertically
+  textangle: -90, 
 }));
 
   const plotData = {
@@ -50,7 +50,7 @@ const ArticlesYear = ({ csvPath }) => {
     marker: {
       color: "#4682B4",
     },
-    hovertemplate: '<b>Year:</b> %{x}<br><b>Studies:</b> %{y}<extra></extra>',
+    hovertemplate: '<b>Year:</b> %{x}<br><b>Studies:</b> %{y:d}<extra></extra>',
     name: '',
   };
 
@@ -71,7 +71,7 @@ const ArticlesYear = ({ csvPath }) => {
             text: "Number of studies per year",
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "black" },
+            font: { size: 18, color: "black" },
             y: 0.95,
           },
           xaxis: {
