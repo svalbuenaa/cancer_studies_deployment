@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1009.95 651.56">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3 {
+        stroke: #231f20;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-1, .cls-3 {
+        fill: none;
+      }
+
+      .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-9, .cls-10 {
+        font-family: Arial-Black, Arial;
+        font-weight: 800;
+      }
+
+      .cls-4, .cls-5, .cls-6, .cls-7, .cls-8, .cls-10 {
+        fill: #ed1c24;
+      }
+
+      .cls-4, .cls-11 {
+        letter-spacing: .06em;
+      }
+
+      .cls-5, .cls-12, .cls-13, .cls-14 {
+        font-size: 14px;
+      }
+
+      .cls-15 {
+        fill: #5fcae2;
+      }
+
+      .cls-15, .cls-16, .cls-17 {
+        opacity: .4;
+      }
+
+      .cls-18, .cls-8 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-19 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-20 {
+        letter-spacing: .05em;
+      }
+
+      .cls-21, .cls-10 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-7, .cls-9 {
+        font-size: 18px;
+      }
+
+      .cls-22, .cls-2, .cls-23, .cls-13, .cls-9, .cls-14, .cls-24 {
+        fill: #231f20;
+      }
+
+      .cls-22, .cls-13 {
+        font-family: Arial-ItalicMT, Arial;
+        font-style: italic;
+      }
+
+      .cls-25 {
+        letter-spacing: 0em;
+      }
+
+      .cls-16 {
+        fill: #586bb2;
+      }
+
+      .cls-23, .cls-14 {
+        font-family: ArialMT, Arial;
+      }
+
+      .cls-26 {
+        letter-spacing: .02em;
+      }
+
+      .cls-3 {
+        stroke-width: 2px;
+      }
+
+      .cls-27 {
+        letter-spacing: -.11em;
+      }
+
+      .cls-17 {
+        fill: #76c58f;
+      }
+
+      .cls-28 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-29 {
+        letter-spacing: -.04em;
+      }
+
+      .cls-30 {
+        letter-spacing: -.06em;
+      }
+    </style>
+  </defs>
+  <rect class="cls-17" width="495.61" height="651.56"/>
+  <rect class="cls-16" x="514.34" width="495.61" height="312.07"/>
+  <rect class="cls-15" x="514.34" y="328.23" width="495.61" height="323.34"/>
+  <text class="cls-9" transform="translate(162.34 33.1)"><tspan x="0" y="0">Scientific a</tspan><tspan class="cls-20" x="112.01" y="0">r</tspan><tspan x="120.89" y="0">ti</tspan><tspan class="cls-18" x="134.88" y="0">c</tspan><tspan x="146.42" y="0">les</tspan></text>
+  <text class="cls-9" transform="translate(684.38 33.1)"><tspan x="0" y="0">Epidemiolo</tspan><tspan class="cls-26" x="109.01" y="0">g</tspan><tspan x="121.32" y="0">y d</tspan><tspan class="cls-19" x="150.33" y="0">a</tspan><tspan x="162.03" y="0">ta</tspan></text>
+  <text class="cls-7" transform="translate(689.74 593.91)"><tspan x="0" y="0">Final d</tspan><tspan class="cls-19" x="66.01" y="0">a</tspan><tspan x="77.71" y="0">taset</tspan><tspan x="-42.68" y="21.6">containing 34 cancer </tspan><tspan x="-54.17" y="43.2">types and 185 countries</tspan></text>
+  <text class="cls-14" transform="translate(183.74 75.79)"><tspan x="0" y="0">PubMed queried </tspan><tspan x="-12.83" y="16.8">through Entrez Direct</tspan></text>
+  <text class="cls-14" transform="translate(690.61 75.79)"><tspan x="0" y="0">Globocan Cancer</tspan><tspan class="cls-28" x="108.95" y="0"> </tspan><tspan class="cls-27" x="112.59" y="0">T</tspan><tspan x="119.59" y="0">oday</tspan><tspan x="26.33" y="16.8">datasets (2022)</tspan></text>
+  <text class="cls-12" transform="translate(173.42 155.97)"><tspan class="cls-10" x="0" y="0">R</tspan><tspan class="cls-6" x="10.54" y="0">etri</tspan><tspan class="cls-8" x="36.97" y="0">ev</tspan><tspan class="cls-6" x="54.13" y="0">ed 4.54M</tspan><tspan class="cls-23" x="123.37" y="0"> </tspan><tspan class="cls-6"><tspan x="-34.56" y="16.8">entries o</tspan><tspan class="cls-11" x="33.11" y="16.8">f</tspan><tspan x="39.37" y="16.8" xml:space="preserve"> Cancer a</tspan><tspan class="cls-20" x="112.5" y="16.8">r</tspan><tspan x="119.41" y="16.8">ti</tspan><tspan class="cls-18" x="130.29" y="16.8">c</tspan><tspan x="139.26" y="16.8">les</tspan></tspan></text>
+  <text class="cls-5" transform="translate(642.55 155.97)"><tspan class="cls-21" x="0" y="0">R</tspan><tspan x="10.54" y="0">etri</tspan><tspan class="cls-18" x="36.97" y="0">ev</tspan><tspan x="54.13" y="0">ed d</tspan><tspan class="cls-19" x="86.82" y="0">a</tspan><tspan x="95.92" y="0">ta </tspan><tspan class="cls-25" x="116.14" y="0">a</tspan><tspan x="125.61" y="0">bout incidence</tspan><tspan class="cls-19" x="-21.08" y="16.8">f</tspan><tspan x="-15.87" y="16.8">or 37 cancer types in 185 countries </tspan><tspan x="21.41" y="33.6">entries o</tspan><tspan class="cls-11" x="89.08" y="33.6">f</tspan><tspan x="95.34" y="33.6" xml:space="preserve"> Cancer a</tspan><tspan class="cls-20" x="168.47" y="33.6">r</tspan><tspan x="175.38" y="33.6">ti</tspan><tspan class="cls-18" x="186.26" y="33.6">c</tspan><tspan x="195.23" y="33.6">les</tspan></text>
+  <text class="cls-13" transform="translate(169.35 234.91)"><tspan x="0" y="0">Parsing, extraction of </tspan><tspan x="15.56" y="16.8">relevant features</tspan></text>
+  <text class="cls-13" transform="translate(701.45 256.73)"><tspan x="0" y="0">Merging, preparing </tspan><tspan x="37.74" y="16.8">dataset</tspan></text>
+  <text class="cls-13" transform="translate(637.7 410.38)"><tspan x="0" y="0">Homogeneize country names</tspan></text>
+  <text class="cls-13" transform="translate(637.7 431.58)"><tspan x="0" y="0">Merge data from overseas territories</tspan></text>
+  <text class="cls-13" transform="translate(637.7 452.78)"><tspan x="0" y="0">Homogeneize cancer names</tspan></text>
+  <text class="cls-13" transform="translate(637.7 474.01)"><tspan x="0" y="0">Merge data from cancer subtypes</tspan></text>
+  <text class="cls-13" transform="translate(637.7 495.22)"><tspan x="0" y="0">Filtering countries with little/no data available</tspan></text>
+  <text class="cls-13" transform="translate(637.7 516.42)"><tspan x="0" y="0">Calculate aggregated data for plotting</tspan></text>
+  <text class="cls-14" transform="translate(580.91 377.52)"><tspan x="0" y="0">Data homogeneization between datasets</tspan></text>
+  <text class="cls-12" transform="translate(14.1 313.44)"><tspan class="cls-6"><tspan x="0" y="0">Public</tspan><tspan class="cls-19" x="47.45" y="0">a</tspan><tspan x="56.55" y="0">tion </tspan><tspan class="cls-19" x="90.77" y="0">y</tspan><tspan x="99.08" y="0">ear</tspan></tspan><tspan class="cls-22"><tspan x="7.91" y="16.8">(directly available</tspan></tspan><tspan class="cls-22"><tspan x="25.41" y="33.6">in retrieved </tspan></tspan><tspan class="cls-22"><tspan x="25.03" y="50.4">information)</tspan></tspan></text>
+  <text class="cls-13" transform="translate(328.23 396.72)"><tspan x="0" y="0">Regular expressions</tspan></text>
+  <text class="cls-14" transform="translate(184.02 313.44)"><tspan x="0" y="0">A</tspan><tspan class="cls-28" x="9.34" y="0">f</tspan><tspan x="12.97" y="0">filiation of the </tspan><tspan x="16.99" y="16.8">last author</tspan></text>
+  <text class="cls-14" transform="translate(346 313.44)"><tspan class="cls-29" x="0" y="0">T</tspan><tspan x="8.03" y="0">itle,</tspan><tspan class="cls-30" x="29.82" y="0"> </tspan><tspan x="32.94" y="0">Abstract, </tspan><tspan x="-39.56" y="16.8">MeSH Headings, Keywords</tspan></text>
+  <text class="cls-13" transform="translate(156.27 395.98)"><tspan x="0" y="0">Named entity recognition</tspan><tspan x="-8.18" y="16.8">on the affiliation information</tspan></text>
+  <text class="cls-12" transform="translate(177.67 476.66)"><tspan class="cls-23"><tspan x="0" y="0">Iterative approach</tspan></tspan><tspan class="cls-23" x="-5.05" y="16.8">to extract </tspan><tspan class="cls-6" x="56.42" y="16.8">Count</tspan><tspan class="cls-4" x="101.54" y="16.8">r</tspan><tspan class="cls-6" x="108.56" y="16.8">y</tspan></text>
+  <text class="cls-13" transform="translate(274.47 530.17)"><tspan x="0" y="0">Regular expressions</tspan></text>
+  <g>
+    <line class="cls-1" x1="233.7" y1="103.1" x2="233.7" y2="131.49"/>
+    <polygon class="cls-24" points="233.7 138.55 229.64 128.6 233.7 130.96 237.77 128.6 233.7 138.55"/>
+  </g>
+  <g>
+    <line class="cls-1" x1="762.15" y1="103.1" x2="762.15" y2="131.49"/>
+    <polygon class="cls-24" points="762.15 138.55 758.08 128.6 762.15 130.96 766.21 128.6 762.15 138.55"/>
+  </g>
+  <g>
+    <line class="cls-1" x1="233.7" y1="178.4" x2="233.7" y2="206.8"/>
+    <polygon class="cls-24" points="233.7 213.86 229.64 203.91 233.7 206.27 237.77 203.91 233.7 213.86"/>
+  </g>
+  <g>
+    <line class="cls-1" x1="762.15" y1="198.14" x2="762.15" y2="226.54"/>
+    <polygon class="cls-24" points="762.15 233.6 758.08 223.65 762.15 226.01 766.21 223.65 762.15 233.6"/>
+  </g>
+  <g>
+    <line class="cls-3" x1="762.15" y1="286.16" x2="762.15" y2="342.95"/>
+    <polygon class="cls-24" points="762.15 357.07 754.02 337.17 762.15 341.89 770.28 337.17 762.15 357.07"/>
+  </g>
+  <g>
+    <line class="cls-1" x1="762.15" y1="528.57" x2="762.15" y2="556.97"/>
+    <polygon class="cls-24" points="762.15 564.03 758.08 554.08 762.15 556.44 766.21 554.08 762.15 564.03"/>
+  </g>
+  <g>
+    <line class="cls-1" x1="233.7" y1="258.4" x2="233.7" y2="288.68"/>
+    <polygon class="cls-24" points="233.7 295.74 229.64 285.79 233.7 288.15 237.77 285.79 233.7 295.74"/>
+  </g>
+  <g>
+    <line class="cls-1" x1="392.04" y1="340.36" x2="392.04" y2="368.76"/>
+    <polygon class="cls-24" points="392.04 375.82 387.97 365.87 392.04 368.23 396.1 365.87 392.04 375.82"/>
+  </g>
+  <text class="cls-12" transform="translate(336.03 475.64)"><tspan class="cls-6"><tspan x="0" y="0">Cancer type(s)</tspan></tspan><tspan class="cls-23"><tspan x="-8.97" y="16.8">(156 types/subtypes)</tspan></tspan></text>
+  <g>
+    <line class="cls-1" x1="392.04" y1="419.29" x2="392.04" y2="447.68"/>
+    <polygon class="cls-24" points="392.04 454.74 387.97 444.79 392.04 447.15 396.1 444.79 392.04 454.74"/>
+  </g>
+  <g>
+    <line class="cls-1" x1="233.7" y1="340.36" x2="233.7" y2="368.76"/>
+    <polygon class="cls-24" points="233.7 375.82 229.64 365.87 233.7 368.23 237.77 365.87 233.7 375.82"/>
+  </g>
+  <g>
+    <line class="cls-24" x1="233.26" y1="526.74" x2="268.72" y2="526.74"/>
+    <g>
+      <line class="cls-1" x1="233.26" y1="526.74" x2="261.66" y2="526.74"/>
+      <polygon class="cls-24" points="268.72 526.74 258.77 530.81 261.13 526.74 258.77 522.68 268.72 526.74"/>
+    </g>
+  </g>
+  <g>
+    <line class="cls-24" x1="469.08" y1="446.13" x2="539.99" y2="446.13"/>
+    <g>
+      <line class="cls-3" x1="469.08" y1="446.13" x2="525.87" y2="446.13"/>
+      <polygon class="cls-24" points="539.99 446.13 520.09 454.27 524.81 446.13 520.09 438.01 539.99 446.13"/>
+    </g>
+  </g>
+  <text class="cls-13" transform="translate(274.47 552.53)"><tspan x="0" y="0">Matching with scientific </tspan><tspan x="0" y="16.8">institutions database</tspan></text>
+  <g>
+    <line class="cls-24" x1="233.26" y1="549.1" x2="268.72" y2="549.1"/>
+    <g>
+      <line class="cls-1" x1="233.26" y1="549.1" x2="261.66" y2="549.1"/>
+      <polygon class="cls-24" points="268.72 549.1 258.77 553.17 261.13 549.1 258.77 545.04 268.72 549.1"/>
+    </g>
+  </g>
+  <text class="cls-13" transform="translate(274.47 588.1)"><tspan x="0" y="0">Matching with geopolitical </tspan><tspan x="0" y="16.8">entities database</tspan></text>
+  <g>
+    <line class="cls-24" x1="233.26" y1="584.67" x2="268.72" y2="584.67"/>
+    <g>
+      <line class="cls-1" x1="233.26" y1="584.67" x2="261.66" y2="584.67"/>
+      <polygon class="cls-24" points="268.72 584.67 258.77 588.74 261.13 584.67 258.77 580.61 268.72 584.67"/>
+    </g>
+  </g>
+  <text class="cls-13" transform="translate(274.47 619.36)"><tspan x="0" y="0">Geolocation </tspan><tspan x="0" y="16.8">services</tspan><tspan class="cls-29" x="51.34" y="16.8"> </tspan><tspan x="54.71" y="16.8">APIs</tspan></text>
+  <g>
+    <line class="cls-24" x1="233.26" y1="615.94" x2="268.72" y2="615.94"/>
+    <g>
+      <line class="cls-1" x1="233.26" y1="615.94" x2="261.66" y2="615.94"/>
+      <polygon class="cls-24" points="268.72 615.94 258.77 620 261.13 615.94 258.77 611.87 268.72 615.94"/>
+    </g>
+  </g>
+  <g>
+    <line class="cls-1" x1="233.7" y1="422.1" x2="233.7" y2="450.49"/>
+    <polygon class="cls-24" points="233.7 457.55 229.64 447.6 233.7 449.96 237.77 447.6 233.7 457.55"/>
+  </g>
+  <line class="cls-2" x1="233.7" y1="500.77" x2="233.7" y2="615.94"/>
+  <g>
+    <line class="cls-24" x1="598.53" y1="406.81" x2="633.99" y2="406.81"/>
+    <g>
+      <line class="cls-1" x1="598.53" y1="406.81" x2="626.92" y2="406.81"/>
+      <polygon class="cls-24" points="633.99 406.81 624.04 410.88 626.4 406.81 624.04 402.75 633.99 406.81"/>
+    </g>
+  </g>
+  <g>
+    <line class="cls-24" x1="598.53" y1="427.73" x2="633.99" y2="427.73"/>
+    <g>
+      <line class="cls-1" x1="598.53" y1="427.73" x2="626.92" y2="427.73"/>
+      <polygon class="cls-24" points="633.99 427.73 624.04 431.8 626.4 427.73 624.04 423.67 633.99 427.73"/>
+    </g>
+  </g>
+  <g>
+    <line class="cls-24" x1="598.53" y1="448.65" x2="633.99" y2="448.65"/>
+    <g>
+      <line class="cls-1" x1="598.53" y1="448.65" x2="626.92" y2="448.65"/>
+      <polygon class="cls-24" points="633.99 448.65 624.04 452.71 626.4 448.65 624.04 444.58 633.99 448.65"/>
+    </g>
+  </g>
+  <g>
+    <line class="cls-24" x1="598.53" y1="469.41" x2="633.99" y2="469.41"/>
+    <g>
+      <line class="cls-1" x1="598.53" y1="469.41" x2="626.92" y2="469.41"/>
+      <polygon class="cls-24" points="633.99 469.41 624.04 473.48 626.4 469.41 624.04 465.35 633.99 469.41"/>
+    </g>
+  </g>
+  <g>
+    <line class="cls-24" x1="598.53" y1="491.34" x2="633.99" y2="491.34"/>
+    <g>
+      <line class="cls-1" x1="598.53" y1="491.34" x2="626.92" y2="491.34"/>
+      <polygon class="cls-24" points="633.99 491.34 624.04 495.4 626.4 491.34 624.04 487.27 633.99 491.34"/>
+    </g>
+  </g>
+  <g>
+    <line class="cls-24" x1="598.53" y1="512.17" x2="633.99" y2="512.17"/>
+    <g>
+      <line class="cls-1" x1="598.53" y1="512.17" x2="626.92" y2="512.17"/>
+      <polygon class="cls-24" points="633.99 512.17 624.04 516.24 626.4 512.17 624.04 508.11 633.99 512.17"/>
+    </g>
+  </g>
+  <line class="cls-2" x1="598.97" y1="382.24" x2="598.97" y2="512.68"/>
+  <g>
+    <line class="cls-24" x1="76.08" y1="237.2" x2="76.08" y2="295.74"/>
+    <g>
+      <line class="cls-1" x1="76.08" y1="237.2" x2="76.08" y2="288.68"/>
+      <polygon class="cls-24" points="76.08 295.74 72.02 285.79 76.08 288.15 80.15 285.79 76.08 295.74"/>
+    </g>
+  </g>
+  <line class="cls-2" x1="164.87" y1="237.2" x2="76.08" y2="237.2"/>
+  <line class="cls-2" x1="392.04" y1="237.2" x2="304.79" y2="237.2"/>
+  <g>
+    <line class="cls-24" x1="392.04" y1="237.2" x2="392.04" y2="295.74"/>
+    <g>
+      <line class="cls-1" x1="392.04" y1="237.2" x2="392.04" y2="288.68"/>
+      <polygon class="cls-24" points="392.04 295.74 387.97 285.79 392.04 288.15 396.1 285.79 392.04 295.74"/>
+    </g>
+  </g>
+</svg>
