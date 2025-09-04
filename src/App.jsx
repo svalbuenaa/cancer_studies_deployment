@@ -55,7 +55,7 @@ function App() {
 		  <p>
 			This project explores published scientific articles with the aim of understanding how cancer research has evolved over time, which cancer types receive more scientific attention, and how different countries contribute to cancer research. The entry point for the project is a
 			dataset containing <b>over 4 million scientific articles</b>, built from <a href="https://pubmed.ncbi.nlm.nih.gov/about" target="_blank" rel="noopener noreferrer">PubMed</a>, the scientific research database of the United States National Institutes of Health. The current version of this webpage contains scientific
-			articles pulished between 1984 and July 2024 (with some exceptions) and will be updated soon to include every article on cancer available in PubMed. 
+			articles published between 1984 and July 2024 (with some exceptions) and will be updated soon to include every article on cancer available in PubMed. 
 		  </p>
 		  
 		  <p>
@@ -213,6 +213,7 @@ function App() {
 		  <img
 			src={DataProcessing} 
 			alt="Data retrieval and preparation schema" 
+			style={{ maxWidth: "100%", height: "auto" }}
 		  />
         </div>
         
