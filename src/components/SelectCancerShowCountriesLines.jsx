@@ -104,10 +104,10 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
         data={plotData}
         layout={{
           title: {
-            text: `Countries with the highest number of <b>${selectedCancer}</b> studies`,
+            text: `Countries with the highest number of <b>${selectedCancer}</b> studies, tendencies`,
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "black" },
+            font: { size: 18, color: "black" },
             y: 0.95,
           },
           xaxis: {

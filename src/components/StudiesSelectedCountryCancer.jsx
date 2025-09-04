@@ -181,7 +181,7 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
             text: plotTitle,
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "black" },
+            font: { size: 18, color: "black" },
             y: 0.95,
           },
           xaxis: {

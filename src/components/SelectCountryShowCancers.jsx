@@ -159,7 +159,7 @@ const SelectCountryShowCancers = ({ csvPath }) => {
       <Plot
         data={plotData}
         layout={{
-          title: { text: plotTitle, x: 0.5, xanchor: "center", font: { size: 22, color: "black" }, y: 0.95 },
+          title: { text: plotTitle, x: 0.5, xanchor: "center", font: { size: 18, color: "black" }, y: 0.95 },
           xaxis: { title: { text: "Year", font: { color: "black", size: 16 } }, tickmode: "array", tickvals: years, ticktext: years, tickangle: -90, showgrid: false, zeroline: false, linecolor: "black", gridcolor: "rgba(255, 255, 255, 0.2)", tickfont: { color: "black" } },
           yaxis: { 
             title: { text: "Number of articles", font: { color: "black", size: 16 }, standoff: 20 },
