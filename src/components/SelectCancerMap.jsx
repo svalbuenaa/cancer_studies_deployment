@@ -166,7 +166,7 @@ const SelectCancerMap = ({ csvPath }) => {
             text: `Incidence of <b>${selectedCancer}</b> per country`,
             x: 0.5,
             xanchor: "center",
-            font: { size: 22, color: "black" },
+            font: { size: 18, color: "black" },
             y: 0.93,
           },
           geo: {
