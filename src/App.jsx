@@ -73,7 +73,7 @@ function App() {
       {/* Global + selected cancer incidence combined */}
       <div className="content-section">
         <div className="text-content">
-          <h2>Global Cancer Incidence</h2>
+          <h2>Global cancer incidence</h2>
           <p>
             Cancer incidence varies with age, cancer type and is different in different countries. <b>All data shown in this page correspond to </b><a href="https://www.statcan.gc.ca/en/dai/btd/asr" target="_blank" rel="noopener noreferrer"><b>Age-Standardized incidence Rates (ASR)</b></a><b>, normalized by 100K people </b>. ASR
 			values compensate for differences in age structures between countries and, therefore, allow comparisons to be made in a more precise way. In the map below you can visualize either the cummulative incidence values for all cancers combined or selected country. Use the 
@@ -138,7 +138,7 @@ function App() {
 			<b>important imbalances exist in research output for different cancer types</b>. According to the <a href="https://www.thelancet.com/journals/lanonc/article/PIIS1470-2045(23)00182-1/fulltext#fig1" target="_blank" rel="noopener noreferrer">Lancet study mentioned earlier</a>, only 6 major cancer types
 			(breast, blood-related, brain, lung, prostate and colorectal) receive the vast majority of funding, a fact that is reflected in the number
 			of publications studying these cancer types. In the bar chart below, <b>select a country</b> to see the <b>top 5 cancers studied over the years</b> (five colored stacked bars) and the total number of 
-            studies for <b>all cancers combined in that country</b> (dark blue bar, with total number of studies on top).
+            studies for <span style={{ color: '#4682B4' }}><b>all cancers combined in that country</b></span>{' '} (total number of studies on top).
           </p>
         </div>
         <SelectCountryShowCancers csvPath={selectedCountryCancerCsvPath} />
@@ -197,10 +197,20 @@ function App() {
       <div className="content-section">
         <div className="text-content">
           <h2>Under- or over-studied?</h2>
-          <p>
-            Select a country to see how cancer incidence rates (ASR) relate to the number of 
-            published research articles for each cancer type.
-          </p>
+		  <p>
+			The most frequently studied cancer in each country usually corresponds to the cancer
+			with the highest incidence. However, some cancer types attract disproportionately more
+			or less research attention relative to how often they occur.
+		  </p>
+		  <p>
+			In the scatter plot below, <b>select a country</b> to compare the
+			<b> proportion of studies versus incidence</b> for each cancer
+			type in that country. <b>Dots below the dashed line</b> represent cancers that receive <i>less</i> scientific attention than expected given their relative 
+			incidence. For example, breast cancer (blue dot) in Switzerland accounts for over 19% of all new cancer cases in the country, but only 15% of studies are
+			dedicated to studying it. <b>Conversely, dots above the dashed line</b> represent cancers that receive <i>more</i> scientific attention than expected 
+			relative to their relative incidence. In Switzerland, an example could be Leukemia, which has a relative incidence of only 2% of all cancers whereas 10% of 
+			studies published in the country study this specific cancer.
+		  </p>
         </div>
         <ScatterASRArticlesCancerCountry csvPath={scatterCsvPath} />
       </div>
