@@ -20,7 +20,7 @@ function App() {
   const selectedCountryCancerCsvPath = "data/articles_country_year_cancer.csv";
   const selectCancerMapCsvPath = "data/Globocan_dataset_ready_lite.csv";
   const scatterCsvPath = "data/articles_ASR_country_cancer_percentage.csv";
-  const scatterCancerCsvPath = "data/articles_ASR_country_cancer.csv";
+  const scatterCancerCsvPath = "data/articles_ASR_country_cancer_1M.csv";
 
   const [selectedCancer, setSelectedCancer] = useState("Breast cancer");
 
@@ -75,8 +75,9 @@ function App() {
         <div className="text-content">
           <h2>Global cancer incidence</h2>
           <p>
-            Cancer incidence varies with age, cancer type and is different in different countries. <b>All data shown in this page correspond to </b><a href="https://www.statcan.gc.ca/en/dai/btd/asr" target="_blank" rel="noopener noreferrer"><b>Age-Standardized incidence Rates (ASR)</b></a><b>, normalized by 100K people </b>. ASR
-			values compensate for differences in age structures between countries and, therefore, allow comparisons to be made in a more precise way. In the map below you can visualize either the cummulative incidence values for all cancers combined or selected country. Use the 
+            Cancer incidence varies with age, cancer type and is different in different countries. <b>All incidence data shown in this page correspond to </b><a href="https://www.statcan.gc.ca/en/dai/btd/asr" target="_blank" rel="noopener noreferrer"><b>Age-Standardized incidence Rates (ASR)</b></a><b>, normalized by 100K people </b>. ASR
+			values compensate for differences in age structures between countries and, therefore, allow comparisons to be made in a more precise way. In the map below you can visualize either the cummulative incidence values for all cancers combined or selected country. Incidence values are provided as rates per 100.000 people,
+			allowing to compare between countries with different populations. Use the 
 		    the selector above the map to switch views. In the <i>Selected cancer incidende</i> view, you can use the dropdown at the bottom of the map to choose the cancer type of your interest. <b>Hover on
 			the countries to see their incidence values</b>. It is possible to <b>zoom on the map to get a closer view of areas of interest</b> and use the buttons on the top left 
 			to <b>download the plot as a PNG image or to reset the zoom</b>.
@@ -209,7 +210,7 @@ function App() {
 			incidence. For example, breast cancer (blue dot) in Switzerland accounts for over 19% of all new cancer cases in the country, but only 15% of studies are
 			dedicated to studying it. <b>Conversely, dots above the dashed line</b> represent cancers that receive <i>more</i> scientific attention than expected 
 			relative to their relative incidence. In Switzerland, an example could be Leukemia, which has a relative incidence of only 2% of all cancers whereas 10% of 
-			studies published in the country study this specific cancer.
+			studies published in the country study this specific cancer. The 3 cancer types with more studies in the selected country are highlighed in color.
 		  </p>
         </div>
         <ScatterASRArticlesCancerCountry csvPath={scatterCsvPath} />
@@ -217,10 +218,17 @@ function App() {
 
       <div className="content-section">
         <div className="text-content">
-          <h2>ASR vs Articles per Country for Selected Cancer</h2>
+          <h2>Top relative contributors</h2>
           <p>
-            Select a cancer type to see how incidence rates (ASR) relate to the number of 
-            published research articles across countries. Top 5 countries are labeled.
+            More populated countries, such as China or United States, generate most scientific output. To understand this output
+			accounting for differences in population between countries, the plot below represents the <b>incidence of a selected canceer vs 
+			the number of scientific articles for each country normalized by population</b>. The value in the y axis represents the number of articles about this 
+			cancer type published per country and per 1M inhabitants. A new picture emerges from this plot, showing a larger variability
+			associated with different cancer types in which more European countries, especially in the northern part of the continent, 
+			have larger relative contributions, according to their country populations, to cancer research. <b>Use the dropdown below the plot
+			to select other cancer types</b>. The 3 countries with more studies per 1M inhabitants for the selected cancer type are highlighed in color.
+			To facilitate the visualization, only countries with more than 1M inhabitants are plotted. <i>Note 
+			that, upon selecting a cancer type, the updated bar chart will appear after a few seconds</i>.
           </p>
         </div>
         <ScatterASRArticlesCountryCancer
@@ -229,21 +237,6 @@ function App() {
           setSelectedCancer={setSelectedCancer}
         />
       </div>
-	  
-	  {/* Data retrieval and preparation */}
-	  <div id="data-preparation" className="content-section">
-        <div className="text-content">
-          <h2>Data retrieval and preparation</h2>
-          <p>
-            When the studied cancer type could not be identified in an article (for instance, if the article dealt with basic molecular aspects of cancer in general), it would be assigned to <i>Undetermined cancer</i>. When the cancer type studied in the article 
-			was not in the Globocan dataset (see below), it would be assigned to <i>Other cancers</i>
-          </p>
-		  <img
-			src={DataProcessing} 
-			alt="Data retrieval and preparation schema" 
-			style={{ maxWidth: "100%", height: "auto" }}
-		  />
-        </div>
 		
       {/* What comes next */}
       <div id="what-comes-next" className="content-section">
@@ -277,7 +270,40 @@ function App() {
 			is to <b>move away from keywords into a richer search space that allows looking for articles in a nuanced, deeper way</b>. Stay tuned!
           </p>
         </div>
+		
+	  {/* Data retrieval and preparation */}
+	  <div id="data-preparation" className="content-section">
+        <div className="text-content">
+          <h2>Data retrieval and preparation</h2>
+          <p>
+            Below, a scheme of the data preparation is depicted. Data about incidence for different cancer types were collected from the Globocan repository, and then combined into a single dataset. 
+			Data about scientific publications were obtained from PubMed using the EDirect tool, parsed and cleaned. Cancer types and country where the institution of the last author resides 
+			where obtained using a multi-step approach. When the studied cancer type could not be identified in an article (for instance, if the article dealt with basic molecular aspects of cancer in general), it would be assigned to <i>Undetermined cancer</i>. 
+			When the cancer type studied in the article was not in the Globocan dataset (see below), it would be assigned to <i>Other cancers</i>. Upon preparation of both datasets, they were homogeneized to prepare the visualization.
+          </p>
+		  <img
+			src={DataProcessing} 
+			alt="Data retrieval and preparation schema" 
+			style={{ maxWidth: "100%", height: "auto" }}
+		  />
+        </div>
       </div>
+	  
+	  {/* Footer */}
+      <footer
+        style={{
+          width: "100%",
+          textAlign: "center",
+          padding: "2rem 1rem",
+          marginTop: "2rem",
+          backgroundColor: "#f6f8fa",
+          color: "black",
+          fontSize: "0.9rem",
+        }}
+      >
+        © 2025 Sergio Valbuena. This work is licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer" style={{ color: "blue"}}>CC BY SA 4.0</a>
+      </footer>
+	  
       </div>
     </div>
   );
