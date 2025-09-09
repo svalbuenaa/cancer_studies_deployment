@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Plot from "react-plotly.js";
 
-// Define a color palette for the 10-15 most relevant research countries
+// Define a color palette for the most relevant research countries
 const countryColors = {
   "United States": "#1f77b4",
   "United Kingdom": "#ff7f0e",
@@ -17,7 +17,27 @@ const countryColors = {
   "Sweden": "#ffbb78",
   "Spain": "#98df8a",
   "South Korea": "#ff9896",
-  "Belgium": "#c5b0d5"
+  "Belgium": "#c5b0d5",
+  "Norway": "#1f9984",
+  "Denmark": "#ffb347",
+  "Finland": "#2e8b57",
+  "Iceland": "#e9967a",
+  "Austria": "#20b2aa",
+  "Ireland": "#cd5c5c",
+  "Luxembourg": "#9370db",
+  "Portugal": "#4682b4",
+  "Greece": "#daa520",
+  "Poland": "#6495ed",
+  "Czechia": "#ff6347",
+  "Hungary": "#3cb371",
+  "Slovakia": "#8b4513",
+  "Slovenia": "#ff69b4",
+  "Estonia": "#708090",
+  "Latvia": "#40e0d0",
+  "Lithuania": "#b8860b",
+  "Israel": "#7fffd4",
+  "Singapore": "#dc143c",
+  "New Zealand": "#556b2f",
 };
 
 // All other countries will be grey
@@ -26,7 +46,11 @@ const defaultColor = "grey";
 // Helper to split long country names into two lines for the plot text
 const formatCountryText = (country) => country.replace(/ /g, "<br>");
 
-const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedCancer }) => {
+const ScatterASRArticlesCountryCancer = ({
+  csvPath,
+  selectedCancer,
+  setSelectedCancer,
+}) => {
   const [data, setData] = useState([]);
   const [uniqueCancers, setUniqueCancers] = useState([]);
 
@@ -35,30 +59,42 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
       try {
         const response = await fetch(csvPath);
         const text = await response.text();
-        const lines = text.split("\n").filter(line => line.trim() !== "");
+        const lines = text.split("\n").filter((line) => line.trim() !== "");
+
         if (lines.length > 1) {
-          const header = lines[0].split(",").map(h => h.trim());
-          const parsedData = lines.slice(1).map(line => {
-            const values = line.split(",");
-            if (values.length === header.length) {
-              const obj = header.reduce((acc, key, index) => {
-                acc[key] = values[index].trim();
-                return acc;
-              }, {});
-              // Convert numeric fields once
-              obj.Articles = parseInt(obj.Articles);
-              obj.ASR = parseFloat(obj.ASR);
-              return obj;
-            }
-            return null;
-          }).filter(d => d && d.Cancer && d.Country && !isNaN(d.Articles) && !isNaN(d.ASR));
+          const header = lines[0].split(",").map((h) => h.trim());
+
+          const parsedData = lines
+            .slice(1)
+            .map((line) => {
+              const values = line.split(",");
+              if (values.length === header.length) {
+                const obj = header.reduce((acc, key, index) => {
+                  acc[key] = values[index].trim();
+                  return acc;
+                }, {});
+                obj.Norm_articles = parseFloat(obj["Norm_articles"]);
+                obj.ASR = parseFloat(obj["ASR"]);
+                return obj;
+              }
+              return null;
+            })
+            .filter(
+              (d) =>
+                d &&
+                d.Cancer &&
+                d.Country &&
+                !isNaN(d.Norm_articles) &&
+                !isNaN(d.ASR)
+            );
 
           setData(parsedData);
 
-          const cancers = [...new Set(parsedData.map(d => d.Cancer))].sort();
+          const cancers = [...new Set(parsedData.map((d) => d.Cancer))].sort();
           setUniqueCancers(cancers);
 
-          if (!selectedCancer && cancers.length > 0) setSelectedCancer(cancers[0]);
+          if (!selectedCancer && cancers.length > 0)
+            setSelectedCancer(cancers[0]);
         }
       } catch (error) {
         console.error("Error fetching CSV:", error);
@@ -70,60 +106,69 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
 
   const handleCancerChange = (event) => setSelectedCancer(event.target.value);
 
-  const filteredData = useMemo(() => data.filter(d => d.Cancer === selectedCancer), [data, selectedCancer]);
-  const sortedByArticles = useMemo(() => [...filteredData].sort((a, b) => b.Articles - a.Articles), [filteredData]);
-  const top5 = useMemo(() => sortedByArticles.slice(0, 5), [sortedByArticles]);
-  const others = useMemo(() => sortedByArticles.slice(5), [sortedByArticles]);
+  const filteredData = useMemo(
+    () => data.filter((d) => d.Cancer === selectedCancer),
+    [data, selectedCancer]
+  );
+
+  const sortedByArticles = useMemo(
+    () => [...filteredData].sort((a, b) => b.Norm_articles - a.Norm_articles),
+    [filteredData]
+  );
+
+
+  const top3 = useMemo(() => sortedByArticles.slice(0, 3), [sortedByArticles]);
+  const others = useMemo(
+    () => sortedByArticles.slice(3),
+    [sortedByArticles]
+  );
 
   const getCountryColor = (country) => countryColors[country] || defaultColor;
 
-  // Top 5 countries → colored
   const topTrace = {
-    x: top5.map(d => d.ASR),
-    y: top5.map(d => d.Articles),
-    text: top5.map(d => formatCountryText(d.Country)), // split into 2 lines
-    customdata: top5.map(d => d.Country), // hover: single line
+    x: top3.map((d) => d.ASR),
+    y: top3.map((d) => d.Norm_articles),
+    text: top3.map((d) => formatCountryText(d.Country)),
+    customdata: top3.map((d) => d.Country),
     mode: "markers+text",
     type: "scatter",
     textposition: "top center",
     textfont: { color: "black" },
     marker: {
       size: 14,
-      color: top5.map(d => getCountryColor(d.Country)),
+      color: top3.map((d) => getCountryColor(d.Country)),
       opacity: 0.9,
-      line: { width: 1, color: "#333" }
+      line: { width: 1, color: "#333" },
     },
     hovertemplate:
       `<b>Country:</b> %{customdata}<br>` +
       `<b>Cancer:</b> ${selectedCancer}<br>` +
-      `<b>Incidence:</b> %{x}<br>` +
-      `<b>Articles:</b> %{y}<extra></extra>`,
+      `<b>Incidence:</b> %{x} per 100000<br>` +
+      `<b>Norm Articles:</b> %{y} per 1M<extra></extra>`,
     showlegend: false,
   };
 
-  // Other countries → grey
   const othersTrace = {
-    x: others.map(d => d.ASR),
-    y: others.map(d => d.Articles),
-    text: others.map(d => ""), // no plot text
-    customdata: others.map(d => d.Country), // hover: single line
+    x: others.map((d) => d.ASR),
+    y: others.map((d) => d.Norm_articles),
+    customdata: others.map((d) => d.Country),
     mode: "markers",
     type: "scatter",
     marker: {
       size: 10,
       color: defaultColor,
-      opacity: 0.75,
-      line: { width: 1, color: "#333" }
+      opacity: 0.8,
+      line: { width: 1, color: "#333" },
     },
     hovertemplate:
       `<b>Country:</b> %{customdata}<br>` +
       `<b>Cancer:</b> ${selectedCancer}<br>` +
-      `<b>Incidence:</b> %{x}<br>` +
-      `<b>Articles:</b> %{y}<extra></extra>`,
+      `<b>Incidence:</b> %{x} per 100000<br>` +
+      `<b>Norm Articles:</b> %{y} per 1M<extra></extra>`,
     hoverlabel: {
-      bordercolor: 'rgba(0, 0, 0, 0.7)',
-      bgcolor: 'rgba(255, 255, 255, 0.7)',
-      font: { color: 'black' }
+      bordercolor: "rgba(0, 0, 0, 0.7)",
+      bgcolor: "rgba(255, 255, 255, 0.7)",
+      font: { color: "black" },
     },
     showlegend: false,
   };
@@ -132,24 +177,38 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
     responsive: true,
     displaylogo: false,
     modeBarButtonsToRemove: [
-      "zoom2d","pan2d","select2d","lasso2d","zoomIn2d","zoomOut2d",
-      "autoScale2d","hoverClosestCartesian","hoverCompareCartesian",
+      "zoom2d",
+      "pan2d",
+      "select2d",
+      "lasso2d",
+      "zoomIn2d",
+      "zoomOut2d",
+      "autoScale2d",
+      "hoverClosestCartesian",
+      "hoverCompareCartesian",
     ],
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
       <Plot
         data={[topTrace, othersTrace]}
         layout={{
           title: {
-            text: `ASR vs Articles for <b>${selectedCancer}</b>`,
+            text: `Incidence vs normalized number of studies for <b>${selectedCancer}</b>`,
             x: 0.5,
             xanchor: "center",
             font: { size: 18, color: "black" },
           },
           xaxis: {
-            title: { text: "Incidence (ASR)", font: { color: "black", size: 16 } },
+            title: { text: "Incidence per 100000", font: { color: "black", size: 16 } },
             showgrid: true,
             zeroline: false,
             linecolor: "black",
@@ -158,14 +217,17 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
             tickfont: { color: "black" },
           },
           yaxis: {
-            title: { text: "Number of Articles", font: { color: "black", size: 16 } },
+            title: {
+              text: "Normalized studies (per 1M inhabitants)",
+              font: { color: "black", size: 16 },
+            },
             showgrid: true,
             zeroline: false,
             linecolor: "black",
             linewidth: 1.5,
             gridcolor: "rgba(0,0,0,0.075)",
             tickfont: { color: "black" },
-            tickformat: "~s"
+            tickformat: "~s",
           },
           margin: { t: 60, b: 60, l: 80, r: 40 },
           paper_bgcolor: "#f6f8fa",
@@ -174,24 +236,14 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
           showlegend: false,
           width: 700,
           height: 700,
-          shapes: [
-            {
-              type: 'line',
-              xref: 'paper',
-              yref: 'paper',
-              x0: 0,
-              y0: 0,
-              x1: 1,
-              y1: 1,
-              line: { color: '#808080', width: 2, dash: 'dash', opacity: 0.5 }
-            }
-          ]
         }}
         config={config}
       />
 
       <div style={{ marginTop: "20px", color: "black", textAlign: "center" }}>
-        <label htmlFor="cancer-select" style={{ marginRight: "10px" }}>Cancer:</label>
+        <label htmlFor="cancer-select" style={{ marginRight: "10px" }}>
+          Cancer:
+        </label>
         <select
           id="cancer-select"
           onChange={handleCancerChange}
@@ -204,8 +256,10 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
           }}
           value={selectedCancer}
         >
-          {uniqueCancers.map(cancer => (
-            <option key={cancer} value={cancer}>{cancer}</option>
+          {uniqueCancers.map((cancer) => (
+            <option key={cancer} value={cancer}>
+              {cancer}
+            </option>
           ))}
         </select>
       </div>
