@@ -106,6 +106,7 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
       size: 14,
       color: top3.map((d) => colorMapping[d.Cancer] || '#d3d3d3'),
       opacity: 0.9,
+	  line: { width: 1, color: "#333" },
     },
     hovertemplate:
       "<b>Country:</b> " + selectedCountry + "<br>" +
@@ -126,7 +127,8 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
     marker: {
       size: 10,
       color: "grey",
-      opacity: 0.5,
+      opacity: 0.8,
+	  line: { width: 1, color: "#333" },
     },
     hovertemplate:
       "<b>Country:</b> " + selectedCountry + "<br>" +
@@ -170,7 +172,7 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
             font: { size: 18, color: "black" },
           },
           xaxis: {
-            title: { text: "Incidence (%)", font: { color: "black", size: 16 } },
+            title: { text: "Incidence (% of all new cancer cases)", font: { color: "black", size: 16 } },
             showgrid: true,
             zeroline: false,
             linecolor: "black",
@@ -178,10 +180,11 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
             gridcolor: "rgba(0,0,0,0.075)",
             tickfont: { color: "black" },
             ticksuffix: "%",
-            range: [0, maxValue * 1.08],
+            range: [maxValue * -0.08, maxValue * 1.08],
+			dtick: 5,
           },
           yaxis: {
-            title: { text: "Articles (%)", font: { color: "black", size: 16 } },
+            title: { text: "Studies (% of all cancer studies)", font: { color: "black", size: 16 } },
             showgrid: true,
             zeroline: false,
             linecolor: "black",
@@ -189,7 +192,8 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
             gridcolor: "rgba(0,0,0,0.075)",
             tickfont: { color: "black" },
             ticksuffix: "%",
-            range: [0, maxValue * 1.08],
+            range: [maxValue * -0.08, maxValue * 1.08],
+			dtick: 5,
           },
           margin: { t: 60, b: 60, l: 80, r: 40 },
           paper_bgcolor: "#f6f8fa",
@@ -203,8 +207,8 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
               type: 'line',
               xref: 'x',
               yref: 'y',
-              x0: 0,
-              y0: 0,
+              x0: maxValue * -0.08,
+              y0: maxValue * -0.08,
               x1: maxValue * 1.08,
               y1: maxValue * 1.08,
               line: {
