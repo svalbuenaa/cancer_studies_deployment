@@ -166,8 +166,8 @@ function App() {
           <p>
             A small number of countries publish most cancer research. Only 5 out of 185 countries -United States, China, United Kingdom, Japan and Italy have 
 			published 58% of all articles about cancer. In the bar chart below, select a cancer type to see which are the top 5 countries by number of articles about this cancer type (stacked colored bars) and how
-			their contributions have changed over time. As a reference, the dark blue bar in the back shows the <span style={{ color: '#4682B4' }}><b>total number of studies for this cancer type by all countries</b></span>{' '} (values above the bars).
-			<i>Note that, upon selecting a cancer type, the updated bar chart will appear after a few seconds</i>.
+			their contributions have changed over time. As a reference, the dark blue bar in the back shows the <span style={{ color: '#4682B4' }}><b>total number of studies for this cancer type by all countries</b></span>{' '} (values above the bars). <i>Note that, 
+			upon selecting a cancer type, the updated bar chart will appear after a few seconds</i>.
           </p>
         </div>
         <SelectCancerShowCountries
