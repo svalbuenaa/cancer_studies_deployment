@@ -7,14 +7,13 @@ const SelectCancerMap = ({ csvPath }) => {
   const [selectedCancer, setSelectedCancer] = useState("");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // Track window width for responsive title
+  // Track window width for responsive title and layout
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Country -> ISO-3 mapping (copied from MapNumeric)
   const countryCodeMap = {
     "Afghanistan": "AFG","Albania": "ALB","Algeria": "DZA","Angola": "AGO","Argentina": "ARG","Armenia": "ARM",
     "Australia": "AUS","Austria": "AUT","Azerbaijan": "AZE","Bahamas": "BHS","Bahrain": "BHR","Bangladesh": "BGD",
@@ -47,39 +46,29 @@ const SelectCancerMap = ({ csvPath }) => {
     "Vietnam": "VNM","Yemen": "YEM","Zambia": "ZMB","Zimbabwe": "ZWE",
   };
 
+  // Load CSV
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(csvPath);
         const text = await response.text();
-
         const lines = text.split("\n").filter((line) => line.trim() !== "");
         if (lines.length > 1) {
-          const header = lines[0].split(",").map((h) => h.trim());
-          const parsedData = lines
-            .slice(1)
-            .map((line) => {
-              const values = line.split(",");
-              if (values.length === header.length) {
-                return header.reduce((obj, key, index) => {
-                  obj[key] = values[index].trim();
-                  return obj;
-                }, {});
-              }
-              return null;
-            })
-            .filter((d) => d && d.Cancer && d.Country && d.ASR && !isNaN(parseFloat(d.ASR)));
-
+          const header = lines[0].split(",").map(h => h.trim());
+          const parsedData = lines.slice(1).map(line => {
+            const values = line.split(",");
+            if (values.length === header.length) {
+              return header.reduce((obj, key, index) => {
+                obj[key] = values[index].trim();
+                return obj;
+              }, {});
+            }
+            return null;
+          }).filter(d => d && d.Cancer && d.Country && d.ASR && !isNaN(parseFloat(d.ASR)));
           setData(parsedData);
-
-          const cancers = [...new Set(parsedData.map((d) => d.Cancer))].sort();
+          const cancers = [...new Set(parsedData.map(d => d.Cancer))].sort();
           setUniqueCancers(cancers);
-
-          if (cancers.includes("Breast cancer")) {
-            setSelectedCancer("Breast cancer");
-          } else if (cancers.length > 0) {
-            setSelectedCancer(cancers[0]);
-          }
+          setSelectedCancer(cancers.includes("Breast cancer") ? "Breast cancer" : cancers[0]);
         }
       } catch (error) {
         console.error("Error fetching CSV:", error);
@@ -97,25 +86,18 @@ const SelectCancerMap = ({ csvPath }) => {
   }
 
   // Filter by selected cancer
-  const filteredData = data.filter((d) => d.Cancer === selectedCancer);
-
-  const asrValues = filteredData.map((d) => parseFloat(d.ASR));
+  const filteredData = data.filter(d => d.Cancer === selectedCancer);
+  const asrValues = filteredData.map(d => parseFloat(d.ASR));
   const minASR = Math.min(...asrValues);
   const maxASR = Math.max(...asrValues);
   const tickStep = (maxASR - minASR) / 4;
-  const tickValues = [
-    minASR,
-    minASR + tickStep,
-    minASR + 2 * tickStep,
-    minASR + 3 * tickStep,
-    maxASR,
-  ].map((value) => parseFloat(value.toFixed(2)));
+  const tickValues = [0,1,2,3,4].map(i => parseFloat((minASR + i*tickStep).toFixed(2)));
 
   const plotData = {
     type: "choropleth",
-    locations: filteredData.map((d) => countryCodeMap[d.Country]),
+    locations: filteredData.map(d => countryCodeMap[d.Country]),
     z: asrValues,
-    text: filteredData.map((d) => d.Country),
+    text: filteredData.map(d => d.Country),
     colorscale: [
       [0, "#FFFF66"],
       [0.25, "#FFCC33"],
@@ -123,15 +105,10 @@ const SelectCancerMap = ({ csvPath }) => {
       [0.75, "#CC3300"],
       [1, "#800000"]
     ],
-    marker: {
-      line: { color: "black", width: 0.5 },
-    },
+    marker: { line: { color: "black", width: 0.5 } },
     locationmode: "ISO-3",
     colorbar: {
-      title: {
-        text: "Incidence<br>(per 100,000)",
-        font: { color: "black" }
-      },
+      title: { text: "Incidence<br>(per 100,000)", font: { color: "black" } },
       thickness: 10,
       len: 0.5,
       y: -0.1,
@@ -145,88 +122,65 @@ const SelectCancerMap = ({ csvPath }) => {
       ticktext: tickValues.map(String),
       tickfont: { color: "black" },
     },
-    hovertemplate:
-      `<b>%{text}</b><br>${selectedCancer}<br>Incidence: %{z} per 100,000<extra></extra>`,
+    hovertemplate: `<b>%{text}</b><br>${selectedCancer}<br>Incidence: %{z} per 100,000<extra></extra>`,
     hoverlabel: {
-      bordercolor: 'rgba(0, 0, 0, 0.7)',
-      bgcolor: 'rgba(255, 255, 255, 0.7)',
+      bordercolor: 'rgba(0,0,0,0.7)',
+      bgcolor: 'rgba(255,255,255,0.7)',
       font: { color: 'black' }
-    },
+    }
   };
 
   const config = {
     modeBarButtonsToRemove: [
       'zoomInGeo','zoomOutGeo','panGeo','select2d','lasso2d','autoScaleGeo',
       'hoverClosestGeo','hoverCompareGeo','zoom2d','pan2d','resetViews',
-      'select','lasso','hoverClosest','hoverCompare','toggleSpikelines',
-      'sendDataToCloud',
+      'select','lasso','hoverClosest','hoverCompare','toggleSpikelines','sendDataToCloud'
     ],
     displaylogo: false,
+    responsive: true,
+    scrollZoom: true
   };
 
-  // Responsive title like MapNumeric
   const plotTitle = windowWidth <= 768
     ? `Incidence of <b>${selectedCancer}</b><br>per country`
     : `Incidence of <b>${selectedCancer}</b> per country`;
 
+  const topMargin = windowWidth <= 768 ? 120 : 60;
+
   return (
-    <div className="plotly-responsive-plot-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div style={{ width: "100%", position: "relative", display: "flex", flexDirection: "column", alignItems: "center" }}>
       <Plot
         data={[plotData]}
         layout={{
-          title: {
-            text: plotTitle,
-            x: 0.5,
-            xanchor: "center",
-            font: { size: 18, color: "black" },
-            y: 0.93,
-          },
-          geo: {
-            projection: { type: "natural earth" },
-            showframe: false,
-            showcoastlines: true,
-            coastlinecolor: "gray",
-            oceancolor: "#f6f8fa",
-            landcolor: "#f6f8fa",
-            bgcolor: "#f6f8fa",
-            domain: { x: [0, 1], y: [0, 1] },
-          },
-          margin: { t: 40, b: 80, l: 40, r: 40 },
+          title: { text: plotTitle, x: 0.5, xanchor: "center", font: { size: 18, color: "black" }, y: 0.93 },
+          geo: { projection: { type: "natural earth" }, showframe: false, showcoastlines: true, coastlinecolor: "gray", oceancolor: "#f6f8fa", landcolor: "#f6f8fa", bgcolor: "#f6f8fa" },
+          margin: { t: topMargin, b: 40, l: 10, r: 10 },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
-          autosize: true,
+          autosize: true
         }}
         config={config}
         useResizeHandler={true}
-        className="plotly-responsive-plot"
+        style={{ width: "100%", height: windowWidth <= 768 ? 500 : 650 }}
       />
       <div style={{ display: "flex", gap: "20px", marginTop: "20px", color: "black" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <label htmlFor="cancer-select">Cancer:</label>
           <select
             id="cancer-select"
-            onChange={(e) => setSelectedCancer(e.target.value)}
-            style={{
-              padding: "5px",
-              borderRadius: "5px",
-              border: "1px solid black",
-              backgroundColor: "white",
-              color: "black"
-            }}
             value={selectedCancer}
+            onChange={(e) => setSelectedCancer(e.target.value)}
+            style={{ padding: "5px", borderRadius: "5px", border: "1px solid black", backgroundColor: "white", color: "black" }}
           >
-            {uniqueCancers.map((cancer) => (
-              <option key={cancer} value={cancer}>{cancer}</option>
-            ))}
+            {uniqueCancers.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
         </div>
       </div>
       <style jsx>{`
         .modebar {
           top: auto !important;
-          bottom: -60px !important;
-          right: 7% !important;
-          transform: translateX(50%);
+          bottom: 10px !important;
+          right: 10px !important;
         }
       `}</style>
     </div>

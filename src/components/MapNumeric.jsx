@@ -151,7 +151,7 @@ const MapNumeric = ({ csvPath }) => {
     ],
     displaylogo: false,
     responsive: true,
-    scrollZoom: false,
+    scrollZoom: true, // enable zooming
   };
 
   const plotTitle =
@@ -159,16 +159,20 @@ const MapNumeric = ({ csvPath }) => {
       ? "Cancer incidence (<b>all cancer types</b>)<br>per country"
       : "Cancer incidence (<b>all cancer types combined</b>) per country";
 
-  // Responsive margin for title
   const topMargin = windowWidth <= 768 ? 120 : 60;
 
   return (
-    <div className="plotly-responsive-plot-container" style={{ width: "100%" }}>
+    <div style={{ width: "100%", position: "relative" }}>
       <Plot
         data={[plotData]}
         layout={{
           autosize: true,
-          title: { text: plotTitle, x: 0.5, xanchor: "center", font: { size: 18, color: "black" } },
+          title: {
+            text: plotTitle,
+            x: 0.5,
+            xanchor: "center",
+            font: { size: 18, color: "black" },
+          },
           geo: {
             projection: { type: "natural earth" },
             showframe: false,
@@ -177,6 +181,7 @@ const MapNumeric = ({ csvPath }) => {
             oceancolor: "#f6f8fa",
             landcolor: "#f6f8fa",
             bgcolor: "#f6f8fa",
+            dragmode: "zoom",
           },
           margin: { t: topMargin, b: 40, l: 10, r: 10 },
           paper_bgcolor: "#f6f8fa",
@@ -186,6 +191,13 @@ const MapNumeric = ({ csvPath }) => {
         useResizeHandler={true}
         style={{ width: "100%", height: windowWidth <= 768 ? 500 : 650 }}
       />
+      <style jsx>{`
+        .modebar {
+          top: auto !important;
+          bottom: 10px !important;
+          right: 10px !important;
+        }
+      `}</style>
     </div>
   );
 };
