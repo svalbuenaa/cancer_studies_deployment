@@ -145,8 +145,8 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
           plot_bgcolor: "#f6f8fa",
           hovermode: "closest",
           showlegend: false,
-          width: size*0.9,
-          height: size*0.9,
+          width: size*1.3,
+          height: size*1.3,
         }}
         config={config}
       />

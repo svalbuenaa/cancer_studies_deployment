@@ -217,8 +217,8 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
           plot_bgcolor: "#f6f8fa",
           hovermode: "closest",
           showlegend: false,
-          width: dimensions.width,
-          height: dimensions.height,
+          width: dimensions.width*1.4,
+          height: dimensions.height*1.4,
           shapes: [
             {
               type: 'line',
