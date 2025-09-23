@@ -122,7 +122,7 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
             text: windowWidth < 768
               ? `Cancer research vs incidence<br>in <b>${selectedCountry}</b>`
               : `Cancer research vs incidence in <b>${selectedCountry}</b>`,
-            y: windowWidth < 768 ? 0.95 : 0.98,
+            y: windowWidth < 768 ? 0.95 : 0.95,
             x: 0.5,
             xanchor: "center",
             font: { size: windowWidth < 768 ? 14 : 18, color: "black" },
