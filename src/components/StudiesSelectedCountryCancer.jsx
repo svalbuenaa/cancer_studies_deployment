@@ -9,7 +9,7 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
   const [selectedCountry, setSelectedCountry] = useState("United States");
   const [selectedCancer, setSelectedCancer] = useState("Breast cancer");
 
-  // 🔹 Track screen width for responsive title
+  // 🔹 Track screen width for responsive title and layout
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
@@ -238,6 +238,9 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
           gap: "20px",
           marginTop: "20px",
           color: "black",
+          // 💡 Conditional styling based on screen size
+          flexDirection: windowWidth <= 768 ? "column" : "row",
+          alignItems: windowWidth <= 768 ? "center" : "flex-start",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
