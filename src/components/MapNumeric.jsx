@@ -3,8 +3,16 @@ import Plot from "react-plotly.js";
 
 const MapNumeric = ({ csvPath }) => {
   const [data, setData] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // Comprehensive mapping of country names to ISO-3 codes for Plotly
+  // Update window width on resize
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+    // Comprehensive mapping of country names to ISO-3 codes for Plotly
   const countryCodeMap = {
     "Afghanistan": "AFG",
     "Albania": "ALB",
@@ -193,18 +201,16 @@ const MapNumeric = ({ csvPath }) => {
     "Zimbabwe": "ZWE",
   };
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(csvPath);
         const text = await response.text();
-
-        const lines = text.split('\n').filter(line => line.trim() !== '');
+        const lines = text.split("\n").filter(line => line.trim() !== "");
         if (lines.length > 1) {
-          const header = lines[0].split(',').map(h => h.trim());
+          const header = lines[0].split(",").map(h => h.trim());
           const parsedData = lines.slice(1).map(line => {
-            const values = line.split(',');
+            const values = line.split(",");
             if (values.length === header.length) {
               return header.reduce((obj, key, index) => {
                 obj[key] = values[index].trim();
@@ -213,7 +219,6 @@ const MapNumeric = ({ csvPath }) => {
             }
             return null;
           }).filter(d => d && d.ASR && !isNaN(parseFloat(d.ASR)));
-
           setData(parsedData);
         }
       } catch (error) {
@@ -231,23 +236,21 @@ const MapNumeric = ({ csvPath }) => {
     );
   }
 
-  const asrValues = data.map((d) => parseFloat(d.ASR));
+  const asrValues = data.map(d => parseFloat(d.ASR));
   const minASR = Math.min(...asrValues);
   const maxASR = Math.max(...asrValues);
-  
   const tickStep = (maxASR - minASR) / 4;
   const tickValues = [
     minASR,
     minASR + tickStep,
     minASR + 2 * tickStep,
     minASR + 3 * tickStep,
-    maxASR,
-  ].map((value) => parseFloat(value.toFixed(2)));
+    maxASR
+  ].map(v => parseFloat(v.toFixed(2)));
 
   const plotData = {
     type: "choropleth",
-    // Use ISO-3 country codes for locations
-    locations: data.map(d => countryCodeMap[d.Country]), 
+    locations: data.map(d => countryCodeMap[d.Country]),
     z: asrValues,
     text: data.map(d => d.Country),
     colorscale: [
@@ -257,19 +260,10 @@ const MapNumeric = ({ csvPath }) => {
       [0.75, "#CC3300"],
       [1, "#800000"]
     ],
-    marker: {
-      line: {
-        color: "black",
-        width: 0.5,
-      },
-    },
-    // Change locationmode to use ISO-3 codes
+    marker: { line: { color: "black", width: 0.5 } },
     locationmode: "ISO-3",
     colorbar: {
-      title: {
-        text: "Incidence<br>(per 100,000)",
-        font: { color: "black" }
-      },
+      title: { text: "Incidence<br>(per 100,000)", font: { color: "black" } },
       thickness: 10,
       len: 0.5,
       y: -0.1,
@@ -281,27 +275,27 @@ const MapNumeric = ({ csvPath }) => {
       orientation: "h",
       tickvals: tickValues,
       ticktext: tickValues.map(String),
-      tickfont: { color: "black" },
+      tickfont: { color: "black" }
     },
-    hovertemplate:
-      "<b>%{text}</b><br>Cummulative incidence: %{z} per 100,000<extra></extra>",
-    hoverlabel: {
-      bordercolor: 'rgba(0, 0, 0, 0.7)',
-      bgcolor: 'rgba(255, 255, 255, 0.7)',
-      font: { color: 'black' }
-    },
+    hovertemplate: "<b>%{text}</b><br>Cumulative incidence: %{z} per 100,000<extra></extra>",
+    hoverlabel: { bordercolor: "rgba(0,0,0,0.7)", bgcolor: "rgba(255,255,255,0.7)", font: { color: "black" } }
   };
 
   const config = {
     modeBarButtonsToRemove: [
-      'zoomInGeo', 'zoomOutGeo', 'panGeo', 'select2d', 'lasso2d', 'autoScaleGeo', 'hoverClosestGeo', 'hoverCompareGeo', 'zoom2d', 'pan2d', 'resetViews', 'select', 'lasso', 'hoverClosest', 'hoverCompare', 'toggleSpikelines', 'sendDataToCloud',
+      "zoomInGeo", "zoomOutGeo", "panGeo", "select2d", "lasso2d",
+      "autoScaleGeo", "hoverClosestGeo", "hoverCompareGeo",
+      "zoom2d", "pan2d", "resetViews", "select", "lasso",
+      "hoverClosest", "hoverCompare", "toggleSpikelines", "sendDataToCloud"
     ],
     displaylogo: false,
-    modeBar: {
-      bgcolor: 'rgba(255, 255, 255, 0)',
-      orientation: 'h',
-    }
+    modeBar: { bgcolor: "rgba(255,255,255,0)", orientation: "h" }
   };
+
+  // Make title split on small screens
+  const plotTitle = windowWidth <= 768
+    ? "Cancer incidence (<b>all cancer types</b>)<br>per country"
+    : "Cancer incidence (<b>all cancer types combined</b>) per country";
 
   return (
     <div className="plotly-responsive-plot-container" style={{ position: "relative" }}>
@@ -309,11 +303,11 @@ const MapNumeric = ({ csvPath }) => {
         data={[plotData]}
         layout={{
           title: {
-            text: "Cancer incidence (<b>all cancer types combined</b>) per country",
+            text: plotTitle,
             x: 0.5,
             xanchor: "center",
             font: { size: 18, color: "black" },
-            y: 0.93,
+            y: 0.93
           },
           geo: {
             projection: { type: "natural earth" },
@@ -323,25 +317,17 @@ const MapNumeric = ({ csvPath }) => {
             oceancolor: "#f6f8fa",
             landcolor: "#f6f8fa",
             bgcolor: "#f6f8fa",
-            domain: { x: [0, 1], y: [0, 1] },
+            domain: { x: [0, 1], y: [0, 1] }
           },
           margin: { t: 40, b: 80, l: 40, r: 40 },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
-          autosize: true,
+          autosize: true
         }}
         config={config}
         useResizeHandler={true}
         className="plotly-responsive-plot"
       />
-      <style jsx>{`
-        .modebar {
-          top: auto !important;
-          bottom: -60px !important;
-          right: 7% !important;
-          transform: translateX(50%);
-        }
-      `}</style>
     </div>
   );
 };

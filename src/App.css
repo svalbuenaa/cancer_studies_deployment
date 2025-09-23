@@ -7,10 +7,12 @@ body {
   min-height: 100vh;
   background-color: #f6f8fa;
   color: black;
+  overflow-x: hidden; /* prevent horizontal scroll */
 }
 
 h1, h2, h3 {
   color: black;
+  word-break: break-word;
 }
 
 h1 {
@@ -25,6 +27,7 @@ h2 {
 
 p {
   color: black;
+  word-break: break-word;
 }
 
 /* ------------------------ */
@@ -40,12 +43,14 @@ p {
   flex-direction: column;
   align-items: center;
   background-color: #f6f8fa;
+  box-sizing: border-box;
 }
 
 .text-content {
   text-align: center;
   padding: 1rem 1.25rem;
   max-width: 950px;
+  box-sizing: border-box;
 }
 
 .text-content p {
@@ -59,36 +64,55 @@ p {
   display: flex;
   justify-content: center;
   width: 100%;
-  background-color: #f6f8fa; /* ensures sides of plot match background */
+  max-width: 1000px; /* keep desktop plot large */
+  margin: 0 auto;
+  background-color: #f6f8fa;
+  box-sizing: border-box;
 }
 
 .plotly-responsive-plot {
-  width: 1000px; 
-  height: 650px;
+  width: 1000px; /* desktop default */
+  height: 650px; /* desktop height */
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
-/* Responsive styles for smaller screens */
+/* ------------------------ */
+/* Responsive adjustments   */
+/* ------------------------ */
 @media (max-width: 1024px) {
   .plotly-responsive-plot {
     width: 95vw;
     height: 60vh;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 768px) {
   .text-content {
-    padding: 1rem 1.25rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .plotly-responsive-plot-container {
+    max-width: 100%;
+  }
+
+  .plotly-responsive-plot {
+    width: 100vw;
+    height: 50vh;
+    min-height: 300px;
   }
 }
 
+/* Modebar buttons */
 .plotly .modebar-btn {
-  font-size: 20px !important;
+  font-size: 18px !important;
 }
 
+/* Let Plotly handle modebar positioning */
 .plotly-responsive-plot-container .modebar {
   top: auto !important;
-  bottom: -60px !important;
-  right: 7% !important;
-  transform: translateX(50%);
+  bottom: auto !important;
+  right: auto !important;
+  transform: none !important;
 }
-
