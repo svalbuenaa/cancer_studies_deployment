@@ -1,6 +1,10 @@
 /* ------------------------ */
 /* Global Styles & Layout   */
 /* ------------------------ */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   min-width: 320px;
@@ -43,14 +47,12 @@ p {
   flex-direction: column;
   align-items: center;
   background-color: #f6f8fa;
-  box-sizing: border-box;
 }
 
 .text-content {
   text-align: center;
   padding: 1rem 1.25rem;
   max-width: 950px;
-  box-sizing: border-box;
 }
 
 .text-content p {
@@ -64,15 +66,14 @@ p {
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 1000px; /* keep desktop plot large */
+  max-width: 1000px;
   margin: 0 auto;
   background-color: #f6f8fa;
-  box-sizing: border-box;
 }
 
 .plotly-responsive-plot {
-  width: 1000px; /* desktop default */
-  height: 650px; /* desktop height */
+  width: 1000px;
+  height: 650px;
   max-width: 100%;
   box-sizing: border-box;
 }
@@ -89,16 +90,21 @@ p {
 }
 
 @media (max-width: 768px) {
+  body {
+    overflow-x: hidden; /* enforce no horizontal scroll */
+  }
+
   .text-content {
     padding: 0.75rem 1rem;
   }
 
   .plotly-responsive-plot-container {
     max-width: 100%;
+    padding: 0 0.5rem; /* small horizontal padding to prevent cutting edges */
   }
 
   .plotly-responsive-plot {
-    width: 100vw;
+    width: 100vw; /* fill mobile width */
     height: 50vh;
     min-height: 300px;
   }
