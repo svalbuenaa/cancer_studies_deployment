@@ -46,7 +46,9 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
   const [data, setData] = useState([]);
   const [uniqueCancers, setUniqueCancers] = useState([]);
   const [size, setSize] = useState(600);
+  const [sizeFactor, setSizeFactor] = useState(1.1); // dynamic factor
 
+  // Fetch CSV data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -84,11 +86,18 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
     fetchData();
   }, [csvPath]);
 
-  // Responsive square plot
+  // Responsive square plot and dynamic factor
   useEffect(() => {
     const handleResize = () => {
-      const newSize = Math.min(window.innerWidth * 0.8, window.innerHeight * 0.8);
-      setSize(newSize);
+      const viewportSize = Math.min(window.innerWidth, window.innerHeight) * 0.8;
+      setSize(viewportSize);
+
+      // adjust factor depending on screen width
+      if (window.innerWidth < 768) {
+        setSizeFactor(1.1); // small screens
+      } else {
+        setSizeFactor(1.3); // larger screens
+      }
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -137,16 +146,16 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
       <Plot
         data={[topTrace, othersTrace]}
         layout={{
-          title: { text: `Incidence vs normalized number of studies for <b>${selectedCancer}</b>`, x: 0.5, xanchor: "center", font: { size: 18, color: "black" } },
-          xaxis: { title: { text: "Incidence per 100000", font: { color: "black", size: 16 } }, showgrid: true, zeroline: false, linecolor: "black", linewidth: 1.5, gridcolor: "rgba(0,0,0,0.075)", tickfont: { color: "black" } },
-          yaxis: { title: { text: "Normalized studies (per 1M inhabitants)", font: { color: "black", size: 16 } }, showgrid: true, zeroline: false, linecolor: "black", linewidth: 1.5, gridcolor: "rgba(0,0,0,0.075)", tickfont: { color: "black" }, tickformat: "~s" },
+          title: { text: `Incidence vs normalized number of studies for <b>${selectedCancer}</b>`, y: 0.98, x: 0.5, xanchor: "center", font: { size: 18, color: "black" }, automargin: true },
+          xaxis: { title: { text: "Incidence per 100000", font: { color: "black", size: 16 }, automargin: true }, showgrid: true, zeroline: false, linecolor: "black", linewidth: 1.5, gridcolor: "rgba(0,0,0,0.075)", tickfont: { color: "black" } },
+          yaxis: { title: { text: "Normalized studies (per 1M inhabitants)", font: { color: "black", size: 16 }, automargin: true }, showgrid: true, zeroline: false, linecolor: "black", linewidth: 1.5, gridcolor: "rgba(0,0,0,0.075)", tickfont: { color: "black" }, tickformat: "~s" },
           margin: { t: 60, b: 60, l: 80, r: 40 },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
           hovermode: "closest",
           showlegend: false,
-          width: size*1.3,
-          height: size*1.3,
+          width: size * sizeFactor,
+          height: size * sizeFactor,
         }}
         config={config}
       />
