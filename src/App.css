@@ -44,7 +44,7 @@ p {
 
 .text-content {
   text-align: center;
-  padding: 1rem 0;
+  padding: 1rem 1.25rem;
 }
 
 .text-content p {
@@ -71,6 +71,12 @@ p {
   .plotly-responsive-plot {
     width: 95vw;
     height: 60vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .text-content {
+    padding: 1rem 1.5rem;
   }
 }
 
