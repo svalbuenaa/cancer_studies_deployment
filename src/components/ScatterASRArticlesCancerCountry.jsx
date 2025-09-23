@@ -31,7 +31,6 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
     'Penile cancer': '#a6cee3',
   };
 
-  // Fetch CSV data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -40,8 +39,7 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
         const lines = text.split("\n").filter(line => line.trim() !== "");
         if (lines.length > 1) {
           const header = lines[0].split(",").map(h => h.trim());
-          const parsedData = lines
-            .slice(1)
+          const parsedData = lines.slice(1)
             .map(line => {
               const values = line.split(",");
               if (values.length === header.length) {
@@ -67,7 +65,6 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
     fetchData();
   }, [csvPath]);
 
-  // Responsive plot
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -125,7 +122,7 @@ const ScatterASRArticlesCancerCountry = ({ csvPath }) => {
             text: windowWidth < 768
               ? `Cancer research vs incidence<br>in <b>${selectedCountry}</b>`
               : `Cancer research vs incidence in <b>${selectedCountry}</b>`,
-            y: 0.98,
+            y: windowWidth < 768 ? 0.95 : 0.98,
             x: 0.5,
             xanchor: "center",
             font: { size: windowWidth < 768 ? 14 : 18, color: "black" },

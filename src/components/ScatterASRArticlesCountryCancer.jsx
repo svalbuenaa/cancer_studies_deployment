@@ -150,7 +150,7 @@ const ScatterASRArticlesCountryCancer = ({ csvPath, selectedCancer, setSelectedC
             text: windowWidth < 768
               ? `Incidence vs normalized<br>number of studies for <b>${selectedCancer}</b>`
               : `Incidence vs normalized number of studies for <b>${selectedCancer}</b>`,
-            y: 0.98,
+            y: windowWidth < 768 ? 0.8 : 0.98,
             x: 0.5,
             xanchor: "center",
             font: { size: windowWidth < 768 ? 14 : 18, color: "black" },
