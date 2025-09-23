@@ -145,7 +145,7 @@ const SelectCancerMap = ({ csvPath }) => {
     ? `Incidence of <b>${selectedCancer}</b><br>per country`
     : `Incidence of <b>${selectedCancer}</b> per country`;
 
-  const topMargin = windowWidth <= 768 ? 120 : 60;
+  const topMargin = windowWidth <= 768 ? 90 : 60;
 
   return (
     <div style={{ width: "100%", position: "relative", display: "flex", flexDirection: "column", alignItems: "center" }}>

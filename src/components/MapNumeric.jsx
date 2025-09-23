@@ -159,7 +159,7 @@ const MapNumeric = ({ csvPath }) => {
       ? "Cancer incidence (<b>all cancer types</b>)<br>per country"
       : "Cancer incidence (<b>all cancer types combined</b>) per country";
 
-  const topMargin = windowWidth <= 768 ? 120 : 60;
+  const topMargin = windowWidth <= 768 ? 90 : 60;
 
   return (
     <div style={{ width: "100%", position: "relative" }}>
