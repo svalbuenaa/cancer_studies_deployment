@@ -1,5 +1,5 @@
 /* ------------------------ */
-/* Global Styles & Layout   */
+/* Global Styles & Layout  */
 /* ------------------------ */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -40,7 +40,7 @@ p {
 .content-section {
   width: 100%;
   max-width: 1000px;
-  margin: 0 auto;         
+  margin: 0 auto;        
   padding-top: 1rem;
   padding-bottom: 1.5rem;
   display: flex;
@@ -60,29 +60,29 @@ p {
 }
 
 /* ------------------------ */
-/* Plotly Specific Styles   */
+/* Plotly Specific Styles  */
 /* ------------------------ */
 .plotly-responsive-plot-container {
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 1000px;
+  max-width: 950px; /* Aligns with text-content max-width to not exceed text boundaries */
   margin: 0 auto;
   background-color: #f6f8fa;
 }
 
 .plotly-responsive-plot {
-  width: 1000px;
+  width: 100%; /* Fill the container width */
   height: 650px;
   max-width: 100%;
   box-sizing: border-box;
 }
 
 /* ------------------------ */
-/* Responsive adjustments   */
+/* Responsive adjustments  */
 /* ------------------------ */
 @media (max-width: 1024px) {
-  .plotly-responsive-plot {
+ .plotly-responsive-plot {
     width: 95vw;
     height: 60vh;
     max-width: 100%;
@@ -94,16 +94,16 @@ p {
     overflow-x: hidden; /* enforce no horizontal scroll */
   }
 
-  .text-content {
+ .text-content {
     padding: 0.75rem 1rem;
   }
 
-  .plotly-responsive-plot-container {
+ .plotly-responsive-plot-container {
     max-width: 100%;
     padding: 0 0.5rem; /* small horizontal padding to prevent cutting edges */
   }
 
-  .plotly-responsive-plot {
+ .plotly-responsive-plot {
     width: 100vw; /* fill mobile width */
     height: 50vh;
     min-height: 300px;
@@ -111,14 +111,14 @@ p {
 }
 
 /* Modebar buttons */
-.plotly .modebar-btn {
-  font-size: 18px !important;
+.plotly.modebar-btn {
+  font-size: 18px!important;
 }
 
 /* Let Plotly handle modebar positioning */
-.plotly-responsive-plot-container .modebar {
-  top: auto !important;
-  bottom: auto !important;
-  right: auto !important;
-  transform: none !important;
+.plotly-responsive-plot-container.modebar {
+  top: auto!important;
+  bottom: auto!important;
+  right: auto!important;
+  transform: none!important;
 }

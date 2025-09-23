@@ -1,15 +1,9 @@
+/* MapNumeric.jsx */
 import React, { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 
 const MapNumeric = ({ csvPath }) => {
-  const [data, setData] = useState([]);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-  useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const = useState();
 
   const countryCodeMap = {
     "Afghanistan": "AFG","Albania": "ALB","Algeria": "DZA","Angola": "AGO",
@@ -59,12 +53,12 @@ const MapNumeric = ({ csvPath }) => {
       try {
         const response = await fetch(csvPath);
         const text = await response.text();
-        const lines = text.split("\n").filter((line) => line.trim() !== "");
+        const lines = text.split("\n").filter((line) => line.trim()!== "");
         if (lines.length > 1) {
-          const header = lines[0].split(",").map((h) => h.trim());
+          const header = lines.split(",").map((h) => h.trim());
           const parsedData = lines
-            .slice(1)
-            .map((line) => {
+           .slice(1)
+           .map((line) => {
               const values = line.split(",");
               if (values.length === header.length) {
                 return header.reduce((obj, key, index) => {
@@ -74,7 +68,7 @@ const MapNumeric = ({ csvPath }) => {
               }
               return null;
             })
-            .filter((d) => d && d.ASR && !isNaN(parseFloat(d.ASR)));
+           .filter((d) => d && d.ASR &&!isNaN(parseFloat(d.ASR)));
           setData(parsedData);
         }
       } catch (error) {
@@ -96,26 +90,18 @@ const MapNumeric = ({ csvPath }) => {
   const minASR = Math.min(...asrValues);
   const maxASR = Math.max(...asrValues);
   const tickStep = (maxASR - minASR) / 4;
-  const tickValues = [
-    minASR,
-    minASR + tickStep,
-    minASR + 2 * tickStep,
-    minASR + 3 * tickStep,
-    maxASR,
-  ].map((v) => parseFloat(v.toFixed(2)));
+  const tickValues =.map((v) => parseFloat(v.toFixed(2)));
 
   const plotData = {
     type: "choropleth",
     locations: data.map((d) => countryCodeMap[d.Country]),
     z: asrValues,
     text: data.map((d) => d.Country),
-    colorscale: [
-      [0, "#FFFF66"],
+    colorscale: [0, "#FFFF66"],
       [0.25, "#FFCC33"],
       [0.5, "#FF6600"],
       [0.75, "#CC3300"],
       [1, "#800000"],
-    ],
     marker: { line: { color: "black", width: 0.5 } },
     locationmode: "ISO-3",
     colorbar: {
@@ -132,6 +118,7 @@ const MapNumeric = ({ csvPath }) => {
       tickvals: tickValues,
       ticktext: tickValues.map(String),
       tickfont: { color: "black" },
+      yref: 'container'
     },
     hovertemplate:
       "<b>%{text}</b><br>Cumulative incidence: %{z} per 100,000<extra></extra>",
@@ -143,28 +130,18 @@ const MapNumeric = ({ csvPath }) => {
   };
 
   const config = {
-    modeBarButtonsToRemove: [
-      "zoomInGeo","zoomOutGeo","panGeo","select2d","lasso2d",
-      "autoScaleGeo","hoverClosestGeo","hoverCompareGeo",
-      "zoom2d","pan2d","resetViews","select","lasso",
-      "hoverClosest","hoverCompare","toggleSpikelines","sendDataToCloud"
-    ],
+    modeBarButtonsToRemove:,
     displaylogo: false,
     responsive: true,
     scrollZoom: true, // enable zooming
   };
 
-  const plotTitle =
-    windowWidth <= 768
-      ? "Cancer incidence (<b>all cancer types</b>)<br>per country"
-      : "Cancer incidence (<b>all cancer types combined</b>) per country";
-
-  const topMargin = windowWidth <= 768 ? 120 : 60;
+  const plotTitle = "Cancer incidence (<b>all cancer types combined</b>) per country";
 
   return (
     <div style={{ width: "100%", position: "relative" }}>
       <Plot
-        data={[plotData]}
+        data={}
         layout={{
           autosize: true,
           title: {
@@ -172,6 +149,9 @@ const MapNumeric = ({ csvPath }) => {
             x: 0.5,
             xanchor: "center",
             font: { size: 18, color: "black" },
+            yref: 'container',
+            y: 1,
+            yanchor: 'bottom'
           },
           geo: {
             projection: { type: "natural earth" },
@@ -183,19 +163,19 @@ const MapNumeric = ({ csvPath }) => {
             bgcolor: "#f6f8fa",
             dragmode: "zoom",
           },
-          margin: { t: topMargin, b: 40, l: 10, r: 10 },
+          margin: { t: 60, b: 40, l: 10, r: 10 },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
         }}
         config={config}
         useResizeHandler={true}
-        style={{ width: "100%", height: windowWidth <= 768 ? 500 : 650 }}
+        style={{ width: "100%", height: 650 }}
       />
       <style jsx>{`
-        .modebar {
-          top: auto !important;
-          bottom: 10px !important;
-          right: 10px !important;
+       .modebar {
+          top: auto!important;
+          bottom: 10px!important;
+          right: 10px!important;
         }
       `}</style>
     </div>
