@@ -33,18 +33,19 @@ p {
 .content-section {
   width: 100%;
   max-width: 1000px;
-  margin: 0 auto;         /* center content */
+  margin: 0 auto;         
   padding-top: 1rem;
   padding-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f6f8fa; /* matches page background */
+  background-color: #f6f8fa;
 }
 
 .text-content {
   text-align: center;
   padding: 1rem 1.25rem;
+  max-width: 950px;
 }
 
 .text-content p {
