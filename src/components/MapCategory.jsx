@@ -77,6 +77,14 @@ const countryCodeMap = {
 
 const MapCategory = ({ csvPath }) => {
   const [data, setData] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Track window width for responsive title
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     Papa.parse(csvPath, {
@@ -102,43 +110,51 @@ const MapCategory = ({ csvPath }) => {
   const uniqueCancers = [...new Set(data.map(d => d.Cancer))].sort();
 
   const plotTraces = uniqueCancers.map(cancerType => {
-  const categoryData = data.filter(d => d.Cancer === cancerType);
-  const color = colorMapping[cancerType] || "#999999";
+    const categoryData = data.filter(d => d.Cancer === cancerType);
+    const color = colorMapping[cancerType] || "#999999";
 
-  // Trick: use two different z values to force legend display
-  const zValues = categoryData.map((_, i) => i % 2); // 0,1,0,1,...
+    // Trick: use two different z values to force legend display
+    const zValues = categoryData.map((_, i) => i % 2); // 0,1,0,1,...
 
-  return {
-    type: "choropleth",
-    locations: categoryData.map(d => countryCodeMap[d.Country]),
-    z: zValues,
-    text: categoryData.map(d => d.Country),
-    name: cancerType,
-    showscale: false,
-    showlegend: true,
-    marker: { line: { color: "black", width: 0.5 } },
-    locationmode: "ISO-3",
-    colorscale: [[0, color], [1, color]],
-    hovertemplate:
-      `<b>%{text}</b><br>` +
-      `Highest incidence cancer: ${cancerType}<br>` +
-      `Incidence: %{customdata} per 100,000<extra></extra>`,
-	 hoverlabel: {
-      bordercolor: 'rgba(0, 0, 0, 0.7)',
-      bgcolor: 'rgba(255, 255, 255, 0.7)',
-      font: { color: 'black' }
-    },
-    customdata: categoryData.map(d => parseFloat(d.ASR)), 
-  };
-});
+    return {
+      type: "choropleth",
+      locations: categoryData.map(d => countryCodeMap[d.Country]),
+      z: zValues,
+      text: categoryData.map(d => d.Country),
+      name: cancerType,
+      showscale: false,
+      showlegend: true,
+      marker: { line: { color: "black", width: 0.5 } },
+      locationmode: "ISO-3",
+      colorscale: [[0, color], [1, color]],
+      hovertemplate:
+        `<b>%{text}</b><br>` +
+        `Highest incidence cancer: ${cancerType}<br>` +
+        `Incidence: %{customdata} per 100,000<extra></extra>`,
+      hoverlabel: {
+        bordercolor: 'rgba(0, 0, 0, 0.7)',
+        bgcolor: 'rgba(255, 255, 255, 0.7)',
+        font: { color: 'black' }
+      },
+      customdata: categoryData.map(d => parseFloat(d.ASR)), 
+    };
+  });
 
   const config = {
     modeBarButtonsToRemove: [
-      'zoomInGeo', 'zoomOutGeo', 'panGeo', 'select2d', 'lasso2d', 'autoScaleGeo', 'hoverClosestGeo', 'hoverCompareGeo', 'zoom2d', 'pan2d', 'resetViews', 'select', 'lasso', 'hoverClosest', 'hoverCompare', 'toggleSpikelines', 'sendDataToCloud',
+      'zoomInGeo', 'zoomOutGeo', 'panGeo', 'select2d', 'lasso2d',
+      'autoScaleGeo', 'hoverClosestGeo', 'hoverCompareGeo',
+      'zoom2d', 'pan2d', 'resetViews', 'select', 'lasso',
+      'hoverClosest', 'hoverCompare', 'toggleSpikelines', 'sendDataToCloud',
     ],
     displaylogo: false,
     modeBar: { bgcolor: 'rgba(255, 255, 255, 0)', orientation: 'h' }
   };
+
+  // Responsive title like MapNumeric / SelectCancerMap
+  const plotTitle = windowWidth <= 768
+    ? "Most common cancer<br>-by incidence- per country"
+    : "Most common cancer -by incidence- per country";
 
   return (
     <div style={{ position: "relative" }}>
@@ -146,7 +162,7 @@ const MapCategory = ({ csvPath }) => {
         data={plotTraces}
         layout={{
           title: {
-            text: "Most common cancer -by incidence- per country",
+            text: plotTitle,
             x: 0.5,
             xanchor: "center",
             font: { size: 18, color: "black" },

@@ -5,6 +5,14 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
   const [data, setData] = useState([]);
   const [uniqueCancers, setUniqueCancers] = useState([]);
 
+  // 🔹 Track screen width for responsive title
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -120,18 +128,27 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
 
   const plotData = [allCountriesTrace, ...top5Traces];
 
-  const plotTitle = `Countries with the highest number of <b>${selectedCancer}</b> studies`;
+  // 🔹 Responsive title
+  const plotTitle =
+    windowWidth <= 768
+      ? `Countries with the highest number of <br><b>${selectedCancer}</b> studies`
+      : `Countries with the highest number of <b>${selectedCancer}</b> studies`;
 
   const maxBarValue = Math.max(...plotData.flatMap((t) => t.y));
   const rawStep = maxBarValue / 10;
   const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
   const step = Math.ceil(rawStep / magnitude) * magnitude;
   const upper = Math.ceil(maxBarValue / step) * step;
-  const tickvals = Array.from({ length: Math.floor(upper / step) + 1 }, (_, i) => i * step);
+  const tickvals = Array.from(
+    { length: Math.floor(upper / step) + 1 },
+    (_, i) => i * step
+  );
 
   const formatCompact = (num) => {
-    if (num >= 1_000_000) return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
-    if (num >= 1_000) return (num / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
+    if (num >= 1_000_000)
+      return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+    if (num >= 1_000)
+      return (num / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
     return num.toString();
   };
 
@@ -139,30 +156,61 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
     responsive: true,
     displaylogo: false,
     modeBarButtonsToRemove: [
-      "zoom2d","pan2d","select2d","lasso2d","zoomIn2d","zoomOut2d",
-      "autoScale2d","hoverClosestCartesian","hoverCompareCartesian",
+      "zoom2d",
+      "pan2d",
+      "select2d",
+      "lasso2d",
+      "zoomIn2d",
+      "zoomOut2d",
+      "autoScale2d",
+      "hoverClosestCartesian",
+      "hoverCompareCartesian",
     ],
   };
 
   return (
-    <div className="plotly-responsive-plot-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      className="plotly-responsive-plot-container"
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <Plot
         data={plotData}
         layout={{
-          title: { text: plotTitle, x: 0.5, xanchor: "center", font: { size: 18, color: "black" }, y: 0.95 },
-          xaxis: { title: { text: "Year", font: { color: "black", size: 16 } }, tickmode: "array", tickvals: years, ticktext: years, tickangle: -90, showgrid: false, zeroline: false, linecolor: "black", gridcolor: "rgba(255, 255, 255, 0.2)", tickfont: { color: "black" } },
-          yaxis: { 
-            title: { text: "Number of articles", font: { color: "black", size: 16 }, standoff: 20 },
+          title: {
+            text: plotTitle,
+            x: 0.5,
+            xanchor: "center",
+            font: { size: windowWidth <= 768 ? 14 : 18, color: "black" },
+            y: 0.95,
+          },
+          xaxis: {
+            title: { text: "Year", font: { color: "black", size: 16 } },
+            tickmode: "array",
+            tickvals: years,
+            ticktext: years,
+            tickangle: -90,
+            showgrid: false,
+            zeroline: false,
+            linecolor: "black",
+            gridcolor: "rgba(255, 255, 255, 0.2)",
+            tickfont: { color: "black" },
+          },
+          yaxis: {
+            title: {
+              text: "Number of articles",
+              font: { color: "black", size: 16 },
+              standoff: 20,
+            },
             showgrid: true,
             zeroline: false,
             showline: false,
             linecolor: "black",
             gridcolor: "rgba(0,0,0,0.075)",
             tickfont: { color: "black" },
-            range: [0, maxBarValue * 1.2], 
+            range: [0, maxBarValue * 1.2],
             tickmode: "array",
             tickvals: tickvals,
-            ticktext: tickvals.map(formatCompact)
+            ticktext: tickvals.map(formatCompact),
           },
           margin: { t: 60, b: 150, l: 60, r: 60 },
           paper_bgcolor: "#f6f8fa",
@@ -171,22 +219,45 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
           barmode: "stack",
           hovermode: "x",
           annotations: allCountriesAnnotations,
-          legend: { x: 0.5, y: -0.2, xanchor: "center", orientation: "h", font: { color: "black" } },
+          legend: {
+            x: 0.5,
+            y: -0.2,
+            xanchor: "center",
+            orientation: "h",
+            font: { color: "black" },
+          },
         }}
         config={config}
         useResizeHandler={true}
         className="plotly-responsive-plot"
       />
-      <div style={{ display: "flex", gap: "20px", marginTop: "20px", color: "black" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "20px",
+          marginTop: "20px",
+          color: "black",
+        }}
+      >
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <label htmlFor="cancer-select">Cancer:</label>
           <select
             id="cancer-select"
             onChange={handleCancerChange}
-            style={{ padding: "5px", borderRadius: "5px", border: "1px solid black", backgroundColor: "white", color: "black" }}
+            style={{
+              padding: "5px",
+              borderRadius: "5px",
+              border: "1px solid black",
+              backgroundColor: "white",
+              color: "black",
+            }}
             value={selectedCancer}
           >
-            {uniqueCancers.map((cancer) => <option key={cancer} value={cancer}>{cancer}</option>)}
+            {uniqueCancers.map((cancer) => (
+              <option key={cancer} value={cancer}>
+                {cancer}
+              </option>
+            ))}
           </select>
         </div>
       </div>

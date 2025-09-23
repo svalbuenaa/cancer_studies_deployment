@@ -9,13 +9,20 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
   const [selectedCountry, setSelectedCountry] = useState("United States");
   const [selectedCancer, setSelectedCancer] = useState("Breast cancer");
 
+  // 🔹 Track screen width for responsive title
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(csvPath);
         const text = await response.text();
 
-        // Manually parse the CSV data
         const lines = text.split("\n").filter((line) => line.trim() !== "");
         if (lines.length > 1) {
           const header = lines[0].split(",").map((h) => h.trim());
@@ -72,19 +79,15 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
     y: totalArticlesByYear,
     type: "bar",
     name: `Total ${selectedCancer} studies`,
-    marker: {
-      color: "#4682B4",
-      opacity: 1,
-    },
+    marker: { color: "#4682B4", opacity: 1 },
     hovertemplate: `<b>Year:</b> %{x}<br><b>Total ${selectedCancer} studies:</b> %{y}<extra></extra>`,
   };
 
   const plotData = [totalArticlesTrace];
-  let plotTitle = "Total Published Cancer studies per Year";
 
-  let filteredData = data;
-  filteredData = filteredData.filter((d) => d.Country === selectedCountry);
-  filteredData = filteredData.filter((d) => d.Cancer === selectedCancer);
+  let filteredData = data
+    .filter((d) => d.Country === selectedCountry)
+    .filter((d) => d.Cancer === selectedCancer);
 
   const filteredArticlesByYear = years.map((year) =>
     filteredData
@@ -97,26 +100,27 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
     y: filteredArticlesByYear,
     type: "bar",
     name: `${selectedCountry} ${selectedCancer} studies`,
-    marker: {
-      color: "#FFA500",
-    },
+    marker: { color: "#FFA500" },
     hovertemplate: `<b>Year:</b> %{x}<br><b>${selectedCountry} ${selectedCancer} studies:</b> %{y}<extra></extra>`,
   };
 
   plotData.push(filteredArticlesTrace);
-  plotTitle = `Studies per year for selected country and cancer type`;
+
+  // 🔹 Responsive plot title
+  const plotTitle =
+    windowWidth <= 768
+      ? `Studies per year<br> in <b>${selectedCountry}</b> for <b>${selectedCancer}</b>`
+      : `Studies per year in <b>${selectedCountry}</b> for <b>${selectedCancer}</b>`;
 
   const annotations = plotData
     .flatMap((trace, traceIndex) =>
       trace.y
         .map((y, index) => {
           if (y === 0) return null;
-
-          const isTotalTrace = traceIndex === 0; // first trace = total studies
-
+          const isTotalTrace = traceIndex === 0;
           return {
             x: years[index],
-            y: isTotalTrace ? y : 0, // top for total, bottom for filtered
+            y: isTotalTrace ? y : 0,
             text: y.toString(),
             xref: "x",
             yref: "y",
@@ -124,19 +128,16 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
             yanchor: isTotalTrace ? "bottom" : "top",
             yshift: isTotalTrace ? 10 : -2,
             showarrow: false,
-            font: {
-              color: "black",
-              size: 12,
-            },
+            font: { color: "black", size: 12 },
             textangle: -90,
           };
         })
         .filter((a) => a !== null)
     );
 
-  // Compute dynamic y-axis ticks
+  // Dynamic y-axis ticks
   const maxVal = Math.max(...totalArticlesByYear);
-  const rawStep = maxVal / 10; // aim for ~10 ticks
+  const rawStep = maxVal / 10;
   const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
   const step = Math.ceil(rawStep / magnitude) * magnitude;
   const upper = Math.ceil(maxVal / step) * step;
@@ -146,7 +147,6 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
     (_, i) => i * step
   );
 
-  // Convert numbers to compact form (e.g., 2K, 1.2M)
   const formatCompact = (num) => {
     if (num >= 1_000_000) return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
     if (num >= 1_000) return (num / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
@@ -181,14 +181,11 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
             text: plotTitle,
             x: 0.5,
             xanchor: "center",
-            font: { size: 18, color: "black" },
+            font: { size: windowWidth <= 768 ? 14 : 18, color: "black" },
             y: 0.95,
           },
           xaxis: {
-            title: {
-              text: "Year",
-              font: { color: "black", size: 16 },
-            },
+            title: { text: "Year", font: { color: "black", size: 16 } },
             tickmode: "array",
             tickvals: years,
             ticktext: years,
@@ -214,7 +211,7 @@ const StudiesSelectedCountryCancer = ({ csvPath }) => {
             range: [-maxVal * 0.24, upper * 1.25],
             tickmode: "array",
             tickvals: tickvals,
-            ticktext: tickvals.map((v) => formatCompact(v)), 
+            ticktext: tickvals.map((v) => formatCompact(v)),
           },
           margin: { t: 60, b: 150, l: 60, r: 60 },
           paper_bgcolor: "#f6f8fa",

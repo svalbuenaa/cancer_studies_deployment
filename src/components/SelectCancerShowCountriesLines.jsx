@@ -6,6 +6,14 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
   const [years, setYears] = useState([]);
   const [topCountries, setTopCountries] = useState([]);
 
+  // 🔹 Track screen width for responsive title
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -98,16 +106,25 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
     ],
   };
 
+  // 🔹 Title (unchanged text, just break into 2 lines on small screens)
+  const plotTitle =
+    windowWidth <= 768
+      ? `Countries with the highest number of <b>${selectedCancer}</b><br>studies, tendencies`
+      : `Countries with the highest number of <b>${selectedCancer}</b> studies, tendencies`;
+
   return (
-    <div className="plotly-responsive-plot-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      className="plotly-responsive-plot-container"
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <Plot
         data={plotData}
         layout={{
           title: {
-            text: `Countries with the highest number of <b>${selectedCancer}</b> studies, tendencies`,
+            text: plotTitle,
             x: 0.5,
             xanchor: "center",
-            font: { size: 18, color: "black" },
+            font: { size: windowWidth <= 768 ? 14 : 18, color: "black" },
             y: 0.95,
           },
           xaxis: {
@@ -120,19 +137,23 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
             zeroline: false,
             linecolor: "black",
             tickfont: { color: "black" },
-			range: [Math.min(...years)-0.5, Math.max(...years)]
+            range: [Math.min(...years) - 0.5, Math.max(...years)],
           },
           yaxis: {
-			title: { text: "Number of articles", font: { color: "black", size: 16 }, standoff: 20 },
-			showgrid: true,
-			zeroline: false,
-			showline: false,
-			linecolor: "black",
-			gridcolor: "rgba(0,0,0,0.075)",
-			tickfont: { color: "black" },
-			range: [0, maxVal * 1.2],
-			tickformat: "~s" // 
-			},
+            title: {
+              text: "Number of articles",
+              font: { color: "black", size: 16 },
+              standoff: 20,
+            },
+            showgrid: true,
+            zeroline: false,
+            showline: false,
+            linecolor: "black",
+            gridcolor: "rgba(0,0,0,0.075)",
+            tickfont: { color: "black" },
+            range: [0, maxVal * 1.2],
+            tickformat: "~s",
+          },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
           autosize: true,
@@ -143,7 +164,7 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
             xanchor: "center",
             orientation: "h",
             font: { color: "black" },
-            traceorder: "reversed", 
+            traceorder: "reversed",
           },
         }}
         config={config}

@@ -5,6 +5,14 @@ const SelectCancerMap = ({ csvPath }) => {
   const [data, setData] = useState([]);
   const [uniqueCancers, setUniqueCancers] = useState([]);
   const [selectedCancer, setSelectedCancer] = useState("");
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  // Track window width for responsive title
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Country -> ISO-3 mapping (copied from MapNumeric)
   const countryCodeMap = {
@@ -67,7 +75,6 @@ const SelectCancerMap = ({ csvPath }) => {
           const cancers = [...new Set(parsedData.map((d) => d.Cancer))].sort();
           setUniqueCancers(cancers);
 
-          // Default cancer = "Breast cancer" if available, otherwise fallback to first
           if (cancers.includes("Breast cancer")) {
             setSelectedCancer("Breast cancer");
           } else if (cancers.length > 0) {
@@ -157,13 +164,18 @@ const SelectCancerMap = ({ csvPath }) => {
     displaylogo: false,
   };
 
+  // Responsive title like MapNumeric
+  const plotTitle = windowWidth <= 768
+    ? `Incidence of <b>${selectedCancer}</b><br>per country`
+    : `Incidence of <b>${selectedCancer}</b> per country`;
+
   return (
     <div className="plotly-responsive-plot-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <Plot
         data={[plotData]}
         layout={{
           title: {
-            text: `Incidence of <b>${selectedCancer}</b> per country`,
+            text: plotTitle,
             x: 0.5,
             xanchor: "center",
             font: { size: 18, color: "black" },

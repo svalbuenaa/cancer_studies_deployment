@@ -5,6 +5,7 @@ const SelectCountryShowCancers = ({ csvPath }) => {
   const [data, setData] = useState([]);
   const [uniqueCountries, setUniqueCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("Switzerland");
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,10 +28,16 @@ const SelectCountryShowCancers = ({ csvPath }) => {
               }
               return null;
             })
-            // Filter out unwanted cancer types during data parsing
-            .filter((d) => d && d.Year && d.Articles && d.Country && d.Cancer && 
-              d.Cancer !== "Undetermined cancer" && 
-              d.Cancer !== "Other cancer");
+            .filter(
+              (d) =>
+                d &&
+                d.Year &&
+                d.Articles &&
+                d.Country &&
+                d.Cancer &&
+                d.Cancer !== "Undetermined cancer" &&
+                d.Cancer !== "Other cancer"
+            );
 
           setData(parsedData);
           const countries = [...new Set(parsedData.map((d) => d.Country))].sort();
@@ -48,11 +55,17 @@ const SelectCountryShowCancers = ({ csvPath }) => {
     fetchData();
   }, [csvPath]);
 
+  // Track window width for responsive title
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const handleCountryChange = (event) => setSelectedCountry(event.target.value);
 
   const years = [...new Set(data.map((d) => d.Year))].sort();
 
-  // Top 5 cancers by total articles for the selected country, from the already filtered data
   const topCancers = [...new Set(data.map((d) => d.Cancer))]
     .map((cancer) => {
       const total = data
@@ -64,7 +77,6 @@ const SelectCountryShowCancers = ({ csvPath }) => {
     .slice(0, 5)
     .map((d) => d.cancer);
 
-  // Traces for top 5 cancers (stacked)
   const top5Traces = topCancers.map((cancer, index) => {
     const yValues = years.map((year) => {
       const entry = data.find(
@@ -92,7 +104,6 @@ const SelectCountryShowCancers = ({ csvPath }) => {
     };
   });
 
-  // All cancers trace (background)
   const totalAllCancersY = years.map((year) =>
     data
       .filter((d) => d.Country === selectedCountry && d.Year === year)
@@ -114,7 +125,6 @@ const SelectCountryShowCancers = ({ csvPath }) => {
     base: 0,
   };
 
-  // Annotations for all cancers bar
   const allCancersAnnotations = totalAllCancersY.map((y, i) => ({
     x: years[i],
     y: y,
@@ -130,18 +140,27 @@ const SelectCountryShowCancers = ({ csvPath }) => {
 
   const plotData = [allCancersTrace, ...top5Traces];
 
-  const plotTitle = `Most studied cancers in <b>${selectedCountry}</b>`;
+  // Responsive title (with <br> for small screens)
+  const plotTitle =
+    windowWidth <= 768
+      ? `Most studied cancers<br>in <b>${selectedCountry}</b>`
+      : `Most studied cancers in <b>${selectedCountry}</b>`;
 
   const maxBarValue = Math.max(...plotData.flatMap((t) => t.y));
   const rawStep = maxBarValue / 10;
   const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
   const step = Math.ceil(rawStep / magnitude) * magnitude;
   const upper = Math.ceil(maxBarValue / step) * step;
-  const tickvals = Array.from({ length: Math.floor(upper / step) + 1 }, (_, i) => i * step);
+  const tickvals = Array.from(
+    { length: Math.floor(upper / step) + 1 },
+    (_, i) => i * step
+  );
 
   const formatCompact = (num) => {
-    if (num >= 1_000_000) return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
-    if (num >= 1_000) return (num / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
+    if (num >= 1_000_000)
+      return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+    if (num >= 1_000)
+      return (num / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
     return num.toString();
   };
 
@@ -149,20 +168,51 @@ const SelectCountryShowCancers = ({ csvPath }) => {
     responsive: true,
     displaylogo: false,
     modeBarButtonsToRemove: [
-      "zoom2d","pan2d","select2d","lasso2d","zoomIn2d","zoomOut2d",
-      "autoScale2d","hoverClosestCartesian","hoverCompareCartesian",
+      "zoom2d",
+      "pan2d",
+      "select2d",
+      "lasso2d",
+      "zoomIn2d",
+      "zoomOut2d",
+      "autoScale2d",
+      "hoverClosestCartesian",
+      "hoverCompareCartesian",
     ],
   };
 
   return (
-    <div className="plotly-responsive-plot-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div
+      className="plotly-responsive-plot-container"
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <Plot
         data={plotData}
         layout={{
-          title: { text: plotTitle, x: 0.5, xanchor: "center", font: { size: 18, color: "black" }, y: 0.95 },
-          xaxis: { title: { text: "Year", font: { color: "black", size: 16 } }, tickmode: "array", tickvals: years, ticktext: years, tickangle: -90, showgrid: false, zeroline: false, linecolor: "black", gridcolor: "rgba(255, 255, 255, 0.2)", tickfont: { color: "black" } },
-          yaxis: { 
-            title: { text: "Number of articles", font: { color: "black", size: 16 }, standoff: 20 },
+          title: {
+            text: plotTitle,
+            x: 0.5,
+            xanchor: "center",
+            font: { size: 18, color: "black" },
+            y: 0.95,
+          },
+          xaxis: {
+            title: { text: "Year", font: { color: "black", size: 16 } },
+            tickmode: "array",
+            tickvals: years,
+            ticktext: years,
+            tickangle: -90,
+            showgrid: false,
+            zeroline: false,
+            linecolor: "black",
+            gridcolor: "rgba(255, 255, 255, 0.2)",
+            tickfont: { color: "black" },
+          },
+          yaxis: {
+            title: {
+              text: "Number of articles",
+              font: { color: "black", size: 16 },
+              standoff: 20,
+            },
             showgrid: true,
             zeroline: false,
             showline: false,
@@ -172,7 +222,7 @@ const SelectCountryShowCancers = ({ csvPath }) => {
             range: [0, maxBarValue * 1.2],
             tickmode: "array",
             tickvals: tickvals,
-            ticktext: tickvals.map(formatCompact)
+            ticktext: tickvals.map(formatCompact),
           },
           margin: { t: 60, b: 150, l: 60, r: 60 },
           paper_bgcolor: "#f6f8fa",
@@ -181,22 +231,45 @@ const SelectCountryShowCancers = ({ csvPath }) => {
           barmode: "stack",
           hovermode: "x",
           annotations: allCancersAnnotations,
-          legend: { x: 0.5, y: -0.2, xanchor: "center", orientation: "h", font: { color: "black" } },
+          legend: {
+            x: 0.5,
+            y: -0.2,
+            xanchor: "center",
+            orientation: "h",
+            font: { color: "black" },
+          },
         }}
         config={config}
         useResizeHandler={true}
         className="plotly-responsive-plot"
       />
-      <div style={{ display: "flex", gap: "20px", marginTop: "20px", color: "black" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "20px",
+          marginTop: "20px",
+          color: "black",
+        }}
+      >
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <label htmlFor="country-select">Country:</label>
           <select
             id="country-select"
             onChange={handleCountryChange}
-            style={{ padding: "5px", borderRadius: "5px", border: "1px solid black", backgroundColor: "white", color: "black" }}
+            style={{
+              padding: "5px",
+              borderRadius: "5px",
+              border: "1px solid black",
+              backgroundColor: "white",
+              color: "black",
+            }}
             value={selectedCountry}
           >
-            {uniqueCountries.map((country) => <option key={country} value={country}>{country}</option>)}
+            {uniqueCountries.map((country) => (
+              <option key={country} value={country}>
+                {country}
+              </option>
+            ))}
           </select>
         </div>
       </div>
