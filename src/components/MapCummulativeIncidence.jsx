@@ -124,8 +124,8 @@ const MapCummulativeIncidence = ({ csvPath }) => {
 
   const plotTitle =
 	windowWidth <= 1080
-		? "Cancer incidence <b>(all cancer types)</b> per country"
-		: "Cancer incidence <b>(all cancer types combined)</b> per country";
+		? "Cancer incidence <b>-all cancer types combined-</b> per country"
+		: "Cancer incidence <b>-all cancer types combined-</b> per country";
 
   const titleStyle = {
 	textAlign: "center",
