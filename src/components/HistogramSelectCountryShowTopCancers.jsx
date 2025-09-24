@@ -143,7 +143,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
     windowWidth <= 1080
       ? `Most studied cancers<br>in <b>${selectedCountry}</b>`
       : `Most studied cancers in <b>${selectedCountry}</b>`;
-  
+
   const maxBarValue = Math.max(...plotData.flatMap((t) => t.y));
   const rawStep = maxBarValue / 10;
   const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
@@ -166,8 +166,15 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
     responsive: true,
     displaylogo: false,
     modeBarButtonsToRemove: [
-      "zoom2d","pan2d","select2d","lasso2d","zoomIn2d",
-      "zoomOut2d","autoScale2d","hoverClosestCartesian","hoverCompareCartesian",
+      "zoom2d",
+      "pan2d",
+      "select2d",
+      "lasso2d",
+      "zoomIn2d",
+      "zoomOut2d",
+      "autoScale2d",
+      "hoverClosestCartesian",
+      "hoverCompareCartesian",
     ],
     modeBarButtons: [["resetScale2d"]],
   };
@@ -178,6 +185,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       <Plot
+        key={selectedCountry}
         data={plotData}
         layout={{
           title: {
@@ -188,7 +196,10 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
             y: 0.95,
           },
           xaxis: {
-            title: { text: "Year", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 } },
+            title: {
+              text: "Year",
+              font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 },
+            },
             tickmode: "array",
             tickvals: years,
             ticktext: years,
@@ -236,13 +247,6 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
             orientation: "h",
             font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
           },
-          modebar: {
-            orientation: 'v',
-            x: 1,
-            y: 1,
-            xanchor: 'right',
-            yanchor: 'top',
-          },
         }}
         config={config}
         useResizeHandler={true}
@@ -279,6 +283,14 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
           </select>
         </div>
       </div>
+
+      <style jsx>{`
+        .modebar {
+          top: auto !important;
+          bottom: 5px !important;
+          right: 10px !important;
+        }
+      `}</style>
     </div>
   );
 };
