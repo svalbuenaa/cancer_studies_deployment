@@ -90,7 +90,7 @@ p {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1080px) {
   body {
     overflow-x: hidden; /* enforce no horizontal scroll */
   }
