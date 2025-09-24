@@ -20,7 +20,7 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
       header: true,
       complete: (results) => {
         const sortedData = results.data
-          .filter(d => d.Year && d.Articles)
+          .filter((d) => d.Year && d.Articles)
           .sort((a, b) => a.Year - b.Year);
         setData(sortedData);
       },
@@ -35,18 +35,21 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
     );
   }
 
-  const years = data.map(d => d.Year);
-  const articles = data.map(d => parseFloat(d.Articles));
+  const years = data.map((d) => d.Year);
+  const articles = data.map((d) => parseFloat(d.Articles));
 
-  const annotations = data.map(d => ({
+  const annotations = data.map((d) => ({
     x: d.Year,
     y: d.Articles,
     text: d.Articles,
-    xref: 'x',
-    yref: 'y',
+    xref: "x",
+    yref: "y",
     yshift: 35,
     showarrow: false,
-    font: { color: 'black', size: 12 },
+    font: {
+      color: "black",
+      size: windowWidth <= 768 ? 10 : 12, // smaller font on small screens
+    },
     textangle: -90,
   }));
 
@@ -55,18 +58,27 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
     y: articles,
     type: "bar",
     marker: { color: "#4682B4" },
-    hovertemplate: '<b>Year:</b> %{x}<br><b>Studies:</b> %{y:d}<extra></extra>',
-    name: '',
+    hovertemplate:
+      "<b>Year:</b> %{x}<br><b>Studies:</b> %{y:d}<extra></extra>",
+    name: "",
   };
 
   const config = {
     responsive: true,
     displaylogo: false,
     modeBarButtonsToRemove: [
-      'toImage', 'zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d',
-      'autoScale2d', 'hoverClosestCartesian', 'hoverCompareCartesian'
+      "toImage",
+      "zoom2d",
+      "pan2d",
+      "select2d",
+      "lasso2d",
+      "zoomIn2d",
+      "zoomOut2d",
+      "autoScale2d",
+      "hoverClosestCartesian",
+      "hoverCompareCartesian",
     ],
-    modeBarButtons: [['resetScale2d']], // ensures reset button is visible on right
+    modeBarButtons: [["resetScale2d"]],
   };
 
   const titleStyle = {
@@ -95,18 +107,18 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
           autosize: true,
           margin: {
             t: 20,
-            b: windowWidth <= 1080 ? 180 : 150,
-            l: 60,
-            r: 60,
+            b: windowWidth <= 1080 ? 80 : 80,
+            l: 50,
+            r: windowWidth <= 1080 ? 20 : 50,
           },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
           xaxis: {
             title: {
               text: "Year",
-              font: { color: "black", size: 16 },
+              font: { color: "black", size: windowWidth <= 1080 ? 14 : 16 },
             },
-            tickmode: 'array',
+            tickmode: "array",
             tickvals: years,
             ticktext: years,
             tickangle: -90,
@@ -118,7 +130,7 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
           yaxis: {
             title: {
               text: "Number of studies",
-              font: { color: "black", size: 16 },
+              font: { color: "black", size: windowWidth <= 1080 ? 14 : 16 },
             },
             showgrid: true,
             zeroline: false,
