@@ -76,6 +76,7 @@ p {
   height: 650px;
   max-width: 100%;
   box-sizing: border-box;
+  touch-action: none;
 }
 
 /* ------------------------ */
