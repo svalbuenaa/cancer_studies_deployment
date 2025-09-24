@@ -8,6 +8,8 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
   const [years, setYears] = useState([]);
   const [topCountries, setTopCountries] = useState([]);
 
+  const colors = ["#FF5733", "#19ad17", "#33e7ff", "#FF33A1", "#FFC300"];
+
   // Debounced window resize
   useEffect(() => {
     const handleResize = () => {
@@ -75,43 +77,54 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
       setTopCountries([]);
       return;
     }
+
+    // Sort descending by total articles
     const top5 = Object.entries(dataMap[selectedCancer])
       .map(([country, yearMap]) => ({
         country,
         total: Object.values(yearMap).reduce((a,b) => a+b, 0)
       }))
       .sort((a,b) => b.total - a.total)
-      .slice(0,5)
-      .map(d => d.country);
-    setTopCountries(top5);
-  }, [selectedCancer, dataMap]);
+      .slice(0,5);
 
-  const colors = ["#FF5733", "#19ad17", "#33e7ff", "#FF33A1", "#FFC300"];
+    // Keep the descending order for colors
+    const topCountriesData = top5.map(d => d.country);
+
+    setTopCountries(topCountriesData);
+  }, [selectedCancer, dataMap]);
 
   // Build plotData
   const plotData = useMemo(() => {
     if (!selectedCancer || !dataMap[selectedCancer]) return [];
-    return topCountries.map((country, idx) => ({
-      x: years,
-      y: years.map(y => dataMap[selectedCancer][country][y] || 0),
-      type: "scatter",
-      mode: "lines+markers",
-      name: country,
-      line: { color: colors[idx % colors.length], width: 3 },
-      marker: { size: 6 },
-      hovertemplate:
-        `<b>Cancer:</b> ${selectedCancer}<br>` +
-        `<b>Country:</b> ${country}<br>` +
-        `<b>Year:</b> %{x}<br>` +
-        `<b>Articles:</b> %{y}<extra></extra>`,
-    }));
+
+    // Legend in ascending order, colors in descending order
+    const legendCountries = [...topCountries].reverse();
+
+    return legendCountries.map((country, idx) => {
+      // Find original index in descending order for color
+      const colorIdx = topCountries.indexOf(country);
+      return {
+        x: years,
+        y: years.map(y => dataMap[selectedCancer][country][y] || 0),
+        type: "scatter",
+        mode: "lines+markers",
+        name: country,
+        line: { color: colors[colorIdx % colors.length], width: 3 },
+        marker: { size: 6 },
+        hovertemplate:
+          `<b>Cancer:</b> ${selectedCancer}<br>` +
+          `<b>Country:</b> ${country}<br>` +
+          `<b>Year:</b> %{x}<br>` +
+          `<b>Articles:</b> %{y}<extra></extra>`,
+      };
+    });
   }, [selectedCancer, dataMap, topCountries, years]);
 
   const maxVal = Math.max(...plotData.flatMap(t => t.y), 0);
 
   // Title above plot
   const plotTitle = windowWidth <= 768
-    ? <>Countries with the highest number of<br/><b>{selectedCancer}</b>studies, tendencies</>
+    ? <>Countries with the highest number of<br/><b>{selectedCancer}</b> studies, tendencies</>
     : <>Countries with the highest number of <b>{selectedCancer}</b> studies, tendencies</>;
 
   const titleStyle = {
@@ -128,8 +141,7 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
     displaylogo: false,
     modeBarButtonsToRemove: [
       "zoom2d","pan2d","select2d","lasso2d","zoomIn2d","zoomOut2d",
-      "autoScale2d","hoverClosestCartesian","hoverCompareCartesian",
-	  "toImage",
+      "autoScale2d","hoverClosestCartesian","hoverCompareCartesian","toImage",
     ],
   };
 
