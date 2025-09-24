@@ -1,31 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Plot from "react-plotly.js";
 
 const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
   const [data, setData] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  const [dataMap, setDataMap] = useState({});
   const [years, setYears] = useState([]);
   const [topCountries, setTopCountries] = useState([]);
 
-  // 🔹 Track screen width for responsive title
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  // Debounced window resize
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth);
+    const handleResize = () => {
+      clearTimeout(window.resizeTimeout);
+      window.resizeTimeout = setTimeout(() => setWindowWidth(window.innerWidth), 150);
+    };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Load CSV
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(csvPath);
         const text = await response.text();
-
-        const lines = text.split("\n").filter((line) => line.trim() !== "");
+        const lines = text.split("\n").filter(line => line.trim() !== "");
         if (lines.length > 1) {
-          const header = lines[0].split(",").map((h) => h.trim());
-          const parsedData = lines
-            .slice(1)
-            .map((line) => {
+          const header = lines[0].split(",").map(h => h.trim());
+          const parsedData = lines.slice(1)
+            .map(line => {
               const values = line.split(",");
               if (values.length === header.length) {
                 return header.reduce((obj, key, index) => {
@@ -35,67 +39,85 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
               }
               return null;
             })
-            .filter((d) => d && d.Year && d.Articles && d.Country && d.Cancer);
+            .filter(d => d && d.Year && d.Articles && d.Country && d.Cancer);
 
           setData(parsedData);
-
-          const allYears = [...new Set(parsedData.map((d) => d.Year))].sort();
-          setYears(allYears);
-
-          // Compute top 5 countries for the selected cancer
-          const top5 = [...new Set(parsedData.map((d) => d.Country))]
-            .map((country) => {
-              const total = parsedData
-                .filter((d) => d.Country === country && d.Cancer === selectedCancer)
-                .reduce((sum, d) => sum + parseInt(d.Articles), 0);
-              return { country, total };
-            })
-            .sort((a, b) => b.total - a.total)
-            .slice(0, 5)
-            .map((d) => d.country);
-
-          setTopCountries(top5); // keep original order for color matching
         }
       } catch (error) {
         console.error("Error fetching CSV:", error);
       }
     };
+    fetchData();
+  }, [csvPath]);
 
-    if (selectedCancer) {
-      fetchData();
-    }
-  }, [csvPath, selectedCancer]);
+  // Precompute dataMap & years
+  useEffect(() => {
+    if (!data || data.length === 0) return;
 
-  // Generate line traces for top 5 countries
-  const colors = ["#FF5733", "#19ad17", "#33e7ff", "#FF33A1", "#FFC300"];
-  const plotData = topCountries.map((country, index) => {
-    const yValues = years.map((year) => {
-      const entry = data.find(
-        (d) =>
-          d.Country === country &&
-          d.Cancer === selectedCancer &&
-          d.Year === year
-      );
-      return entry ? parseInt(entry.Articles) : 0;
+    const map = {};
+    const yearSet = new Set();
+
+    data.forEach(d => {
+      const { Cancer: ca, Country: c, Year: y, Articles } = d;
+      const val = parseInt(Articles);
+
+      yearSet.add(y);
+      if (!map[ca]) map[ca] = {};
+      if (!map[ca][c]) map[ca][c] = {};
+      map[ca][c][y] = val;
     });
 
-    return {
+    setDataMap(map);
+    setYears([...yearSet].sort());
+  }, [data]);
+
+  // Compute top 5 countries whenever selectedCancer or dataMap changes
+  useEffect(() => {
+    if (!selectedCancer || !dataMap[selectedCancer]) {
+      setTopCountries([]);
+      return;
+    }
+
+    const top5 = Object.entries(dataMap[selectedCancer])
+      .map(([country, yearMap]) => ({
+        country,
+        total: Object.values(yearMap).reduce((a,b) => a+b, 0)
+      }))
+      .sort((a,b) => b.total - a.total)
+      .slice(0,5)
+      .map(d => d.country);
+
+    setTopCountries(top5);
+  }, [selectedCancer, dataMap]);
+
+  const colors = ["#FF5733", "#19ad17", "#33e7ff", "#FF33A1", "#FFC300"];
+
+  // Build plotData
+  const plotData = useMemo(() => {
+    if (!selectedCancer || !dataMap[selectedCancer]) return [];
+
+    return topCountries.map((country, idx) => ({
       x: years,
-      y: yValues,
+      y: years.map(y => dataMap[selectedCancer][country][y] || 0),
       type: "scatter",
       mode: "lines+markers",
       name: country,
-      line: { color: colors[index % colors.length], width: 3 },
+      line: { color: colors[idx % colors.length], width: 3 },
       marker: { size: 6 },
       hovertemplate:
         `<b>Cancer:</b> ${selectedCancer}<br>` +
         `<b>Country:</b> ${country}<br>` +
         `<b>Year:</b> %{x}<br>` +
         `<b>Articles:</b> %{y}<extra></extra>`,
-    };
-  });
+    }));
+  }, [selectedCancer, dataMap, topCountries, years]);
 
-  const maxVal = Math.max(...plotData.flatMap((t) => t.y));
+  const maxVal = Math.max(...plotData.flatMap(t => t.y), 0);
+
+  const plotTitle =
+    windowWidth <= 768
+      ? `Countries with the highest number of <b>${selectedCancer}</b><br>studies, tendencies`
+      : `Countries with the highest number of <b>${selectedCancer}</b> studies, tendencies`;
 
   const config = {
     responsive: true,
@@ -106,29 +128,14 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
     ],
   };
 
-  // 🔹 Title (unchanged text, just break into 2 lines on small screens)
-  const plotTitle =
-    windowWidth <= 768
-      ? `Countries with the highest number of <b>${selectedCancer}</b><br>studies, tendencies`
-      : `Countries with the highest number of <b>${selectedCancer}</b> studies, tendencies`;
-
   return (
-    <div
-      className="plotly-responsive-plot-container"
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
+    <div className="plotly-responsive-plot-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <Plot
         data={plotData}
         layout={{
-          title: {
-            text: plotTitle,
-            x: 0.5,
-            xanchor: "center",
-            font: { size: windowWidth <= 768 ? 14 : 18, color: "black" },
-            y: 0.95,
-          },
+          title: { text: plotTitle, x: 0.5, xanchor: "center", font: { size: windowWidth <= 768 ? 14 : 18, color: "black" }, y: 0.95 },
           xaxis: {
-            title: { text: "Year", font: { color: "black", size: 16 } },
+            title: { text: "Year", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 } },
             tickmode: "array",
             tickvals: years,
             ticktext: years,
@@ -136,21 +143,15 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
             showgrid: false,
             zeroline: false,
             linecolor: "black",
-            tickfont: { color: "black" },
-            range: [Math.min(...years) - 0.5, Math.max(...years)],
+            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
           },
           yaxis: {
-            title: {
-              text: "Number of articles",
-              font: { color: "black", size: 16 },
-              standoff: 20,
-            },
+            title: { text: "Number of articles", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 }, standoff: 15 },
             showgrid: true,
             zeroline: false,
             showline: false,
-            linecolor: "black",
             gridcolor: "rgba(0,0,0,0.075)",
-            tickfont: { color: "black" },
+            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
             range: [0, maxVal * 1.2],
             tickformat: "~s",
           },
@@ -158,18 +159,11 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
           plot_bgcolor: "#f6f8fa",
           autosize: true,
           hovermode: "x",
-          legend: {
-            x: 0.5,
-            y: -0.2,
-            xanchor: "center",
-            orientation: "h",
-            font: { color: "black" },
-            traceorder: "reversed",
-          },
+          legend: { x: 0.5, y: -0.2, xanchor: "center", orientation: "h", font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 } },
         }}
         config={config}
         useResizeHandler={true}
-        className="plotly-responsive-plot"
+        style={{ width: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
       />
     </div>
   );
