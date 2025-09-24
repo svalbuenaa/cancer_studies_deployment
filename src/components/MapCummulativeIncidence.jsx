@@ -160,7 +160,7 @@ const MapCummulativeIncidence = ({ csvPath }) => {
             bgcolor: "#f6f8fa",
             dragmode: "zoom",
           },
-          margin: { t: 40, b: 40, l: 10, r: 10 },
+          margin: { t: 10, b: 40, l: 10, r: 10 },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
         }}
