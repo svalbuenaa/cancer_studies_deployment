@@ -168,8 +168,12 @@ const MapSelectedCancer = ({ csvPath }) => {
             landcolor: "#f6f8fa",
             bgcolor: "#f6f8fa",
             dragmode: "zoom",
+			scope: "world",
+			showland: true,
+			visible: true,
+			lataxis: { range: [-60, 90] }
           },
-          margin: { t: 10, b: 40, l: 10, r: 10 },
+          margin: { t: windowWidth <= 768 ? 0 : 10, b: 40, l: 10, r: 10 },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
         }}
