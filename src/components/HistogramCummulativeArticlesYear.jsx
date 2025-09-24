@@ -83,7 +83,7 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
 
   const titleStyle = {
     textAlign: "center",
-    marginBottom: windowWidth <= 1080 ? "1.5rem" : "3rem",
+    marginBottom: windowWidth <= 1080 ? "1.5rem" : "2rem",
     fontWeight: "normal",
     fontSize: windowWidth <= 1080 ? "16px" : "20px",
     color: "black",

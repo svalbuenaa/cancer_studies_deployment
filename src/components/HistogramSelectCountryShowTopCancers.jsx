@@ -7,6 +7,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
   const [selectedCountry, setSelectedCountry] = useState("Switzerland");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
+  // Fetch CSV data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -55,6 +56,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
     fetchData();
   }, [csvPath]);
 
+  // Window resize for responsive layout
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -139,11 +141,6 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
 
   const plotData = [allCancersTrace, ...top5Traces];
 
-  const plotTitle =
-    windowWidth <= 1080
-      ? `Most studied cancers<br>in <b>${selectedCountry}</b>`
-      : `Most studied cancers in <b>${selectedCountry}</b>`;
-
   // --- Y-axis tick calculation with minimum step 1 ---
   const maxBarValue = Math.max(...plotData.flatMap((t) => t.y));
   const rawStep = maxBarValue / 10;
@@ -181,22 +178,31 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
     modeBarButtons: [["resetScale2d"]],
   };
 
+  // Dynamic title with <br> on small screens
+  const plotTitle = windowWidth <= 1080
+    ? <>Most studied cancers<br />in <b>{selectedCountry}</b></>
+    : <>Most studied cancers in <b>{selectedCountry}</b></>;
+
+  const titleStyle = {
+    textAlign: "center",
+    marginBottom: windowWidth <= 1080 ? "1.5rem" : "2rem",
+    fontWeight: "normal",
+    fontSize: windowWidth <= 1080 ? "16px" : "20px",
+    color: "black",
+  };
+
   return (
     <div
       className="plotly-responsive-plot-container"
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
+      {/* Title above the plot */}
+      <h2 style={titleStyle}>{plotTitle}</h2>
+
       <Plot
         key={selectedCountry}
         data={plotData}
         layout={{
-          title: {
-            text: plotTitle,
-            x: 0.5,
-            xanchor: "center",
-            font: { size: windowWidth <= 1080 ? 16 : 18, color: "black" },
-            y: 0.95,
-          },
           xaxis: {
             title: {
               text: "Year",
@@ -255,6 +261,8 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
         className="plotly-responsive-plot"
         style={{ width: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
       />
+
+      {/* Country select dropdown */}
       <div
         style={{
           display: "flex",

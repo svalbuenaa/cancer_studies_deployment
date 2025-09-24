@@ -161,19 +161,18 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
     return num.toString();
   };
 
-  const plotTitle =
-    windowWidth <= 1080
-      ? `Countries with the highest <br>number of <b>${selectedCancer}</b> studies`
-      : `Countries with the highest number of <b>${selectedCancer}</b> studies`;
-	  
+  // Title above the plot
+  const plotTitle = windowWidth <= 1080
+    ? <>Countries with the highest <br />number of <b>{selectedCancer}</b> studies</>
+    : <>Countries with the highest number of <b>{selectedCancer}</b> studies</>;
+
   const titleStyle = {
     textAlign: "center",
-    marginBottom: windowWidth <= 1080 ? "1.5rem" : "3rem",
+    marginBottom: windowWidth <= 1080 ? "1.5rem" : "2rem",
     fontWeight: "normal",
     fontSize: windowWidth <= 1080 ? "16px" : "20px",
     color: "black",
   };
-
 
   const config = {
     responsive: true,
@@ -187,10 +186,12 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
 
   return (
     <div className="plotly-responsive-plot-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      {/* Title above the plot */}
+      <h2 style={titleStyle}>{plotTitle}</h2>
+
       <Plot
         data={plotData}
         layout={{
-          title: { text: plotTitle, x: 0.5, xanchor: "center", font: { size: windowWidth <= 1080 ? 16 : 18, color: "black" }, y: 0.95 },
           xaxis: {
             title: { text: "Year", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 } },
             tickmode: "array",
@@ -227,6 +228,8 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
         useResizeHandler={true}
         style={{ width: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
       />
+
+      {/* Cancer select dropdown */}
       <div style={{ display: "flex", gap: "20px", marginTop: "20px", color: "black" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <label htmlFor="cancer-select">Cancer:</label>
