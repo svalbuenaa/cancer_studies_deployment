@@ -48,7 +48,7 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
     showarrow: false,
     font: {
       color: "black",
-      size: windowWidth <= 768 ? 10 : 12, // smaller font on small screens
+      size: windowWidth <= 768 ? 9 : 12, // smaller font on small screens
     },
     textangle: -90,
   }));
@@ -116,7 +116,7 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
           xaxis: {
             title: {
               text: "Year",
-              font: { color: "black", size: windowWidth <= 1080 ? 14 : 16 },
+              font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 },
             },
             tickmode: "array",
             tickvals: years,
@@ -125,18 +125,18 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
             showgrid: false,
             zeroline: false,
             linecolor: "black",
-            tickfont: { color: "black" },
+            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 16 },
           },
           yaxis: {
             title: {
               text: "Number of studies",
-              font: { color: "black", size: windowWidth <= 1080 ? 14 : 16 },
+              font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 },
             },
             showgrid: true,
             zeroline: false,
             showline: false,
             gridcolor: "rgba(0,0,0,0.075)",
-            tickfont: { color: "black" },
+            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 16 },
             range: [0, Math.max(...articles) * 1.25],
           },
           annotations,
