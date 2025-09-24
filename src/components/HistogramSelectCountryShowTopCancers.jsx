@@ -134,7 +134,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
     xanchor: "center",
     yanchor: "bottom",
     showarrow: false,
-    font: { color: "black", size: 12 },
+    font: { color: "black", size: windowWidth <= 1080 ? 9 : 12, },
     textangle: -90,
   }));
 

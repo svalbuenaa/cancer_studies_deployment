@@ -44,11 +44,11 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
     text: d.Articles,
     xref: "x",
     yref: "y",
-    yshift: 35,
+    yshift: windowWidth <= 1080 ? 20 : 35,
     showarrow: false,
     font: {
       color: "black",
-      size: windowWidth <= 768 ? 9 : 12, // smaller font on small screens
+      size: windowWidth <= 1080 ? 9 : 12, 
     },
     textangle: -90,
   }));
