@@ -55,7 +55,6 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
     fetchData();
   }, [csvPath]);
 
-  // Track window width for responsive title
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
@@ -134,18 +133,17 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
     xanchor: "center",
     yanchor: "bottom",
     showarrow: false,
-    font: { color: "black", size: windowWidth <= 1080 ? 9 : 12, },
+    font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
     textangle: -90,
   }));
 
   const plotData = [allCancersTrace, ...top5Traces];
 
-  // Responsive title
   const plotTitle =
     windowWidth <= 1080
       ? `Most studied cancers<br>in <b>${selectedCountry}</b>`
       : `Most studied cancers in <b>${selectedCountry}</b>`;
-
+  
   const maxBarValue = Math.max(...plotData.flatMap((t) => t.y));
   const rawStep = maxBarValue / 10;
   const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
@@ -168,16 +166,10 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
     responsive: true,
     displaylogo: false,
     modeBarButtonsToRemove: [
-      "zoom2d",
-      "pan2d",
-      "select2d",
-      "lasso2d",
-      "zoomIn2d",
-      "zoomOut2d",
-      "autoScale2d",
-      "hoverClosestCartesian",
-      "hoverCompareCartesian",
+      "zoom2d","pan2d","select2d","lasso2d","zoomIn2d",
+      "zoomOut2d","autoScale2d","hoverClosestCartesian","hoverCompareCartesian",
     ],
+    modeBarButtons: [["resetScale2d"]],
   };
 
   return (
@@ -196,7 +188,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
             y: 0.95,
           },
           xaxis: {
-            title: { text: "Year", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 }, },
+            title: { text: "Year", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 } },
             tickmode: "array",
             tickvals: years,
             ticktext: years,
@@ -205,7 +197,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
             zeroline: false,
             linecolor: "black",
             gridcolor: "rgba(255, 255, 255, 0.2)",
-            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
+            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
           },
           yaxis: {
             title: {
@@ -213,12 +205,13 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
               font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 },
               standoff: 15,
             },
+            automargin: true,
             showgrid: true,
             zeroline: false,
             showline: false,
             linecolor: "black",
             gridcolor: "rgba(0,0,0,0.075)",
-            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
+            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
             range: [0, maxBarValue * 1.2],
             tickmode: "array",
             tickvals: tickvals,
@@ -242,6 +235,13 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
             xanchor: "center",
             orientation: "h",
             font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
+          },
+          modebar: {
+            orientation: 'v',
+            x: 1,
+            y: 1,
+            xanchor: 'right',
+            yanchor: 'top',
           },
         }}
         config={config}

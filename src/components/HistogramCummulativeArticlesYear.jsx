@@ -83,7 +83,7 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
 
   const titleStyle = {
     textAlign: "center",
-    marginBottom: windowWidth <= 1080 ? "1rem" : "2rem",
+    marginBottom: windowWidth <= 1080 ? "1.5rem" : "3rem",
     fontWeight: "normal",
     fontSize: windowWidth <= 1080 ? "16px" : "20px",
     color: "black",
@@ -125,18 +125,19 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
             showgrid: false,
             zeroline: false,
             linecolor: "black",
-            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 16 },
+            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
           },
           yaxis: {
             title: {
               text: "Number of studies",
               font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 },
             },
+			automargin: true,
             showgrid: true,
             zeroline: false,
             showline: false,
             gridcolor: "rgba(0,0,0,0.075)",
-            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 16 },
+            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
             range: [0, Math.max(...articles) * 1.25],
           },
           annotations,
