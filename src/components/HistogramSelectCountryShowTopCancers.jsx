@@ -196,7 +196,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
             y: 0.95,
           },
           xaxis: {
-            title: { text: "Year", font: { color: "black", size: 14 } },
+            title: { text: "Year", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 }, },
             tickmode: "array",
             tickvals: years,
             ticktext: years,
@@ -210,7 +210,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
           yaxis: {
             title: {
               text: "Number of articles",
-              font: { color: "black", size: 14 },
+              font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 },
               standoff: 15,
             },
             showgrid: true,
@@ -241,7 +241,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
             y: -0.2,
             xanchor: "center",
             orientation: "h",
-            font: { color: "black", size: windowWidth <= 1080 ? 10 : 12 },
+            font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
           },
         }}
         config={config}
