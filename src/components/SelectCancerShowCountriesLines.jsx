@@ -4,7 +4,6 @@ import Plot from "react-plotly.js";
 const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
   const [data, setData] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
   const [dataMap, setDataMap] = useState({});
   const [years, setYears] = useState([]);
   const [topCountries, setTopCountries] = useState([]);
@@ -60,7 +59,6 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
     data.forEach(d => {
       const { Cancer: ca, Country: c, Year: y, Articles } = d;
       const val = parseInt(Articles);
-
       yearSet.add(y);
       if (!map[ca]) map[ca] = {};
       if (!map[ca][c]) map[ca][c] = {};
@@ -71,13 +69,12 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
     setYears([...yearSet].sort());
   }, [data]);
 
-  // Compute top 5 countries whenever selectedCancer or dataMap changes
+  // Compute top 5 countries
   useEffect(() => {
     if (!selectedCancer || !dataMap[selectedCancer]) {
       setTopCountries([]);
       return;
     }
-
     const top5 = Object.entries(dataMap[selectedCancer])
       .map(([country, yearMap]) => ({
         country,
@@ -86,7 +83,6 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
       .sort((a,b) => b.total - a.total)
       .slice(0,5)
       .map(d => d.country);
-
     setTopCountries(top5);
   }, [selectedCancer, dataMap]);
 
@@ -95,7 +91,6 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
   // Build plotData
   const plotData = useMemo(() => {
     if (!selectedCancer || !dataMap[selectedCancer]) return [];
-
     return topCountries.map((country, idx) => ({
       x: years,
       y: years.map(y => dataMap[selectedCancer][country][y] || 0),
@@ -114,26 +109,36 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
 
   const maxVal = Math.max(...plotData.flatMap(t => t.y), 0);
 
-  const plotTitle =
-    windowWidth <= 768
-      ? `Countries with the highest number of <b>${selectedCancer}</b><br>studies, tendencies`
-      : `Countries with the highest number of <b>${selectedCancer}</b> studies, tendencies`;
+  // Title above plot
+  const plotTitle = windowWidth <= 768
+    ? <>Countries with the highest number of <b>{selectedCancer}</b><br/>studies, tendencies</>
+    : <>Countries with the highest number of <b>{selectedCancer}</b> studies, tendencies</>;
+
+  const titleStyle = {
+    textAlign: "center",
+    marginBottom: windowWidth <= 768 ? "0rem" : "0rem",
+    fontWeight: "normal",
+    fontSize: windowWidth <= 768 ? "16px" : "20px",
+    color: "black",
+    lineHeight: 1.2
+  };
 
   const config = {
     responsive: true,
     displaylogo: false,
     modeBarButtonsToRemove: [
       "zoom2d","pan2d","select2d","lasso2d","zoomIn2d","zoomOut2d",
-      "autoScale2d","resetScale2d","hoverClosestCartesian","hoverCompareCartesian",
+      "autoScale2d","hoverClosestCartesian","hoverCompareCartesian",
     ],
   };
 
   return (
-    <div className="plotly-responsive-plot-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+      <h2 style={titleStyle}>{plotTitle}</h2>
       <Plot
         data={plotData}
         layout={{
-          title: { text: plotTitle, x: 0.5, xanchor: "center", font: { size: windowWidth <= 768 ? 14 : 18, color: "black" }, y: 0.95 },
+          autosize: true,
           xaxis: {
             title: { text: "Year", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 } },
             tickmode: "array",
@@ -157,13 +162,13 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
           },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
-          autosize: true,
           hovermode: "x",
+          margin: { t: 20, b: 80, l: 50, r: windowWidth <= 768 ? 20 : 50 },
           legend: { x: 0.5, y: -0.2, xanchor: "center", orientation: "h", font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 } },
         }}
         config={config}
         useResizeHandler={true}
-        style={{ width: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
+        style={{ width: "100%", minWidth: "300px", maxWidth: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
       />
     </div>
   );
