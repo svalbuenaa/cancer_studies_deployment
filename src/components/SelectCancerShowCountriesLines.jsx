@@ -111,7 +111,7 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
 
   // Title above plot
   const plotTitle = windowWidth <= 768
-    ? <>Countries with the highest number of <b>{selectedCancer}</b><br/>studies, tendencies</>
+    ? <>Countries with the highest number of<br/><b>{selectedCancer}</b>studies, tendencies</>
     : <>Countries with the highest number of <b>{selectedCancer}</b> studies, tendencies</>;
 
   const titleStyle = {
@@ -129,6 +129,7 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
     modeBarButtonsToRemove: [
       "zoom2d","pan2d","select2d","lasso2d","zoomIn2d","zoomOut2d",
       "autoScale2d","hoverClosestCartesian","hoverCompareCartesian",
+	  "toImage",
     ],
   };
 
