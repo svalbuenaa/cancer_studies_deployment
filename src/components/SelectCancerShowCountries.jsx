@@ -165,6 +165,15 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
     windowWidth <= 1080
       ? `Countries with the highest <br>number of <b>${selectedCancer}</b> studies`
       : `Countries with the highest number of <b>${selectedCancer}</b> studies`;
+	  
+  const titleStyle = {
+    textAlign: "center",
+    marginBottom: windowWidth <= 1080 ? "1.5rem" : "3rem",
+    fontWeight: "normal",
+    fontSize: windowWidth <= 1080 ? "16px" : "20px",
+    color: "black",
+  };
+
 
   const config = {
     responsive: true,
