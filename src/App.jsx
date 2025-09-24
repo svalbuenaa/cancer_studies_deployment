@@ -6,7 +6,7 @@ import MapMostStudied from "./components/MapMostStudied";
 import StudiesSelectedCountryCancer from "./components/StudiesSelectedCountryCancer";
 import SelectCancerShowCountries from "./components/SelectCancerShowCountries";
 import SelectCancerShowCountriesLines from "./components/SelectCancerShowCountriesLines";
-import SelectCountryShowCancers from "./components/SelectCountryShowCancers";
+import HistogramSelectCountryShowTopCancers from "./components/HistogramSelectCountryShowTopCancers";
 import ScatterASRArticlesCancerCountry from "./components/ScatterASRArticlesCancerCountry";
 import ScatterASRArticlesCountryCancer from "./components/ScatterASRArticlesCountryCancer";
 import DataProcessing from "/Schema_data_processing.svg";
@@ -142,7 +142,7 @@ function App() {
             studies for <span style={{ color: '#4682B4' }}><b>all cancers combined in that country</b></span>{' '} (total number of studies on top).
           </p>
         </div>
-        <SelectCountryShowCancers csvPath={selectedCountryCancerCsvPath} />
+        <HistogramSelectCountryShowTopCancers csvPath={selectedCountryCancerCsvPath} />
       </div>
 
       {/* Selected country cancer studies */}

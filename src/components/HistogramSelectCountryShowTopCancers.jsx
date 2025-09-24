@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 
-const SelectCountryShowCancers = ({ csvPath }) => {
+const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
   const [data, setData] = useState([]);
   const [uniqueCountries, setUniqueCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("Switzerland");
@@ -140,7 +140,7 @@ const SelectCountryShowCancers = ({ csvPath }) => {
 
   const plotData = [allCancersTrace, ...top5Traces];
 
-  // Responsive title (with <br> for small screens)
+  // Responsive title
   const plotTitle =
     windowWidth <= 768
       ? `Most studied cancers<br>in <b>${selectedCountry}</b>`
@@ -192,11 +192,11 @@ const SelectCountryShowCancers = ({ csvPath }) => {
             text: plotTitle,
             x: 0.5,
             xanchor: "center",
-            font: { size: 18, color: "black" },
+            font: { size: windowWidth <= 768 ? 16 : 18, color: "black" },
             y: 0.95,
           },
           xaxis: {
-            title: { text: "Year", font: { color: "black", size: 16 } },
+            title: { text: "Year", font: { color: "black", size: 14 } },
             tickmode: "array",
             tickvals: years,
             ticktext: years,
@@ -205,26 +205,26 @@ const SelectCountryShowCancers = ({ csvPath }) => {
             zeroline: false,
             linecolor: "black",
             gridcolor: "rgba(255, 255, 255, 0.2)",
-            tickfont: { color: "black" },
+            tickfont: { color: "black", size: windowWidth <= 768 ? 9 : 12 },
           },
           yaxis: {
             title: {
               text: "Number of articles",
-              font: { color: "black", size: 16 },
-              standoff: 20,
+              font: { color: "black", size: 14 },
+              standoff: 15,
             },
             showgrid: true,
             zeroline: false,
             showline: false,
             linecolor: "black",
             gridcolor: "rgba(0,0,0,0.075)",
-            tickfont: { color: "black" },
+            tickfont: { color: "black", size: windowWidth <= 768 ? 9 : 12 },
             range: [0, maxBarValue * 1.2],
             tickmode: "array",
             tickvals: tickvals,
             ticktext: tickvals.map(formatCompact),
           },
-          margin: { t: 60, b: 150, l: 60, r: 60 },
+          margin: { t: windowWidth <= 768 ? 40 : 50, b: 100, l: 50, r: 50 },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
           autosize: true,
@@ -236,12 +236,13 @@ const SelectCountryShowCancers = ({ csvPath }) => {
             y: -0.2,
             xanchor: "center",
             orientation: "h",
-            font: { color: "black" },
+            font: { color: "black", size: windowWidth <= 768 ? 10 : 12 },
           },
         }}
         config={config}
         useResizeHandler={true}
         className="plotly-responsive-plot"
+        style={{ width: "100%", height: windowWidth <= 768 ? 400 : 600 }}
       />
       <div
         style={{
@@ -277,4 +278,4 @@ const SelectCountryShowCancers = ({ csvPath }) => {
   );
 };
 
-export default SelectCountryShowCancers;
+export default HistogramSelectCountryShowTopCancers;
