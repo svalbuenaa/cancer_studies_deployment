@@ -139,7 +139,7 @@ const MapSelectedCancer = ({ csvPath }) => {
 
   const titleStyle = {
 	textAlign: "center",
-	marginBottom: windowWidth <= 1080 ? "-2rem" : "-3rem",
+	marginBottom: windowWidth <= 1080 ? "-1rem" : "-2rem",
 	fontWeight: "normal",
 	fontSize: windowWidth <= 1080 ? "16px" : "20px",
 	color: "black",
