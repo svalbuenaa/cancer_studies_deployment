@@ -175,7 +175,7 @@ const MapSelectedCancer = ({ csvPath }) => {
         }}
         config={config}
         useResizeHandler={true}
-        style={{ width: "100%", height: windowWidth <= 768 ? 500 : 650 }}
+        style={{ width: "100%", height: windowWidth <= 768 ? 400 : 650 }}
       />
       <div style={{ marginTop: "20px", textAlign: "center" }}>
         <label htmlFor="cancer-select" style={{ marginRight: "10px" }}>
