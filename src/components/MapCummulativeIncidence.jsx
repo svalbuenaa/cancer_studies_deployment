@@ -75,7 +75,7 @@ const MapCummulativeIncidence = ({ csvPath }) => {
     colorbar: {
       title: { text: "Incidence<br>(per 100,000)", font: { color: "black" } },
       thickness: 10,
-      len: 0.5,
+      len: 0.8,
       y: -0.1,
       yanchor: "bottom",
       x: 0.5,
@@ -129,10 +129,12 @@ const MapCummulativeIncidence = ({ csvPath }) => {
 
   const titleStyle = {
 	textAlign: "center",
-	marginBottom: windowWidth <= 1080 ? "0rem" : "0rem",
+	marginBottom: windowWidth <= 1080 ? "-2rem" : "-3rem",
 	fontWeight: "normal", 
 	fontSize: windowWidth <= 1080 ? "16px" : "20px",
 	color: "black",
+	position: "relative",
+	zIndex: 2,
   };
 
   return (
@@ -164,13 +166,13 @@ const MapCummulativeIncidence = ({ csvPath }) => {
 			visible: true,
 			lataxis: { range: [-60, 90] }
           },
-          margin: { t: windowWidth <= 1080 ? 0 : 10, b: 40, l: 10, r: 10 },
+          margin: { t: windowWidth <= 1080 ? 0 : 0, b: 40, l: 10, r: 10 },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
         }}
         config={config}
         useResizeHandler={true}
-        style={{ width: "100%", height: windowWidth <= 1080 ? 350 : 550 }}
+        style={{ width: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
       />
     </div>
   );

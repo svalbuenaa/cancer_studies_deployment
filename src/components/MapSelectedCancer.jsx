@@ -86,7 +86,7 @@ const MapSelectedCancer = ({ csvPath }) => {
     colorbar: {
       title: { text: "Incidence<br>(per 100,000)", font: { color: "black" } },
       thickness: 10,
-      len: 0.5,
+      len: 0.8,
       y: -0.1,
       yanchor: "bottom",
       x: 0.5,
@@ -139,10 +139,12 @@ const MapSelectedCancer = ({ csvPath }) => {
 
   const titleStyle = {
 	textAlign: "center",
-	marginBottom: windowWidth <= 1080 ? "0rem" : "0rem",
+	marginBottom: windowWidth <= 1080 ? "-2rem" : "-3rem",
 	fontWeight: "normal",
 	fontSize: windowWidth <= 1080 ? "16px" : "20px",
 	color: "black",
+	position: "relative",
+	zIndex: 2,
   };
 
   return (
@@ -179,7 +181,7 @@ const MapSelectedCancer = ({ csvPath }) => {
         }}
         config={config}
         useResizeHandler={true}
-        style={{ width: "100%", height: windowWidth <= 1080 ? 350 : 550 }}
+        style={{ width: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
       />
       <div style={{ marginTop: "20px", textAlign: "center" }}>
         <label htmlFor="cancer-select" style={{ marginRight: "10px" }}>
