@@ -170,7 +170,7 @@ const MapCummulativeIncidence = ({ csvPath }) => {
         }}
         config={config}
         useResizeHandler={true}
-        style={{ width: "100%", height: windowWidth <= 768 ? 400 : 650 }}
+        style={{ width: "100%", height: windowWidth <= 768 ? 350 : 550 }}
       />
     </div>
   );
