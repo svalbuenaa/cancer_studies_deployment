@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CancerMapSwitcher from "./components/CancerMapSwitcher";
-import MapCategory from "./components/MapCategory";
+import MapMostCommon from "./components/MapMostCommon";
 import ArticlesYear from "./components/ArticlesYear";
 import MapMostStudied from "./components/MapMostStudied";
 import StudiesSelectedCountryCancer from "./components/StudiesSelectedCountryCancer";
@@ -99,7 +99,7 @@ function App() {
 			The map below shows the most common type of cancer diagnosed in each country, together with its associated incidence rate.
           </p>
         </div>
-        <MapCategory csvPath={categoryCsvPath} />
+        <MapMostCommon csvPath={categoryCsvPath} />
       </div>
 
       {/* Number of cancer studies over time */}
