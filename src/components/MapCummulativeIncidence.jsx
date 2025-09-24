@@ -115,6 +115,7 @@ const MapCummulativeIncidence = ({ csvPath }) => {
       "hoverCompare",
       "toggleSpikelines",
       "sendDataToCloud",
+	  "toImage",
     ],
     displaylogo: false,
     responsive: true,
@@ -122,9 +123,17 @@ const MapCummulativeIncidence = ({ csvPath }) => {
   };
 
   const plotTitle =
-    windowWidth <= 768
-      ? "Cancer incidence (<b>all cancer types</b>) per country"
-      : "Cancer incidence (<b>all cancer types combined</b>) per country";
+	windowWidth <= 768
+		? "Cancer incidence <b>(all cancer types)</b> per country"
+		: "Cancer incidence <b>(all cancer types combined)</b> per country";
+
+  const titleStyle = {
+	textAlign: "center",
+	marginBottom: windowWidth <= 768 ? "0rem" : "0rem",
+	fontWeight: "normal", 
+	fontSize: windowWidth <= 768 ? "16px" : "20px",
+	color: "black",
+  };
 
   return (
     <div
@@ -136,14 +145,7 @@ const MapCummulativeIncidence = ({ csvPath }) => {
 		alignItems: "center",
 	}}
 	>
-      <h2
-        style={{
-          textAlign: "center",
-          marginBottom: "1rem",
-          color: "black",
-        }}
-        dangerouslySetInnerHTML={{ __html: plotTitle }}
-      />
+      <h2 style={titleStyle} dangerouslySetInnerHTML={{ __html: plotTitle }} />
       <Plot
         data={[plotData]}
         layout={{

@@ -125,6 +125,7 @@ const MapSelectedCancer = ({ csvPath }) => {
       "hoverCompare",
       "toggleSpikelines",
       "sendDataToCloud",
+	  "toImage",
     ],
     displaylogo: false,
     responsive: true,
@@ -132,9 +133,17 @@ const MapSelectedCancer = ({ csvPath }) => {
   };
 
   const plotTitle =
-    windowWidth <= 768
-      ? `Incidence of <b>${selectedCancer}</b> per country`
-      : `Incidence of <b>${selectedCancer}</b> per country`;
+  windowWidth <= 768
+    ? `Incidence of <b>${selectedCancer}</b> per country`
+    : `Incidence of <b>${selectedCancer}</b> per country`;
+
+  const titleStyle = {
+	textAlign: "center",
+	marginBottom: windowWidth <= 768 ? "0rem" : "0rem",
+	fontWeight: "normal",
+	fontSize: windowWidth <= 768 ? "16px" : "20px",
+	color: "black",
+  };
 
   return (
     <div
@@ -146,14 +155,7 @@ const MapSelectedCancer = ({ csvPath }) => {
         alignItems: "center",
       }}
     >
-      <h2
-        style={{
-          textAlign: "center",
-          marginBottom: "1rem",
-          color: "black",
-        }}
-        dangerouslySetInnerHTML={{ __html: plotTitle }}
-      />
+      <h2 style={titleStyle} dangerouslySetInnerHTML={{ __html: plotTitle }} />
       <Plot
         data={[plotData]}
         layout={{
