@@ -142,7 +142,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
 
   // Responsive title
   const plotTitle =
-    windowWidth <= 768
+    windowWidth <= 1080
       ? `Most studied cancers<br>in <b>${selectedCountry}</b>`
       : `Most studied cancers in <b>${selectedCountry}</b>`;
 
@@ -192,7 +192,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
             text: plotTitle,
             x: 0.5,
             xanchor: "center",
-            font: { size: windowWidth <= 768 ? 16 : 18, color: "black" },
+            font: { size: windowWidth <= 1080 ? 16 : 18, color: "black" },
             y: 0.95,
           },
           xaxis: {
@@ -205,7 +205,7 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
             zeroline: false,
             linecolor: "black",
             gridcolor: "rgba(255, 255, 255, 0.2)",
-            tickfont: { color: "black", size: windowWidth <= 768 ? 9 : 12 },
+            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
           },
           yaxis: {
             title: {
@@ -218,13 +218,18 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
             showline: false,
             linecolor: "black",
             gridcolor: "rgba(0,0,0,0.075)",
-            tickfont: { color: "black", size: windowWidth <= 768 ? 9 : 12 },
+            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
             range: [0, maxBarValue * 1.2],
             tickmode: "array",
             tickvals: tickvals,
             ticktext: tickvals.map(formatCompact),
           },
-          margin: { t: windowWidth <= 768 ? 40 : 50, b: 100, l: 50, r: 50 },
+          margin: {
+            t: 20,
+            b: windowWidth <= 1080 ? 80 : 80,
+            l: 50,
+            r: windowWidth <= 1080 ? 20 : 50,
+          },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
           autosize: true,
@@ -236,13 +241,13 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
             y: -0.2,
             xanchor: "center",
             orientation: "h",
-            font: { color: "black", size: windowWidth <= 768 ? 10 : 12 },
+            font: { color: "black", size: windowWidth <= 1080 ? 10 : 12 },
           },
         }}
         config={config}
         useResizeHandler={true}
         className="plotly-responsive-plot"
-        style={{ width: "100%", height: windowWidth <= 768 ? 400 : 600 }}
+        style={{ width: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
       />
       <div
         style={{
