@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CancerMapSwitcher from "./components/CancerMapSwitcher";
 import MapMostCommon from "./components/MapMostCommon";
-import ArticlesYear from "./components/ArticlesYear";
+import HistogramCummulativeArticlesYear from "./components/HistogramCummulativeArticlesYear";
 import MapMostStudied from "./components/MapMostStudied";
 import StudiesSelectedCountryCancer from "./components/StudiesSelectedCountryCancer";
 import SelectCancerShowCountries from "./components/SelectCancerShowCountries";
@@ -113,7 +113,7 @@ function App() {
 			not reflect final values for these years</i>. 
           </p>
         </div>
-        <ArticlesYear csvPath={articlesCsvPath} />
+        <HistogramCummulativeArticlesYear csvPath={articlesCsvPath} />
       </div>
 
       {/* Most studied cancer per country */}
