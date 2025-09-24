@@ -144,10 +144,12 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
       ? `Most studied cancers<br>in <b>${selectedCountry}</b>`
       : `Most studied cancers in <b>${selectedCountry}</b>`;
 
+  // --- Y-axis tick calculation with minimum step 1 ---
   const maxBarValue = Math.max(...plotData.flatMap((t) => t.y));
   const rawStep = maxBarValue / 10;
   const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
-  const step = Math.ceil(rawStep / magnitude) * magnitude;
+  let step = Math.ceil(rawStep / magnitude) * magnitude;
+  step = Math.max(1, step); // Minimum tick step is 1
   const upper = Math.ceil(maxBarValue / step) * step;
   const tickvals = Array.from(
     { length: Math.floor(upper / step) + 1 },
