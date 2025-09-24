@@ -133,15 +133,15 @@ const MapSelectedCancer = ({ csvPath }) => {
   };
 
   const plotTitle =
-  windowWidth <= 768
+  windowWidth <= 1080
     ? `Incidence of <b>${selectedCancer}</b> per country`
     : `Incidence of <b>${selectedCancer}</b> per country`;
 
   const titleStyle = {
 	textAlign: "center",
-	marginBottom: windowWidth <= 768 ? "0rem" : "0rem",
+	marginBottom: windowWidth <= 1080 ? "0rem" : "0rem",
 	fontWeight: "normal",
-	fontSize: windowWidth <= 768 ? "16px" : "20px",
+	fontSize: windowWidth <= 1080 ? "16px" : "20px",
 	color: "black",
   };
 
@@ -173,13 +173,13 @@ const MapSelectedCancer = ({ csvPath }) => {
 			visible: true,
 			lataxis: { range: [-60, 90] }
           },
-          margin: { t: windowWidth <= 768 ? 0 : 10, b: 40, l: 10, r: 10 },
+          margin: { t: windowWidth <= 1080 ? 0 : 10, b: 40, l: 10, r: 10 },
           paper_bgcolor: "#f6f8fa",
           plot_bgcolor: "#f6f8fa",
         }}
         config={config}
         useResizeHandler={true}
-        style={{ width: "100%", height: windowWidth <= 768 ? 350 : 550 }}
+        style={{ width: "100%", height: windowWidth <= 1080 ? 350 : 550 }}
       />
       <div style={{ marginTop: "20px", textAlign: "center" }}>
         <label htmlFor="cancer-select" style={{ marginRight: "10px" }}>
