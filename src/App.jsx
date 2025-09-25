@@ -8,7 +8,7 @@ import HistogramSelectCancerShowTopCountries from "./components/HistogramSelectC
 import LinesSelectCancerShowTopCountries from "./components/LinesSelectCancerShowTopCountries";
 import HistogramSelectCountryShowTopCancers from "./components/HistogramSelectCountryShowTopCancers";
 import ScatterASRArticlesCancerCountry from "./components/ScatterASRArticlesCancerCountry";
-import ScatterASRArticlesCountryCancer from "./components/ScatterASRArticlesCountryCancer";
+import ScatterSelectCancerShowCountriesIncidenceStudies from "./components/ScatterSelectCancerShowCountriesIncidenceStudies";
 import DataProcessing from "/Schema_data_processing.svg";
 import "./App.css";
 
@@ -232,7 +232,7 @@ function App() {
 			that, upon selecting a cancer type, the updated bar chart will appear after a few seconds</i>.
           </p>
         </div>
-        <ScatterASRArticlesCountryCancer
+        <ScatterSelectCancerShowCountriesIncidenceStudies
           csvPath={scatterCancerCsvPath}
           selectedCancer={selectedCancer}
           setSelectedCancer={setSelectedCancer}
