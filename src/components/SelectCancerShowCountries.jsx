@@ -161,14 +161,13 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
     return num.toString();
   };
 
-  // Title above the plot
   const plotTitle = windowWidth <= 1080
     ? <>Countries with the highest <br />number of <b>{selectedCancer}</b> studies</>
     : <>Countries with the highest number of <b>{selectedCancer}</b> studies</>;
 
   const titleStyle = {
     textAlign: "center",
-    marginBottom: windowWidth <= 1080 ? "0rem" : "0rem",
+    marginBottom: "0rem",
     fontWeight: "normal",
     fontSize: windowWidth <= 1080 ? "16px" : "20px",
     color: "black",
@@ -186,10 +185,10 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
 
   return (
     <div className="plotly-responsive-plot-container" style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      {/* Title above the plot */}
       <h2 style={titleStyle}>{plotTitle}</h2>
 
       <Plot
+        key={selectedCancer} 
         data={plotData}
         layout={{
           xaxis: {
@@ -229,7 +228,6 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
         style={{ width: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
       />
 
-      {/* Cancer select dropdown */}
       <div style={{ display: "flex", gap: "20px", marginTop: "20px", color: "black" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
           <label htmlFor="cancer-select">Cancer:</label>
