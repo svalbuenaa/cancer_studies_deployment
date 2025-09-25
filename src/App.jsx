@@ -18,6 +18,7 @@ function App() {
   const articlesCsvPath = "data/articles_year.csv";
   const articlesMostStudiedCsvPath = "data/articles_cancer_most_studied_country.csv";
   const selectedCountryCancerCsvPath = "data/articles_country_year_cancer.csv";
+  const selectedCountryCancerLiteCsvPath = "data/articles_country_year_cancer_lite.csv";
   const selectCancerMapCsvPath = "data/Globocan_dataset_ready_lite.csv";
   const scatterCsvPath = "data/articles_ASR_country_cancer_percentage.csv";
   const scatterCancerCsvPath = "data/articles_ASR_country_cancer_1M.csv";
@@ -171,7 +172,7 @@ function App() {
           </p>
         </div>
         <SelectCancerShowCountries
-          csvPath={selectedCountryCancerCsvPath}
+          csvPath={selectedCountryCancerLiteCsvPath}
           selectedCancer={selectedCancer}
           setSelectedCancer={setSelectedCancer}
         />
@@ -189,7 +190,7 @@ function App() {
           </p>
         </div>
         <SelectCancerShowCountriesLines
-          csvPath={selectedCountryCancerCsvPath}
+          csvPath={selectedCountryCancerLiteCsvPath}
           selectedCancer={selectedCancer}
         />
       </div>
