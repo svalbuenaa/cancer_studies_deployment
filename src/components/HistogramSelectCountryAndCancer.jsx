@@ -175,6 +175,7 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
       "autoScale2d",
       "hoverClosestCartesian",
       "hoverCompareCartesian",
+	  "toImage",
     ],
     modeBarButtons: [["resetScale2d"]],
   };
