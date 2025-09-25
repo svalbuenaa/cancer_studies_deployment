@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Plot from "react-plotly.js";
 
-const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer }) => {
+const HistogramSelectCancerShowTopCountries = ({ csvPath }) => {
   const [data, setData] = useState([]);
   const [uniqueCancers, setUniqueCancers] = useState([]);
+  const [selectedCancer, setSelectedCancer] = useState("Breast cancer"); // default
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
   const [dataMap, setDataMap] = useState({});
   const [totalPerCountry, setTotalPerCountry] = useState({});
   const [years, setYears] = useState([]);
 
-  // Debounced window resize
+  const colors = ["#FF5733", "#19ad17", "#33e7ff", "#FF33A1", "#FFC300"];
+
   useEffect(() => {
     const handleResize = () => {
       clearTimeout(window.resizeTimeout);
@@ -20,7 +21,6 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Load CSV data
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,16 +43,21 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
             .filter(d => d && d.Year && d.Articles && d.Country && d.Cancer);
 
           setData(parsedData);
-          setUniqueCancers([...new Set(parsedData.map(d => d.Cancer))].sort());
+          const cancers = [...new Set(parsedData.map(d => d.Cancer))].sort();
+          setUniqueCancers(cancers);
+
+          // If Breast cancer exists, set as default, else first cancer
+          if (cancers.includes("Breast cancer")) setSelectedCancer("Breast cancer");
+          else if (!selectedCancer && cancers.length > 0) setSelectedCancer(cancers[0]);
         }
-      } catch (error) {
-        console.error("Error fetching CSV:", error);
+      } catch (err) {
+        console.error("Error fetching CSV:", err);
       }
     };
     fetchData();
   }, [csvPath]);
 
-  // Precompute dataMap, totalPerCountry, years
+  // Precompute maps
   useEffect(() => {
     if (!data || data.length === 0) return;
 
@@ -63,7 +68,6 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
     data.forEach(d => {
       const { Cancer: ca, Country: c, Year: y, Articles } = d;
       const val = parseInt(Articles);
-
       yearSet.add(y);
       if (!map[ca]) map[ca] = {};
       if (!map[ca][c]) map[ca][c] = {};
@@ -84,9 +88,7 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
 
   const handleCancerChange = (event) => setSelectedCancer(event.target.value);
 
-  const colors = ["#FF5733", "#19ad17", "#33e7ff", "#FF33A1", "#FFC300"];
-
-  // Compute traces and annotations for selected cancer
+  // Plot data
   const { plotData, annotations } = useMemo(() => {
     if (!selectedCancer || !dataMap[selectedCancer]) return { plotData: [], annotations: [] };
 
@@ -230,9 +232,9 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
 
       <div style={{ display: "flex", gap: "20px", marginTop: "20px", color: "black" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <label htmlFor="cancer-select">Cancer:</label>
+          <label htmlFor="cancer-select-bar">Cancer:</label>
           <select
-            id="cancer-select"
+            id="cancer-select-bar"
             onChange={handleCancerChange}
             value={selectedCancer}
             style={{ padding: "5px", borderRadius: "5px", border: "1px solid black", backgroundColor: "white", color: "black" }}
@@ -245,4 +247,4 @@ const SelectCancerShowCountries = ({ csvPath, selectedCancer, setSelectedCancer 
   );
 };
 
-export default SelectCancerShowCountries;
+export default HistogramSelectCancerShowTopCountries;

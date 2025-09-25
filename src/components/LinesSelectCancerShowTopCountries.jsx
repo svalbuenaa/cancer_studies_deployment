@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Plot from "react-plotly.js";
 
-const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
+const LinesSelectCancerShowTopCountries = ({ csvPath }) => {
   const [data, setData] = useState([]);
+  const [uniqueCancers, setUniqueCancers] = useState([]);
+  const [selectedCancer, setSelectedCancer] = useState("Breast cancer"); // default
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [dataMap, setDataMap] = useState({});
   const [years, setYears] = useState([]);
   const [topCountries, setTopCountries] = useState([]);
 
-  const colors = ["#FF5733", "#19ad17", "#33e7ff", "#FF33A1", "#FFC300"];
+  const colors = ["#e6194b", "#3cb44b", "#ffe119", "#4363d8", "#f58231"];
 
-  // Debounced window resize
   useEffect(() => {
     const handleResize = () => {
       clearTimeout(window.resizeTimeout);
@@ -20,7 +21,6 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Load CSV
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,15 +43,21 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
             .filter(d => d && d.Year && d.Articles && d.Country && d.Cancer);
 
           setData(parsedData);
+          const cancers = [...new Set(parsedData.map(d => d.Cancer))].sort();
+          setUniqueCancers(cancers);
+
+          // Default Breast cancer
+          if (cancers.includes("Breast cancer")) setSelectedCancer("Breast cancer");
+          else if (!selectedCancer && cancers.length > 0) setSelectedCancer(cancers[0]);
         }
-      } catch (error) {
-        console.error("Error fetching CSV:", error);
+      } catch (err) {
+        console.error("Error fetching CSV:", err);
       }
     };
     fetchData();
   }, [csvPath]);
 
-  // Precompute dataMap & years
+  // Precompute maps
   useEffect(() => {
     if (!data || data.length === 0) return;
 
@@ -89,13 +95,15 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
     setTopCountries(top5.map(d => d.country));
   }, [selectedCancer, dataMap]);
 
-  // Build plotData
+  const handleCancerChange = (event) => setSelectedCancer(event.target.value);
+
+  // Build plot data
   const plotData = useMemo(() => {
     if (!selectedCancer || !dataMap[selectedCancer]) return [];
 
     const legendCountries = [...topCountries].reverse();
 
-    return legendCountries.map((country, idx) => {
+    return legendCountries.map((country) => {
       const colorIdx = topCountries.indexOf(country);
       return {
         x: years,
@@ -115,11 +123,9 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
   }, [selectedCancer, dataMap, topCountries, years]);
 
   const maxVal = Math.max(...plotData.flatMap(t => t.y), 0);
-  
   const yearNumbers = years.map(y => parseInt(y, 10));
   const xRange = [yearNumbers[0] - 0.5, yearNumbers[yearNumbers.length - 1] + 0.5];
 
-  // Dynamic title outside the plot
   const plotTitle = windowWidth <= 768
     ? <>Countries with the highest number of<br/><b>{selectedCancer}</b> studies, tendencies</>
     : <>Countries with the highest number of <b>{selectedCancer}</b> studies, tendencies</>;
@@ -147,7 +153,7 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
       <h2 style={titleStyle}>{plotTitle}</h2>
 
       <Plot
-	    key={selectedCancer}
+        key={selectedCancer}
         data={plotData}
         layout={{
           autosize: true,
@@ -161,7 +167,7 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
             zeroline: false,
             linecolor: "black",
             tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
-			range: xRange,
+            range: xRange,
           },
           yaxis: {
             title: { text: "Number of articles", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 }, standoff: 15 },
@@ -183,8 +189,22 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
         useResizeHandler={true}
         style={{ width: "100%", minWidth: "300px", maxWidth: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
       />
+
+      <div style={{ display: "flex", gap: "20px", marginTop: "20px", color: "black" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <label htmlFor="cancer-select-line">Cancer:</label>
+          <select
+            id="cancer-select-line"
+            onChange={handleCancerChange}
+            value={selectedCancer}
+            style={{ padding: "5px", borderRadius: "5px", border: "1px solid black", backgroundColor: "white", color: "black" }}
+          >
+            {uniqueCancers.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default SelectCancerShowCountriesLines;
+export default LinesSelectCancerShowTopCountries;

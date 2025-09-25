@@ -4,8 +4,8 @@ import MapMostCommon from "./components/MapMostCommon";
 import HistogramCummulativeArticlesYear from "./components/HistogramCummulativeArticlesYear";
 import MapMostStudied from "./components/MapMostStudied";
 import StudiesSelectedCountryCancer from "./components/StudiesSelectedCountryCancer";
-import SelectCancerShowCountries from "./components/SelectCancerShowCountries";
-import SelectCancerShowCountriesLines from "./components/SelectCancerShowCountriesLines";
+import HistogramSelectCancerShowTopCountries from "./components/HistogramSelectCancerShowTopCountries";
+import LinesSelectCancerShowTopCountries from "./components/LinesSelectCancerShowTopCountries";
 import HistogramSelectCountryShowTopCancers from "./components/HistogramSelectCountryShowTopCancers";
 import ScatterASRArticlesCancerCountry from "./components/ScatterASRArticlesCancerCountry";
 import ScatterASRArticlesCountryCancer from "./components/ScatterASRArticlesCountryCancer";
@@ -167,11 +167,10 @@ function App() {
           <p>
             A small number of countries publish most cancer research. Only 5 out of 185 countries -United States, China, United Kingdom, Japan and Italy have 
 			published 58% of all articles about cancer. In the bar chart below, select a cancer type to see which are the top 5 countries by number of articles about this cancer type (stacked colored bars) and how
-			their contributions have changed over time. As a reference, the dark blue bar in the back shows the <span style={{ color: '#4682B4' }}><b>total number of studies for this cancer type by all countries</b></span>{' '} (values above the bars). <i>Note that, 
-			upon selecting a cancer type, the updated bar chart will appear after a few seconds</i>.
+			their contributions have changed over time. As a reference, the dark blue bar in the back shows the <span style={{ color: '#4682B4' }}><b>total number of studies for this cancer type by all countries</b></span>{' '} (values above the bars).
           </p>
         </div>
-        <SelectCancerShowCountries
+        <HistogramSelectCancerShowTopCountries
           csvPath={selectedCountryCancerLiteCsvPath}
           selectedCancer={selectedCancer}
           setSelectedCancer={setSelectedCancer}
@@ -186,10 +185,11 @@ function App() {
 			however, research hubs are reorganizing and other countries are gaining traction and even surpasing their western counterparts.
 			The most obvious example is <b>China, which in 1993 published 1% of all articles on breast cancer whereas in 2023 this value grew to 
 			20%</b>. In 2020, China surpased the United States as the country publishing more studies on breast cancer. A similar phenomenon has
-			taken place for many other cancer types.
+			taken place for many other cancer types. In the line chart below, <b>select a cancer type to see how the number of articles published by the top 5
+			countries have evolved for this cancer type</b>.
           </p>
         </div>
-        <SelectCancerShowCountriesLines
+        <LinesSelectCancerShowTopCountries
           csvPath={selectedCountryCancerLiteCsvPath}
           selectedCancer={selectedCancer}
         />
