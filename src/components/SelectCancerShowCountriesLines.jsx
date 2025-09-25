@@ -78,7 +78,6 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
       return;
     }
 
-    // Sort descending by total articles
     const top5 = Object.entries(dataMap[selectedCancer])
       .map(([country, yearMap]) => ({
         country,
@@ -87,21 +86,16 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
       .sort((a,b) => b.total - a.total)
       .slice(0,5);
 
-    // Keep the descending order for colors
-    const topCountriesData = top5.map(d => d.country);
-
-    setTopCountries(topCountriesData);
+    setTopCountries(top5.map(d => d.country));
   }, [selectedCancer, dataMap]);
 
   // Build plotData
   const plotData = useMemo(() => {
     if (!selectedCancer || !dataMap[selectedCancer]) return [];
 
-    // Legend in ascending order, colors in descending order
     const legendCountries = [...topCountries].reverse();
 
     return legendCountries.map((country, idx) => {
-      // Find original index in descending order for color
       const colorIdx = topCountries.indexOf(country);
       return {
         x: years,
@@ -121,15 +115,18 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
   }, [selectedCancer, dataMap, topCountries, years]);
 
   const maxVal = Math.max(...plotData.flatMap(t => t.y), 0);
+  
+  const yearNumbers = years.map(y => parseInt(y, 10));
+  const xRange = [yearNumbers[0] - 0.5, yearNumbers[yearNumbers.length - 1] + 0.5];
 
-  // Title above plot
+  // Dynamic title outside the plot
   const plotTitle = windowWidth <= 768
     ? <>Countries with the highest number of<br/><b>{selectedCancer}</b> studies, tendencies</>
     : <>Countries with the highest number of <b>{selectedCancer}</b> studies, tendencies</>;
 
   const titleStyle = {
     textAlign: "center",
-    marginBottom: windowWidth <= 768 ? "0rem" : "0rem",
+    marginBottom: "0.5rem",
     fontWeight: "normal",
     fontSize: windowWidth <= 768 ? "16px" : "20px",
     color: "black",
@@ -148,7 +145,9 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
       <h2 style={titleStyle}>{plotTitle}</h2>
+
       <Plot
+	    key={selectedCancer}
         data={plotData}
         layout={{
           autosize: true,
@@ -162,6 +161,7 @@ const SelectCancerShowCountriesLines = ({ csvPath, selectedCancer }) => {
             zeroline: false,
             linecolor: "black",
             tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
+			range: xRange,
           },
           yaxis: {
             title: { text: "Number of articles", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 }, standoff: 15 },
