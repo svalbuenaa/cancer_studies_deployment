@@ -3,7 +3,7 @@ import CancerMapSwitcher from "./components/CancerMapSwitcher";
 import MapMostCommon from "./components/MapMostCommon";
 import HistogramCummulativeArticlesYear from "./components/HistogramCummulativeArticlesYear";
 import MapMostStudied from "./components/MapMostStudied";
-import StudiesSelectedCountryCancer from "./components/StudiesSelectedCountryCancer";
+import HistogramSelectCountryAndCancer from "./components/HistogramSelectCountryAndCancer";
 import HistogramSelectCancerShowTopCountries from "./components/HistogramSelectCancerShowTopCountries";
 import LinesSelectCancerShowTopCountries from "./components/LinesSelectCancerShowTopCountries";
 import HistogramSelectCountryShowTopCancers from "./components/HistogramSelectCountryShowTopCancers";
@@ -157,7 +157,7 @@ function App() {
 			the number of studies published in <span style={{ color: '#4682B4' }}><b>all countries combined for this cancer type</b></span>{' '} (values shown above the bar) are displayed.
           </p>
         </div>
-        <StudiesSelectedCountryCancer csvPath={selectedCountryCancerCsvPath} />
+        <HistogramSelectCountryAndCancer csvPath={selectedCountryCancerCsvPath} />
       </div>
 
       {/* Top contributing countries per cancer per year */}
