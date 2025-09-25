@@ -4,7 +4,7 @@ import Plot from "react-plotly.js";
 const LinesSelectCancerShowTopCountries = ({ csvPath }) => {
   const [data, setData] = useState([]);
   const [uniqueCancers, setUniqueCancers] = useState([]);
-  const [selectedCancer, setSelectedCancer] = useState("Breast cancer"); // default
+  const [selectedCancer, setSelectedCancer] = useState("Breast cancer"); 
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [dataMap, setDataMap] = useState({});
   const [years, setYears] = useState([]);
@@ -46,7 +46,6 @@ const LinesSelectCancerShowTopCountries = ({ csvPath }) => {
           const cancers = [...new Set(parsedData.map(d => d.Cancer))].sort();
           setUniqueCancers(cancers);
 
-          // Default Breast cancer
           if (cancers.includes("Breast cancer")) setSelectedCancer("Breast cancer");
           else if (!selectedCancer && cancers.length > 0) setSelectedCancer(cancers[0]);
         }
@@ -57,7 +56,6 @@ const LinesSelectCancerShowTopCountries = ({ csvPath }) => {
     fetchData();
   }, [csvPath]);
 
-  // Precompute maps
   useEffect(() => {
     if (!data || data.length === 0) return;
 
@@ -77,7 +75,6 @@ const LinesSelectCancerShowTopCountries = ({ csvPath }) => {
     setYears([...yearSet].sort());
   }, [data]);
 
-  // Compute top 5 countries
   useEffect(() => {
     if (!selectedCancer || !dataMap[selectedCancer]) {
       setTopCountries([]);
@@ -97,14 +94,15 @@ const LinesSelectCancerShowTopCountries = ({ csvPath }) => {
 
   const handleCancerChange = (event) => setSelectedCancer(event.target.value);
 
-  // Build plot data
   const plotData = useMemo(() => {
     if (!selectedCancer || !dataMap[selectedCancer]) return [];
 
     const legendCountries = [...topCountries].reverse();
 
-    return legendCountries.map((country) => {
+    return legendCountries.map((country, idx) => {
       const colorIdx = topCountries.indexOf(country);
+      const showHover = colorIdx < (windowWidth <= 1080 ? 3 : 5);
+
       return {
         x: years,
         y: years.map(y => dataMap[selectedCancer][country][y] || 0),
@@ -113,14 +111,13 @@ const LinesSelectCancerShowTopCountries = ({ csvPath }) => {
         name: country,
         line: { color: colors[colorIdx % colors.length], width: 3 },
         marker: { size: 6 },
-        hovertemplate:
-          `<b>Cancer:</b> ${selectedCancer}<br>` +
-          `<b>Country:</b> ${country}<br>` +
-          `<b>Year:</b> %{x}<br>` +
-          `<b>Articles:</b> %{y}<extra></extra>`,
+        hovertemplate: showHover
+          ? `<b>Cancer:</b> ${selectedCancer}<br><b>Country:</b> ${country}<br><b>Year:</b> %{x}<br><b>Articles:</b> %{y}<extra></extra>`
+          : undefined,
+        hoverinfo: showHover ? undefined : "skip",
       };
     });
-  }, [selectedCancer, dataMap, topCountries, years]);
+  }, [selectedCancer, dataMap, topCountries, years, windowWidth]);
 
   const maxVal = Math.max(...plotData.flatMap(t => t.y), 0);
   const yearNumbers = years.map(y => parseInt(y, 10));

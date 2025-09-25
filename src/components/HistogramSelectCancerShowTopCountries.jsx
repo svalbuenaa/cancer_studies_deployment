@@ -4,7 +4,7 @@ import Plot from "react-plotly.js";
 const HistogramSelectCancerShowTopCountries = ({ csvPath }) => {
   const [data, setData] = useState([]);
   const [uniqueCancers, setUniqueCancers] = useState([]);
-  const [selectedCancer, setSelectedCancer] = useState("Breast cancer"); // default
+  const [selectedCancer, setSelectedCancer] = useState("Breast cancer");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [dataMap, setDataMap] = useState({});
   const [totalPerCountry, setTotalPerCountry] = useState({});
@@ -46,7 +46,6 @@ const HistogramSelectCancerShowTopCountries = ({ csvPath }) => {
           const cancers = [...new Set(parsedData.map(d => d.Cancer))].sort();
           setUniqueCancers(cancers);
 
-          // If Breast cancer exists, set as default, else first cancer
           if (cancers.includes("Breast cancer")) setSelectedCancer("Breast cancer");
           else if (!selectedCancer && cancers.length > 0) setSelectedCancer(cancers[0]);
         }
@@ -57,7 +56,6 @@ const HistogramSelectCancerShowTopCountries = ({ csvPath }) => {
     fetchData();
   }, [csvPath]);
 
-  // Precompute maps
   useEffect(() => {
     if (!data || data.length === 0) return;
 
@@ -77,7 +75,7 @@ const HistogramSelectCancerShowTopCountries = ({ csvPath }) => {
     Object.keys(map).forEach(cancer => {
       total[cancer] = {};
       Object.keys(map[cancer]).forEach(country => {
-        total[cancer][country] = Object.values(map[cancer][country]).reduce((a,b)=>a+b,0);
+        total[cancer][country] = Object.values(map[cancer][country]).reduce((a, b) => a + b, 0);
       });
     });
 
@@ -88,26 +86,26 @@ const HistogramSelectCancerShowTopCountries = ({ csvPath }) => {
 
   const handleCancerChange = (event) => setSelectedCancer(event.target.value);
 
-  // Plot data
   const { plotData, annotations } = useMemo(() => {
     if (!selectedCancer || !dataMap[selectedCancer]) return { plotData: [], annotations: [] };
 
     const topCountries = Object.entries(totalPerCountry[selectedCancer])
-      .sort(([,a],[,b]) => b - a)
-      .slice(0,5)
+      .sort(([, a], [, b]) => b - a)
+      .slice(0, 5)
       .map(([country]) => country);
 
-    const top5Traces = topCountries.map((country, i) => ({
+    // Build traces: bars stay the same, hovertemplate changes for small screens
+    const topTraces = topCountries.map((country, i) => ({
       x: years,
       y: years.map(year => dataMap[selectedCancer][country][year] || 0),
       type: "bar",
       name: country,
       marker: { color: colors[i % colors.length] },
       hovertemplate:
-        `<b>Cancer:</b> ${selectedCancer}<br>` +
-        `<b>Country:</b> ${country}<br>` +
-        `<b>Year:</b> %{x}<br>` +
-        `<b>Articles:</b> %{y}<extra></extra>`,
+        i < (windowWidth <= 1080 ? 3 : 5)
+          ? `<b>Cancer:</b> ${selectedCancer}<br><b>Country:</b> ${country}<br><b>Year:</b> %{x}<br><b>Articles:</b> %{y}<extra></extra>`
+          : undefined,
+      hoverinfo: i < (windowWidth <= 1080 ? 3 : 5) ? undefined : "skip",
       offsetgroup: "top5",
     }));
 
@@ -125,10 +123,10 @@ const HistogramSelectCancerShowTopCountries = ({ csvPath }) => {
       name: "All countries",
       marker: { color: "#4682B4", opacity: 1 },
       hovertemplate:
-        `<b>Cancer:</b> ${selectedCancer}<br>` +
-        `<b>Country:</b> All countries<br>` +
-        `<b>Year:</b> %{x}<br>` +
-        `<b>Articles:</b> %{y}<extra></extra>`,
+        windowWidth > 1080
+          ? `<b>Cancer:</b> ${selectedCancer}<br><b>Country:</b> All countries<br><b>Year:</b> %{x}<br><b>Articles:</b> %{y}<extra></extra>`
+          : undefined,
+      hoverinfo: windowWidth > 1080 ? undefined : "skip",
       offsetgroup: "top5",
       base: 0,
     };
@@ -146,7 +144,7 @@ const HistogramSelectCancerShowTopCountries = ({ csvPath }) => {
       textangle: -90,
     }));
 
-    return { plotData: [allCountriesTrace, ...top5Traces], annotations };
+    return { plotData: [allCountriesTrace, ...topTraces], annotations };
   }, [selectedCancer, dataMap, totalPerCountry, years, windowWidth]);
 
   const maxBarValue = Math.max(...plotData.flatMap(t => t.y), 0);
@@ -190,7 +188,7 @@ const HistogramSelectCancerShowTopCountries = ({ csvPath }) => {
       <h2 style={titleStyle}>{plotTitle}</h2>
 
       <Plot
-        key={selectedCancer} 
+        key={selectedCancer}
         data={plotData}
         layout={{
           xaxis: {
