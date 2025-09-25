@@ -116,7 +116,7 @@ const ScatterSelectCountryShowCancersIncidenceStudies = ({ csvPath }) => {
   const config = useMemo(() => ({
     responsive: true,
     displaylogo: false,
-    modeBarButtonsToRemove: ["zoom2d","pan2d","select2d","lasso2d","zoomIn2d","zoomOut2d","autoScale2d","hoverClosestCartesian","hoverCompareCartesian"]
+    modeBarButtonsToRemove: ["zoom2d","pan2d","select2d","lasso2d","zoomIn2d","zoomOut2d","autoScale2d","hoverClosestCartesian","hoverCompareCartesian","toImage"]
   }), []);
 
   const plotTitle = windowWidth <= 1080

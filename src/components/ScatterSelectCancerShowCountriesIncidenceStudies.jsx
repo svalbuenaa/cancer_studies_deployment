@@ -165,7 +165,8 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
     displaylogo: false,
     modeBarButtonsToRemove: [
       "zoom2d","pan2d","select2d","lasso2d","zoomIn2d","zoomOut2d",
-      "autoScale2d","hoverClosestCartesian","hoverCompareCartesian"
+      "autoScale2d","hoverClosestCartesian","hoverCompareCartesian",
+	  "toImage",
     ]
   };
 
