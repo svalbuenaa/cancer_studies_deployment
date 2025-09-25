@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Plot from "react-plotly.js";
 
 const HistogramSelectCountryAndCancer = ({ csvPath }) => {
@@ -8,6 +8,7 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
   const [selectedCountry, setSelectedCountry] = useState("United States");
   const [selectedCancer, setSelectedCancer] = useState("Breast cancer");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [revision, setRevision] = useState(0);
 
   // Track window size for responsive behavior
   useEffect(() => {
@@ -54,56 +55,69 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
     fetchData();
   }, [csvPath]);
 
-  const handleCountryChange = (e) => setSelectedCountry(e.target.value);
-  const handleCancerChange = (e) => setSelectedCancer(e.target.value);
+  // Increment revision when selections change
+  useEffect(() => {
+    setRevision((r) => r + 1);
+  }, [selectedCountry, selectedCancer]);
 
-  const years = [...new Set(data.map((d) => d.Year))].sort();
+  const years = useMemo(() => [...new Set(data.map((d) => d.Year))].sort(), [data]);
 
-  const totalArticlesByYear = years.map((year) =>
-    data
-      .filter((d) => d.Year === year && d.Cancer === selectedCancer)
-      .reduce((sum, d) => sum + parseInt(d.Articles), 0)
+  const totalArticlesByYear = useMemo(
+    () =>
+      years.map((year) =>
+        data
+          .filter((d) => d.Year === year && d.Cancer === selectedCancer)
+          .reduce((sum, d) => sum + parseInt(d.Articles), 0)
+      ),
+    [years, data, selectedCancer]
   );
 
-  const filteredData = data.filter(
-    (d) => d.Country === selectedCountry && d.Cancer === selectedCancer
+  const filteredArticlesByYear = useMemo(() => {
+    const filteredData = data.filter(
+      (d) => d.Country === selectedCountry && d.Cancer === selectedCancer
+    );
+    return years.map((year) =>
+      filteredData
+        .filter((d) => d.Year === year)
+        .reduce((sum, d) => sum + parseInt(d.Articles), 0)
+    );
+  }, [years, data, selectedCountry, selectedCancer]);
+
+  const plotData = useMemo(
+    () => [
+      {
+        x: years,
+        y: totalArticlesByYear,
+        type: "bar",
+        name: `Total ${selectedCancer} studies`,
+        marker: { color: "#4682B4" },
+        hovertemplate: `<b>Year:</b> %{x}<br><b>Total ${selectedCancer} studies:</b> %{y}<extra></extra>`,
+        offsetgroup: "total",
+      },
+      {
+        x: years,
+        y: filteredArticlesByYear,
+        type: "bar",
+        name: `${selectedCountry} ${selectedCancer} studies`,
+        marker: { color: "#FFA500" },
+        hovertemplate: `<b>Year:</b> %{x}<br><b>${selectedCountry} ${selectedCancer} studies:</b> %{y}<extra></extra>`,
+        offsetgroup: "total",
+      },
+    ],
+    [years, totalArticlesByYear, filteredArticlesByYear, selectedCountry, selectedCancer]
   );
 
-  const filteredArticlesByYear = years.map((year) =>
-    filteredData
-      .filter((d) => d.Year === year)
-      .reduce((sum, d) => sum + parseInt(d.Articles), 0)
-  );
-
-  const plotData = [
-    {
-      x: years,
-      y: totalArticlesByYear,
-      type: "bar",
-      name: `Total ${selectedCancer} studies`,
-      marker: { color: "#4682B4" },
-      hovertemplate: `<b>Year:</b> %{x}<br><b>Total ${selectedCancer} studies:</b> %{y}<extra></extra>`,
-      offsetgroup: "total",
-    },
-    {
-      x: years,
-      y: filteredArticlesByYear,
-      type: "bar",
-      name: `${selectedCountry} ${selectedCancer} studies`,
-      marker: { color: "#FFA500" },
-      hovertemplate: `<b>Year:</b> %{x}<br><b>${selectedCountry} ${selectedCancer} studies:</b> %{y}<extra></extra>`,
-      offsetgroup: "total",
-    },
-  ];
-
-  // Dynamic y-axis ticks with min step = 1
-  const maxVal = Math.max(...plotData.flatMap((t) => t.y));
-  const rawStep = maxVal / 10;
-  const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
-  let step = Math.ceil(rawStep / magnitude) * magnitude;
-  step = Math.max(1, step);
-  const upper = Math.ceil(maxVal / step) * step;
-  const tickvals = Array.from({ length: Math.floor(upper / step) + 1 }, (_, i) => i * step);
+  // Dynamic y-axis ticks
+  const { tickvals, upper, maxVal } = useMemo(() => {
+    const maxVal = Math.max(...plotData.flatMap((t) => t.y), 0);
+    const rawStep = maxVal / 10 || 1;
+    const magnitude = Math.pow(10, Math.floor(Math.log10(rawStep)));
+    let step = Math.ceil(rawStep / magnitude) * magnitude;
+    step = Math.max(1, step);
+    const upper = Math.ceil(maxVal / step) * step;
+    const tickvals = Array.from({ length: Math.floor(upper / step) + 1 }, (_, i) => i * step);
+    return { tickvals, upper, maxVal };
+  }, [plotData]);
 
   const formatCompact = (num) => {
     if (num >= 1_000_000) return (num / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
@@ -111,38 +125,42 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
     return num.toString();
   };
 
-  // ✅ Annotations: top for total, bottom for selected country
-  const annotations = years.flatMap((year, i) => {
-    const totalY = totalArticlesByYear[i];
-    const filteredY = filteredArticlesByYear[i];
-    return [
-      totalY > 0 && {
-        x: year,
-        y: totalY,
-        text: totalY.toString(),
-        xref: "x",
-        yref: "y",
-        xanchor: "center",
-        yanchor: "bottom",
-        showarrow: false,
-        font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
-        textangle: -90,
-      },
-      filteredY > 0 && {
-        x: year,
-        y: 0, // place at baseline
-        text: filteredY.toString(),
-        xref: "x",
-        yref: "y",
-        xanchor: "center",
-        yanchor: "top",
-        yshift: -5,
-        showarrow: false,
-        font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
-        textangle: -90,
-      },
-    ].filter(Boolean);
-  });
+  // Annotations
+  const annotations = useMemo(
+    () =>
+      years.flatMap((year, i) => {
+        const totalY = totalArticlesByYear[i];
+        const filteredY = filteredArticlesByYear[i];
+        return [
+          totalY > 0 && {
+            x: year,
+            y: totalY,
+            text: totalY.toString(),
+            xref: "x",
+            yref: "y",
+            xanchor: "center",
+            yanchor: "bottom",
+            showarrow: false,
+            font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
+            textangle: -90,
+          },
+          filteredY > 0 && {
+            x: year,
+            y: 0,
+            text: filteredY.toString(),
+            xref: "x",
+            yref: "y",
+            xanchor: "center",
+            yanchor: "top",
+            yshift: -5,
+            showarrow: false,
+            font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
+            textangle: -90,
+          },
+        ].filter(Boolean);
+      }),
+    [years, totalArticlesByYear, filteredArticlesByYear, windowWidth]
+  );
 
   const config = {
     responsive: true,
@@ -161,9 +179,14 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
     modeBarButtons: [["resetScale2d"]],
   };
 
-  const plotTitle = windowWidth <= 1080
-    ? <>Studies per year<br />in <b>{selectedCountry}</b> for <b>{selectedCancer}</b></>
-    : <>Studies per year in <b>{selectedCountry}</b> for <b>{selectedCancer}</b></>;
+  const plotTitle =
+    windowWidth <= 1080 ? (
+      <>
+        Studies per year<br />in <b>{selectedCountry}</b> for <b>{selectedCancer}</b>
+      </>
+    ) : (
+      <>Studies per year in <b>{selectedCountry}</b> for <b>{selectedCancer}</b></>
+    );
 
   const titleStyle = {
     textAlign: "center",
@@ -182,7 +205,6 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
       <h2 style={titleStyle}>{plotTitle}</h2>
 
       <Plot
-        key={`${selectedCountry}-${selectedCancer}`}
         data={plotData}
         layout={{
           xaxis: {
@@ -210,7 +232,7 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
             linecolor: "black",
             gridcolor: "rgba(0,0,0,0.075)",
             tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
-            range: [-maxVal * 0.24, upper * 1.25], // ✅ restored old logic
+            range: [-maxVal * 0.24, upper * 1.25],
             tickmode: "array",
             tickvals: tickvals,
             ticktext: tickvals.map(formatCompact),
@@ -231,12 +253,13 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
           },
         }}
         config={config}
+        revision={revision}
         useResizeHandler={true}
         className="plotly-responsive-plot"
         style={{ width: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
       />
 
-      {/* Country and Cancer select dropdowns */}
+      {/* Dropdowns */}
       <div
         style={{
           display: "flex",
@@ -251,7 +274,7 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
           <label htmlFor="country-select">Country:</label>
           <select
             id="country-select"
-            onChange={handleCountryChange}
+            onChange={(e) => setSelectedCountry(e.target.value)}
             value={selectedCountry}
             style={{
               padding: "5px",
@@ -272,7 +295,7 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
           <label htmlFor="cancer-select">Cancer:</label>
           <select
             id="cancer-select"
-            onChange={handleCancerChange}
+            onChange={(e) => setSelectedCancer(e.target.value)}
             value={selectedCancer}
             style={{
               padding: "5px",
