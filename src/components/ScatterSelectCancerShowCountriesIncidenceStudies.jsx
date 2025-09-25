@@ -104,7 +104,7 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
       clearTimeout(timeout);
       timeout = setTimeout(() => {
         setWindowWidth(window.innerWidth);
-        const size = Math.min(window.innerWidth, window.innerHeight) * 0.6;
+        const size = Math.min(window.innerWidth, window.innerHeight) * (window.innerWidth > 1080 ? 0.6 : 1);
         setPlotSize(size);
       }, 50); // 50ms debounce
     };

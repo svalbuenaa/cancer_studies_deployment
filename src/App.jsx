@@ -7,7 +7,7 @@ import HistogramSelectCountryAndCancer from "./components/HistogramSelectCountry
 import HistogramSelectCancerShowTopCountries from "./components/HistogramSelectCancerShowTopCountries";
 import LinesSelectCancerShowTopCountries from "./components/LinesSelectCancerShowTopCountries";
 import HistogramSelectCountryShowTopCancers from "./components/HistogramSelectCountryShowTopCancers";
-import ScatterASRArticlesCancerCountry from "./components/ScatterASRArticlesCancerCountry";
+import ScatterSelectCountryShowCancersIncidenceStudies from "./components/ScatterSelectCountryShowCancersIncidenceStudies";
 import ScatterSelectCancerShowCountriesIncidenceStudies from "./components/ScatterSelectCancerShowCountriesIncidenceStudies";
 import DataProcessing from "/Schema_data_processing.svg";
 import "./App.css";
@@ -214,7 +214,7 @@ function App() {
 			studies published in the country study this specific cancer. The 3 cancer types with more studies in the selected country are highlighed in color.
 		  </p>
         </div>
-        <ScatterASRArticlesCancerCountry csvPath={scatterCsvPath} />
+        <ScatterSelectCountryShowCancersIncidenceStudies csvPath={scatterCsvPath} />
       </div>
 
       <div className="content-section">
