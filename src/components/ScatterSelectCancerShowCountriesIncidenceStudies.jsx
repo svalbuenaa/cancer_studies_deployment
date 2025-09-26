@@ -207,7 +207,7 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
               tickformat: yTickFormat,
               exponentformat: yExponentFormat
             },
-            margin: { t: 20, b: 60, l: 95, r: 40 },
+            margin: { t: 20, b: 60, l: 80, r: 40 },
             paper_bgcolor: "#f6f8fa",
             plot_bgcolor: "#f6f8fa",
             hovermode: "closest",
