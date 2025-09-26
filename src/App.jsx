@@ -60,7 +60,7 @@ function App() {
 		  </p>
 		  
 		  <p>
-			The curation of the dataset involved extracting information from the title, abstract and keywords of each scientific publication, the cancer type studied in the article (if available) and the country where the institution of the last author of the article resides. The final dataset contains 4.33M articles.
+			The curation of the dataset involved extracting information from the title, abstract and keywords of each scientific publication, the cancer type studied in the article (if available) and the country where the institution of the last author of the article resides.
 			In parallel, a second dataset containing data about incidence for 37 cancer types in 185 countries was obtained from the <a href="https://gco.iarc.fr/en" target="_blank" rel="noopener noreferrer">Global Cancer Observatory</a> (Globocan). Data displayed in this page correspond to the 2022 
 			version of the <a href="https://gco.iarc.who.int/media/globocan/factsheets/populations/900-world-fact-sheet.pdf" target="_blank" rel="noopener noreferrer">"Cancer Today"</a> dataset of Globocan. Data about cancer incidence are correlated with numbers of cancer studies in each country.
 			More information about the data preparation process can be found in the <a href="#data-preparation">Data retrieval and preparation</a> section of this page. Finally, 
@@ -76,12 +76,12 @@ function App() {
         <div className="text-content">
           <h2>Global cancer incidence</h2>
           <p>
-            Cancer incidence varies with age, cancer type and is different in different countries. <b>All incidence data shown in this page correspond to </b><a href="https://www.statcan.gc.ca/en/dai/btd/asr" target="_blank" rel="noopener noreferrer"><b>Age-Standardized incidence Rates (ASR)</b></a><b>, normalized by 100K people </b>. ASR
-			values compensate for differences in age structures between countries and, therefore, allow comparisons to be made in a more precise way. In the map below you can visualize either the cummulative incidence values for all cancers combined or selected country. Incidence values are provided as rates per 100.000 people,
+            Cancer incidence varies with age, cancer type and country. <b>All incidence data shown in this page correspond to </b><a href="https://www.statcan.gc.ca/en/dai/btd/asr" target="_blank" rel="noopener noreferrer"><b>Age-Standardized incidence Rates (ASR)</b></a>. ASR
+			values compensate for differences in age structures between countries and, therefore, allow more precise comparisons. In the map below you can visualize either the incidence values for all cancers combined or the specific incidence of a selected cancer. Incidence values are provided as rates per 100.000 people,
 			allowing to compare between countries with different populations. Use the 
-		    the selector above the map to switch views. In the <i>Selected cancer incidende</i> view, you can use the dropdown at the bottom of the map to choose the cancer type of your interest. <b>Hover on
-			the countries to see their incidence values</b>. It is possible to <b>zoom on the map to get a closer view of areas of interest</b> and use the buttons on the top left 
-			to <b>download the plot as a PNG image or to reset the zoom</b>.
+		    the selector above the map to switch views. In the <i>Selected cancer</i> view, you can use the dropdown at the bottom of the map to choose the cancer type of your interest. <b>Hover on
+			the countries to see their incidence values</b>. It is possible to <b>zoom on the map to get a closer view of areas of interest</b> and use the buttons on the top right 
+			to <b>reset the zoom</b>.
           </p>
         </div>
         <CancerMapSwitcher
@@ -93,10 +93,10 @@ function App() {
       {/* Most frequent cancer per country */}
       <div className="content-section">
         <div className="text-content">
-          <h2>Predominant Cancer Type by Country</h2>
+          <h2>Predominant cancer type by country</h2>
           <p>
-            The predominant cancer type -by incidence- varies between countries. Whereas in most western countries, as well as part of Africa and Asia, 
-			<b>breast cancer</b> has the largest incidence rates, <b>prostate and cervical (uterus) cancer</b> predominate in South America and center-south of Africa.
+            The predominant cancer type -by incidence- varies between countries. Whereas in most western countries, as well as part of Africa and 
+			Asia, <b>breast cancer</b> has the largest incidence rates, <b>prostate and cervical (uterus) cancer</b> predominate in South America and center-south of Africa.
 			The map below shows the most common type of cancer diagnosed in each country, together with its associated incidence rate.
           </p>
         </div>
@@ -108,8 +108,8 @@ function App() {
         <div className="text-content">
           <h2>Published cancer studies over time</h2>
           <p>
-            Out of the 4.54M scientific articles contained in this dataset, more than 1M were published between 2019 and 2023. This corresponds to a
-			2X increase with respect to the same period 10 years before. The bar chart below illustrates the number of scientific studies on cancer published each year. 
+            Out of the 4M+ scientific articles contained in this dataset, more than 1M were published between 2019 and 2023. This corresponds to a
+			2X increase with respect to the same period 10 years before. The bar chart below shows the number of scientific studies on cancer published each year. 
             It provides insight into the research activity and focus over time. Note that <i>data for 2024 and 2025 are still being incorporated into the dataset and do
 			not reflect final values for these years</i>. 
           </p>
@@ -120,10 +120,10 @@ function App() {
       {/* Most studied cancer per country */}
       <div className="content-section">
         <div className="text-content">
-          <h2>Most Studied Cancer Type per Country</h2>
+          <h2>Most studied cancer type by country</h2>
           <p>
             Research does not pay the same attention to all cancer types. This map highlights the most studied cancer type in each country based on the number of 
-            scientific studies published. A quick comparison to the previous map shows that, in general, more research is dedicated in each countries to the 
+            scientific studies published. A quick comparison to the previous map shows that, in general, more research is dedicated in each country to the 
 			cancer with highest incidence. Hover on the map to see the most studied cancer and how many studies were published for this cancer type in each country.
           </p>
         </div>
@@ -133,11 +133,11 @@ function App() {
       {/* Top cancers per selected country */}
       <div className="content-section">
         <div className="text-content">
-          <h2>Top Cancers per Selected Country</h2>
+          <h2>Evolution of most studied cancers by country</h2>
           <p>
             Probably motivated by differences in incidence and prevalence, certain cancer types are significantly more studied than others. As 
-			has been <a href="https://media.nature.com/original/magazine-assets/d41586-023-02609-2/d41586-023-02609-2.pdf" target="_blank" rel="noopener noreferrer">recently published</a>,
-			<b>important imbalances exist in research output for different cancer types</b>. According to the <a href="https://www.thelancet.com/journals/lanonc/article/PIIS1470-2045(23)00182-1/fulltext#fig1" target="_blank" rel="noopener noreferrer">Lancet study mentioned earlier</a>, only 6 major cancer types
+			has been <a href="https://media.nature.com/original/magazine-assets/d41586-023-02609-2/d41586-023-02609-2.pdf" target="_blank" rel="noopener noreferrer">recently published</a>, <b>important 
+			imbalances exist in research output for different cancer types</b>. According to the <a href="https://www.thelancet.com/journals/lanonc/article/PIIS1470-2045(23)00182-1/fulltext#fig1" target="_blank" rel="noopener noreferrer">Lancet study mentioned earlier</a>, only 6 major cancer types
 			(breast, blood-related, brain, lung, prostate and colorectal) receive the vast majority of funding, a fact that is reflected in the number
 			of publications studying these cancer types. In the bar chart below, <b>select a country</b> to see the <b>top 5 cancers studied over the years</b> (five colored stacked bars) and the total number of 
             studies for <span style={{ color: '#4682B4' }}><b>all cancers combined in that country</b></span>{' '} (total number of studies on top).
@@ -149,7 +149,7 @@ function App() {
       {/* Selected country cancer studies */}
       <div className="content-section">
         <div className="text-content">
-          <h2>Research outputs per country and cancer type</h2>
+          <h2>Research produced per country and cancer type</h2>
           <p>
             Another important imbalance exists in the contribution of different countries to cancer research. As an example, <b>United States
 			has produced around 30% of all studies on breast cancer</b>. In the bar chart below, <b>select a cancer type and a country</b> to see how many articles 

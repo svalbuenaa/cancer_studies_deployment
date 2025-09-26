@@ -20,7 +20,7 @@ const CancerMapSwitcher = ({ numericCsvPath, selectCancerCsvPath }) => {
             cursor: "pointer",
           }}
         >
-          Cumulative Incidence
+          All cancers
         </button>
         <button
           onClick={() => setActiveMap("selected")}
@@ -32,7 +32,7 @@ const CancerMapSwitcher = ({ numericCsvPath, selectCancerCsvPath }) => {
             cursor: "pointer",
           }}
         >
-          By Cancer Type
+          Selected cancer
         </button>
       </div>
 
