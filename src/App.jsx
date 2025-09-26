@@ -165,7 +165,7 @@ function App() {
         <div className="text-content">
           <h2>(Shifting?) Research hubs</h2>
           <p>
-            A small number of countries publish most cancer research. Only 5 out of 185 countries -United States, China, United Kingdom, Japan and Italy have 
+            A small number of countries publish most cancer research. Only 5 out of 185 countries (United States, China, United Kingdom, Japan and Italy) have 
 			published 58% of all articles about cancer. In the bar chart below, select a cancer type to see which are the top 5 countries by number of articles about this cancer type (stacked colored bars) and how
 			their contributions have changed over time. As a reference, the dark blue bar in the back shows the <span style={{ color: '#4682B4' }}><b>total number of studies for this cancer type by all countries</b></span>{' '} (values above the bars).
           </p>
@@ -221,15 +221,14 @@ function App() {
         <div className="text-content">
           <h2>Top relative contributors</h2>
           <p>
-            More populated countries, such as China or United States, generate most scientific output. To understand this output
-			accounting for differences in population between countries, the plot below represents the <b>incidence of a selected canceer vs 
+            More populated countries, such as China or United States, generate most scientific output. To understand this output while
+			accounting for differences in population between countries, the plot below represents the <b>incidence of a selected cancer vs 
 			the number of scientific articles for each country normalized by population</b>. The value in the y axis represents the number of articles about this 
 			cancer type published per country and per 1M inhabitants. A new picture emerges from this plot, showing a larger variability
-			associated with different cancer types in which more European countries, especially in the northern part of the continent, 
+			associated with different cancer types in which European countries, especially in the northern part of the continent, 
 			have larger relative contributions, according to their country populations, to cancer research. <b>Use the dropdown below the plot
 			to select other cancer types</b>. The 3 countries with more studies per 1M inhabitants for the selected cancer type are highlighed in color.
-			To facilitate the visualization, only countries with more than 1M inhabitants are plotted. <i>Note 
-			that, upon selecting a cancer type, the updated bar chart will appear after a few seconds</i>.
+			To facilitate the visualization, only countries with more than 1M inhabitants are plotted.
           </p>
         </div>
         <ScatterSelectCancerShowCountriesIncidenceStudies
@@ -246,17 +245,16 @@ function App() {
           <p>
             The main dataset employed to build this page contains information about 4M+ scientific articles on cancer. Here, information 
 			about <b>cancer type, year and country</b> has been included. With this relatively small feature space the information which can be extracted is 
-			already very rich. Future iterations of the project with vastly expand this feature space, allowing for a much more fine-grained analysis 
+			already very rich. Future iterations of the project with vastly expand this feature space, enabling a much more fine-grained analysis and 
 			allowing, for instance, to understand how researchers from different countries collaborate to study cancer, or which factors determine
 			relevant aspects of the scientific outcome, like the journal where it is published.
           </p>
 		  <p>
-            In parallel, the dataset is ever-expanding. Even though it is (mostly) focused on the years 1984 to 2024, the dates covered are being expanded. 
-			The goal is to build an up-to-date dataset which allows to understand the latest trends in cancer research as well as to understand how this 
-			research evolves.
+            In parallel, the dataset is ever-expanding. Even though currently it is (mostly) focused on the years 1984 to 2024, the dates covered are being expanded. 
+			The goal is to build an up-to-date dataset which allows to understand the latest trends in cancer research and how they evolve.
           </p>
 		  <p>
-            <b>How can you contribute?</b>. You can contact me at <b>svalbuenaa@gmail.com</b>. Drop me a message if:<br />
+            <b>How can you contribute?</b> You can contact me at <b>svalbuenaa@gmail.com</b>. Drop me a message if:<br />
 			1.- You would like to <b>use the full dataset for a research project</b> instead of just interacting with the aggregated data displayed in the page.<br />
 			2.- You identify a <b>feature you would like to have implemented or there is a question you are interested in</b> and you believe this dataset could help answering it.<br />  
 			3.- There is something you would like to see better explained, or you see an <b>error in the page</b>.<br />
