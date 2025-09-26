@@ -38,6 +38,7 @@ const countryColors = {
   "Singapore": "#dc143c",
   "New Zealand": "#556b2f",
 };
+
 const defaultColor = "grey";
 const formatCountryText = (country) => country.replace(/ /g, "<br>");
 
@@ -51,7 +52,7 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [plotSize, setPlotSize] = useState(600);
 
-  // Fetch CSV once
+  // Fetch CSV data
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
@@ -60,7 +61,6 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
         const text = await response.text();
         const [headerLine, ...lines] = text.split("\n").filter((l) => l.trim() !== "");
         if (!headerLine) return;
-
         const header = headerLine.split(",").map((h) => h.trim());
         const parsedData = lines
           .map((line) => {
@@ -72,14 +72,7 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
             obj.ASR = parseFloat(obj["ASR"]);
             return obj;
           })
-          .filter(
-            (d) =>
-              d &&
-              d.Cancer &&
-              d.Country &&
-              !isNaN(d.Norm_articles) &&
-              !isNaN(d.ASR)
-          );
+          .filter((d) => d && d.Cancer && d.Country && !isNaN(d.Norm_articles) && !isNaN(d.ASR));
 
         if (isMounted) {
           setData(parsedData);
@@ -106,14 +99,11 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
         setWindowWidth(window.innerWidth);
         const size = Math.min(window.innerWidth, window.innerHeight) * (window.innerWidth > 1080 ? 0.6 : 1);
         setPlotSize(size);
-      }, 50); // 50ms debounce
+      }, 50);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
-    return () => {
-      clearTimeout(timeout);
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => { clearTimeout(timeout); window.removeEventListener("resize", handleResize); };
   }, []);
 
   const handleCancerChange = (e) => setSelectedCancer(e.target.value);
@@ -122,6 +112,11 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
     () => data.filter((d) => d.Cancer === selectedCancer),
     [data, selectedCancer]
   );
+
+  const maxYValue = useMemo(() => {
+    if (filteredData.length === 0) return 0;
+    return Math.max(...filteredData.map(d => d.Norm_articles));
+  }, [filteredData]);
 
   const sortedByArticles = useMemo(
     () => [...filteredData].sort((a, b) => b.Norm_articles - a.Norm_articles),
@@ -132,6 +127,7 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
   const others = useMemo(() => sortedByArticles.slice(3), [sortedByArticles]);
 
   const getCountryColor = (country) => countryColors[country] || defaultColor;
+
   const topMarkerSize = windowWidth <= 1080 ? 10 : 14;
   const othersMarkerSize = windowWidth <= 1080 ? 7 : 10;
 
@@ -165,8 +161,7 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
     displaylogo: false,
     modeBarButtonsToRemove: [
       "zoom2d","pan2d","select2d","lasso2d","zoomIn2d","zoomOut2d",
-      "autoScale2d","hoverClosestCartesian","hoverCompareCartesian",
-	  "toImage",
+      "autoScale2d","hoverClosestCartesian","hoverCompareCartesian","toImage"
     ]
   };
 
@@ -174,40 +169,56 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
     ? <>Incidence vs normalized<br />number of studies for <b>{selectedCancer}</b></>
     : <>Incidence vs normalized number of studies for <b>{selectedCancer}</b></>;
 
-  const titleStyle = { textAlign: "center", marginBottom: "0rem", fontWeight: "normal", fontSize: windowWidth <= 1080 ? "16px" : "20px", color: "black" };
+  const titleStyle = {
+    textAlign: "center",
+    marginBottom: "0rem",
+    fontWeight: "normal",
+    fontSize: windowWidth <= 1080 ? "16px" : "20px",
+    color: "black"
+  };
+
+  // Choose tick format based on maxYValue
+  const yTickFormat = maxYValue < 1 ? ".2e" : ",.2f";
+  const yExponentFormat = maxYValue < 1 ? "e" : undefined;
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <h2 style={titleStyle}>{plotTitle}</h2>
-
       <div style={{ width: plotSize, height: plotSize }}>
         <Plot
           data={[topTrace, othersTrace]}
           layout={{
             xaxis: {
               title: { text: "Incidence per 100000", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 }, automargin: true },
-              showgrid: true, zeroline: false, linecolor: "black", linewidth: 1.5, gridcolor: "rgba(0,0,0,0.075)",
+              showgrid: true, zeroline: false, linecolor: "black", linewidth: 1.5,
+              gridcolor: "rgba(0,0,0,0.075)",
               tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 }
             },
             yaxis: {
-              title: { text: "Normalized studies (per 1M inhabitants)", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 }, automargin: true },
-              showgrid: true, zeroline: false, linecolor: "black", linewidth: 1.5, gridcolor: "rgba(0,0,0,0.075)",
+              title: {
+                text: "Normalized studies (per 1M inhabitants)",
+                font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 },
+                automargin: true,
+                standoff: 25
+              },
+              showgrid: true, zeroline: false, linecolor: "black", linewidth: 1.5,
+              gridcolor: "rgba(0,0,0,0.075)",
               tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
-              tickformat: "~s"
+              tickformat: yTickFormat,
+              exponentformat: yExponentFormat
             },
-            margin: { t: 20, b: 60, l: 70, r: 40 },
+            margin: { t: 20, b: 60, l: 95, r: 40 },
             paper_bgcolor: "#f6f8fa",
             plot_bgcolor: "#f6f8fa",
             hovermode: "closest",
             showlegend: false,
-            autosize: true,
+            autosize: true
           }}
           config={config}
           useResizeHandler
           style={{ width: "100%", height: "100%" }}
         />
       </div>
-
       <div style={{ marginTop: "20px", textAlign: "center", color: "black" }}>
         <label htmlFor="cancer-select" style={{ marginRight: "10px" }}>Cancer:</label>
         <select
