@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Plot from "react-plotly.js";
 
 const HistogramSelectCountryAndCancer = ({ csvPath }) => {
@@ -9,6 +9,9 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
   const [selectedCancer, setSelectedCancer] = useState("Breast cancer");
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [revision, setRevision] = useState(0);
+  
+  // State to manage the Plotly layout for dynamic updates (crucial for fixing the reset)
+  const [layout, setLayout] = useState({});
 
   // Track window size for responsive behavior
   useEffect(() => {
@@ -151,8 +154,7 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
             xref: "x",
             yref: "y",
             xanchor: "center",
-            yanchor: "top",
-            yshift: -5,
+            yanchor: "top", 
             showarrow: false,
             font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
             textangle: -90,
@@ -161,6 +163,85 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
       }),
     [years, totalArticlesByYear, filteredArticlesByYear, windowWidth]
   );
+
+  // Calculate the target yaxis range for resets
+  const targetYRange = [-upper * (windowWidth <= 1080 ? 0.15 : 0.15), upper * 1.25,];
+
+  // Plotly onRelayout handler to force correct axis reset on double-click
+  const handleRelayout = useCallback((event) => {
+      // Check if the event is a double-click reset action
+      if (event['yaxis.autorange'] === true) {
+          // Plotly tries to auto-range, which ignores our negative space.
+          // We immediately set the range back to our custom, full range.
+          setLayout(prevLayout => ({
+              ...prevLayout,
+              // Use targetYRange to reset to the desired full view, fixing the double-click issue
+              yaxis: { ...prevLayout.yaxis, range: targetYRange, autorange: false }, 
+              // uirevision update forces the plot to respect the new layout state
+              uirevision: prevLayout.uirevision + 1, 
+          }));
+      }
+  }, [targetYRange]);
+  
+  // Base layout configuration
+  const baseLayout = useMemo(() => ({
+    // Use uirevision to reset the view state when selections change.
+    // This provides a clean initial state for the onRelayout handler to work from.
+    uirevision: selectedCountry + selectedCancer, 
+    xaxis: {
+      title: { text: "Year", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 } },
+      tickmode: "array",
+      tickvals: years,
+      ticktext: years,
+      tickangle: -90,
+      showgrid: false,
+      zeroline: true, 
+      zerolinecolor: 'black',
+      linecolor: "black",
+      gridcolor: "rgba(255, 255, 255, 0.2)",
+      tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
+    },
+    yaxis: {
+      title: {
+        text: "Number of studies",
+        font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 },
+        standoff: 15,
+      },
+      automargin: true,
+      showgrid: true,
+      zeroline: false,
+      showline: false,
+      linecolor: "black",
+      gridcolor: "rgba(0,0,0,0.075)",
+      tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
+      // Set the initial range, which includes the negative space for annotations
+      range: targetYRange, 
+      tickmode: "array",
+      tickvals: tickvals,
+      ticktext: tickvals.map(formatCompact),
+      autorange: false, // Prevents Plotly from interfering with the initial range
+    },
+    margin: { t: 20, b: windowWidth <= 1080 ? 80 : 80, l: 50, r: windowWidth <= 1080 ? 20 : 50 },
+    paper_bgcolor: "#f6f8fa",
+    plot_bgcolor: "#f6f8fa",
+    autosize: true,
+    barmode: "overlay",
+    hovermode: "x",
+    annotations: annotations,
+    legend: {
+      x: 0.5,
+      y: -0.2,
+      xanchor: "center",
+      orientation: "h",
+      font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
+    },
+  }), [selectedCountry, selectedCancer, windowWidth, years, maxVal, upper, tickvals, annotations, targetYRange, formatCompact]);
+  
+  // Initialize or update the local layout state
+  useEffect(() => {
+      setLayout(baseLayout);
+  }, [baseLayout]);
+
 
   const config = {
     responsive: true,
@@ -175,7 +256,7 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
       "autoScale2d",
       "hoverClosestCartesian",
       "hoverCompareCartesian",
-	  "toImage",
+      "toImage",
     ],
     modeBarButtons: [["resetScale2d"]],
   };
@@ -197,6 +278,9 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
     color: "black",
   };
 
+  // Plot height should be generous to accommodate the 50% negative space
+  const plotHeight = windowWidth <= 1080 ? 450 : 680;
+
   return (
     <div
       className="plotly-responsive-plot-container"
@@ -207,57 +291,13 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
 
       <Plot
         data={plotData}
-        layout={{
-          xaxis: {
-            title: { text: "Year", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 } },
-            tickmode: "array",
-            tickvals: years,
-            ticktext: years,
-            tickangle: -90,
-            showgrid: false,
-            zeroline: false,
-            linecolor: "black",
-            gridcolor: "rgba(255, 255, 255, 0.2)",
-            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
-          },
-          yaxis: {
-            title: {
-              text: "Number of studies",
-              font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 },
-              standoff: 15,
-            },
-            automargin: true,
-            showgrid: true,
-            zeroline: false,
-            showline: false,
-            linecolor: "black",
-            gridcolor: "rgba(0,0,0,0.075)",
-            tickfont: { color: "black", size: windowWidth <= 1080 ? 9 : 14 },
-            range: [-maxVal * 0.24, upper * 1.25],
-            tickmode: "array",
-            tickvals: tickvals,
-            ticktext: tickvals.map(formatCompact),
-          },
-          margin: { t: 20, b: windowWidth <= 1080 ? 80 : 80, l: 50, r: windowWidth <= 1080 ? 20 : 50 },
-          paper_bgcolor: "#f6f8fa",
-          plot_bgcolor: "#f6f8fa",
-          autosize: true,
-          barmode: "overlay",
-          hovermode: "x",
-          annotations: annotations,
-          legend: {
-            x: 0.5,
-            y: -0.2,
-            xanchor: "center",
-            orientation: "h",
-            font: { color: "black", size: windowWidth <= 1080 ? 9 : 12 },
-          },
-        }}
+        layout={layout}
         config={config}
         revision={revision}
+        onRelayout={handleRelayout} // <--- Added the crucial handler
         useResizeHandler={true}
         className="plotly-responsive-plot"
-        style={{ width: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
+        style={{ width: "100%", height: plotHeight }}
       />
 
       {/* Dropdowns */}
