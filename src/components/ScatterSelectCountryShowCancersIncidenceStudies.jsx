@@ -80,13 +80,15 @@ const ScatterSelectCountryShowCancersIncidenceStudies = ({ csvPath }) => {
   const top3 = useMemo(() => sortedByArticles.slice(0, 3), [sortedByArticles]);
   const others = useMemo(() => sortedByArticles.slice(3), [sortedByArticles]);
 
-  const topMarkerSize = windowWidth <= 1080 ? 10 : 12;  // slightly smaller
-  const othersMarkerSize = windowWidth <= 1080 ? 7 : 8;  // slightly smaller
+  const topMarkerSize = windowWidth <= 1080 ? 10 : 12;
+  const othersMarkerSize = windowWidth <= 1080 ? 7 : 8;
 
   const maxValue = useMemo(() => {
     const allValues = filteredData.flatMap(d => [d.ASR, d.Articles]);
     return Math.max(...allValues, 1);
   }, [filteredData]);
+
+  const axisMultiplier = windowWidth <= 1080 ? 1.15 : 1.08;
 
   const topTrace = useMemo(() => ({
     x: top3.map(d => d.ASR),
@@ -133,8 +135,30 @@ const ScatterSelectCountryShowCancersIncidenceStudies = ({ csvPath }) => {
         <Plot
           data={[topTrace, othersTrace]}
           layout={{
-            xaxis: { title: { text: "Incidence (% of all new cancer cases)", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 }, automargin: true }, showgrid: true, zeroline: false, linecolor: "black", linewidth: 1.5, gridcolor: "rgba(0,0,0,0.075)", ticksuffix: "%", range: [maxValue * -0.08, maxValue * 1.08], dtick: 5 },
-            yaxis: { title: { text: "Studies (% of all cancer studies)", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 }, automargin: true }, showgrid: true, zeroline: false, linecolor: "black", linewidth: 1.5, gridcolor: "rgba(0,0,0,0.075)", ticksuffix: "%", range: [maxValue * -0.08, maxValue * 1.08], dtick: 5, scaleanchor: 'x', scaleratio: 1 },
+            xaxis: { 
+              title: { text: "Incidence (% of all new cancer cases)", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 }, automargin: true }, 
+              showgrid: true, 
+              zeroline: false, 
+              linecolor: "black", 
+              linewidth: 1.5, 
+              gridcolor: "rgba(0,0,0,0.075)", 
+              ticksuffix: "%", 
+              range: [maxValue * -0.08, maxValue * axisMultiplier], 
+              dtick: 5 
+            },
+            yaxis: { 
+              title: { text: "Studies (% of all cancer studies)", font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 }, automargin: true }, 
+              showgrid: true, 
+              zeroline: false, 
+              linecolor: "black", 
+              linewidth: 1.5, 
+              gridcolor: "rgba(0,0,0,0.075)", 
+              ticksuffix: "%", 
+              range: [maxValue * -0.08, maxValue * axisMultiplier], 
+              dtick: 5, 
+              scaleanchor: 'x', 
+              scaleratio: 1 
+            },
             margin: { t: 60, b: 60, l: 80, r: 40 },
             paper_bgcolor: "#f6f8fa",
             plot_bgcolor: "#f6f8fa",
@@ -142,7 +166,16 @@ const ScatterSelectCountryShowCancersIncidenceStudies = ({ csvPath }) => {
             showlegend: false,
             width: plotSize,
             height: plotSize,
-            shapes: [{ type: 'line', xref: 'x', yref: 'y', x0: maxValue * -0.08, y0: maxValue * -0.08, x1: maxValue * 1.08, y1: maxValue * 1.08, line: { color: '#808080', width: 2, dash: 'dash', opacity: 0.5 } }],
+            shapes: [{
+              type: 'line',
+              xref: 'x',
+              yref: 'y',
+              x0: maxValue * -0.08,
+              y0: maxValue * -0.08,
+              x1: maxValue * axisMultiplier,
+              y1: maxValue * axisMultiplier,
+              line: { color: '#808080', width: 2, dash: 'dash', opacity: 0.5 }
+            }],
           }}
           config={config}
           useResizeHandler
