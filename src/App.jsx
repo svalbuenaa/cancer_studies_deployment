@@ -9,7 +9,7 @@ import LinesSelectCancerShowTopCountries from "./components/LinesSelectCancerSho
 import HistogramSelectCountryShowTopCancers from "./components/HistogramSelectCountryShowTopCancers";
 import ScatterSelectCountryShowCancersIncidenceStudies from "./components/ScatterSelectCountryShowCancersIncidenceStudies";
 import ScatterSelectCancerShowCountriesIncidenceStudies from "./components/ScatterSelectCancerShowCountriesIncidenceStudies";
-import DataProcessing from "/Schema_data_processing.svg";
+import DataProcessing from "/Schema_data_processing.png";
 import "./App.css";
 
 function App() {
