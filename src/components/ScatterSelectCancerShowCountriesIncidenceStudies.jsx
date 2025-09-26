@@ -178,7 +178,7 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
   };
 
   // Choose tick format based on maxYValue
-  const yTickFormat = maxYValue < 1 ? ".2e" : ",.2f";
+  const yTickFormat = maxYValue < 1 ? ".1e" : ",.0f";
   const yExponentFormat = maxYValue < 1 ? "e" : undefined;
 
   return (
@@ -199,7 +199,7 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
                 text: "Normalized studies (per 1M inhabitants)",
                 font: { color: "black", size: windowWidth <= 1080 ? 12 : 16 },
                 automargin: true,
-                standoff: 25
+                standoff: 20
               },
               showgrid: true, zeroline: false, linecolor: "black", linewidth: 1.5,
               gridcolor: "rgba(0,0,0,0.075)",
@@ -207,7 +207,7 @@ const ScatterSelectCancerShowCountriesIncidenceStudies = ({
               tickformat: yTickFormat,
               exponentformat: yExponentFormat
             },
-            margin: { t: 20, b: 60, l: 80, r: 40 },
+            margin: { t: 20, b: 60, l: 90, r: 40 },
             paper_bgcolor: "#f6f8fa",
             plot_bgcolor: "#f6f8fa",
             hovermode: "closest",
