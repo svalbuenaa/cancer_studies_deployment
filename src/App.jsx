@@ -43,7 +43,7 @@ function App() {
       {/* Title */}
 	  <div className="content-section">
         <div className="text-content">
-          <h1>40(+) years of cancer studies</h1>
+          <h1>Cancer research explorer</h1>
 		  <h2>How cancer science changes over time, and who shapes these changes</h2>
 		  <h3>Sergio Valbuena - <a href="https://svalbuenaa.github.io" target="_blank" rel="noopener noreferrer">About</a></h3>
           <p>
@@ -55,8 +55,8 @@ function App() {
           </p>
 		  <p>
 			This project explores published scientific articles with the aim of understanding how cancer research has evolved over time, which cancer types receive more scientific attention, and how different countries contribute to cancer research. The entry point for the project is a
-			dataset containing <b>over 4 million scientific articles</b>, built from <a href="https://pubmed.ncbi.nlm.nih.gov/about" target="_blank" rel="noopener noreferrer">PubMed</a>, the scientific research database of the United States National Institutes of Health. The current version of this webpage contains scientific
-			articles published between 1984 and July 2024 (with some exceptions) and will be updated soon to include every article on cancer available in PubMed. 
+			dataset containing <b>over 4.7 million scientific articles</b>, built from <a href="https://pubmed.ncbi.nlm.nih.gov/about" target="_blank" rel="noopener noreferrer">PubMed</a>, the scientific research database of the United States National Institutes of Health. The current version of this webpage contains scientific
+			articles published from July 1984 (currently up to September 2025) and will be regularly updated to include new research on cancer available in PubMed. 
 		  </p>
 		  
 		  <p>
@@ -80,7 +80,7 @@ function App() {
 			values compensate for differences in age structures between countries and, therefore, allow more precise comparisons. In the map below you can visualize either the incidence values for all cancers combined or the specific incidence of a selected cancer. Incidence values are provided as rates per 100.000 people,
 			allowing to compare between countries with different populations. Use the 
 		    the selector above the map to switch views. In the <i>Selected cancer</i> view, you can use the dropdown at the bottom of the map to choose the cancer type of your interest. <b>Hover on
-			the countries to see their incidence values</b>. It is possible to <b>zoom on the map to get a closer view of areas of interest</b> and use the buttons on the top right 
+			the countries to see their incidence values</b>. It is possible to <b>zoom on the map to get a closer view of areas of interest</b> and either double click on the plot or use the button on the top right 
 			to <b>reset the zoom</b>.
           </p>
         </div>
@@ -108,10 +108,10 @@ function App() {
         <div className="text-content">
           <h2>Published cancer studies over time</h2>
           <p>
-            Out of the 4M+ scientific articles contained in this dataset, more than 1M were published between 2019 and 2023. This corresponds to a
+            Out of the 4.7M+ scientific articles contained in this dataset, more than 1M were published between 2019 and 2023. This corresponds to a
 			2X increase with respect to the same period 10 years before. The bar chart below shows the number of scientific studies on cancer published each year. 
-            It provides insight into the research activity and focus over time. Note that <i>data for 2024 and 2025 are still being incorporated into the dataset and do
-			not reflect final values for these years</i>. 
+            An upward trend can be identified between 1984 and 2021, which has been halted probably as a consequence of COVID.<b><i>Note that data for 2025 are still incomplete and do
+			not reflect final values for this year. Some articles which will be published in 2026 are already available in PubMed and have been incorporated to the dataset</i></b>. 
           </p>
         </div>
         <HistogramCummulativeArticlesYear csvPath={articlesCsvPath} />
@@ -195,7 +195,7 @@ function App() {
         />
       </div>
 
-      {/* Scatter plots */}
+      {/* Scatter plot per country incidence vs studies */}
       <div className="content-section">
         <div className="text-content">
           <h2>Under- or over-studied?</h2>
@@ -216,7 +216,8 @@ function App() {
         </div>
         <ScatterSelectCountryShowCancersIncidenceStudies csvPath={scatterCsvPath} />
       </div>
-
+	  
+	  {/* Scatter plot per cancer incidence vs studies */}
       <div className="content-section">
         <div className="text-content">
           <h2>Top relative contributors</h2>
@@ -237,37 +238,60 @@ function App() {
           setSelectedCancer={setSelectedCancer}
         />
       </div>
-		
+	  
+	  {/* Conclusions */}
+	  <div className="content-section">
+        <div className="text-content">
+		  <h2>Key takeaways</h2>
+		  <ol className="text-content-list">
+			<li>There was a <b>steady increase in the number of scientific articles about cancer published between 1984 and 2021</b>, which has dramatically slowed since then.</li>
+			<li>There is a <b>strong imbalance in the scientific production about different cancer types</b>. A few cancer types receive most scientific attention.</li>
+			<li>Only <b>5 countries generate almost 60% of all scientific articles about cancer</b>, with United States and China as the largest single contributors.</li>
+			<li>In absolute numbers, <b>China is taking over United States as the main generator of scientific articles about most cancer types</b>. The number of cancer types about which China is becoming the most relevant scientific hub is growing.</li>
+			<li>When <b>accounting by population, european countries are the largest contributors to cancer research</b>.</li>
+		  </ol>
+        </div>
+      </div>
+	  
       {/* What comes next */}
       <div id="what-comes-next" className="content-section">
         <div className="text-content">
           <h2>What comes next?</h2>
           <p>
-            The main dataset employed to build this page contains information about 4M+ scientific articles on cancer. Here, information 
+            The main dataset employed to build this page contains information about 4.7M+ scientific articles on cancer. Here, information 
 			about <b>cancer type, year and country</b> has been included. With this relatively small feature space the information which can be extracted is 
 			already very rich. Future iterations of the project with vastly expand this feature space, enabling a much more fine-grained analysis and 
 			allowing, for instance, to understand how researchers from different countries collaborate to study cancer, or which factors determine
 			relevant aspects of the scientific outcome, like the journal where it is published.
           </p>
 		  <p>
-            In parallel, the dataset is ever-expanding. Even though currently it is (mostly) focused on the years 1984 to 2024, the dates covered are being expanded. 
+            In parallel, the dataset is ever-expanding. Even though currently it is (mostly) focused on the years 1984 to 2025, the dates covered are being expanded. 
 			The goal is to build an up-to-date dataset which allows to understand the latest trends in cancer research and how they evolve.
           </p>
 		  <p>
             <b>How can you contribute?</b> You can contact me at <b>svalbuenaa@gmail.com</b>. Drop me a message if:<br />
-			1.- You would like to <b>use the full dataset for a research project</b> instead of just interacting with the aggregated data displayed in the page.<br />
-			2.- You identify a <b>feature you would like to have implemented or there is a question you are interested in</b> and you believe this dataset could help answering it.<br />  
-			3.- There is something you would like to see better explained, or you see an <b>error in the page</b>.<br />
-			4.- You would like to <b>participate in further validating the data</b> contained in the dataset.
           </p>
+		  <ol className="text-content-list">
+			<li>You would like to <b>use the full dataset for a research project</b> instead of just interacting with the aggregated data displayed in the page.</li>
+			<li>You identify a <b>feature you would like to have implemented or there is a question you are interested in</b> and you believe this dataset could help answering it.</li>
+			<li>There is something you would like to see better explained, or you see an <b>error in the page</b>.</li>
+			<li>You would like to <b>participate in further validating the data</b> contained in the dataset.</li>
+		  </ol>
 		  <p>
-            <b>Other ongoing projects: Semantic search for scientific articles</b>. When you type a query in most search engines of scientific articles (including PubMed),
-			the page uses a method called <a href="https://hslguides.osu.edu/pubmed/automatic-term-mapping" target="_blank" rel="noopener noreferrer"><b>Automatic Term Mapping (ATM)</b></a> to convert the words in your query to terms that can be searched for in their articles' databases.
-			This method is fast and efficient, but not particularly flexible. <i>What if the terms you are looking for are not contained in their dictionaries? What if you are looking for something 
-			very specific, with a long and complex query?</i> Results are most likely going to be suboptimal. In the next few months I will be <b>releasing an 
-			alternative search engine for scientific articles based on semantics -that is, what the article is actually about-, rather than on keywords</b>. The idea
-			is to <b>move away from keywords into a richer search space that allows looking for articles in a nuanced, deeper way</b>. Stay tuned!
+            <b><br />Other ongoing projects:</b>
           </p>
+		  <ul className="text-content-list">
+			<li>
+				<b>Semantic search for scientific articles</b>: When you type a query in most search engines of scientific articles (including PubMed), the page uses a method called 
+				<a href="https://hslguides.osu.edu/pubmed/automatic-term-mapping" target="_blank" rel="noopener noreferrer">
+				<b>Automatic Term Mapping (ATM)</b>
+				</a> 
+				to convert the words in your query to terms that can be searched for in their articles' databases. This method is fast and efficient, but not particularly flexible. 
+				<i>What if the terms you are looking for are not contained in their dictionaries? What if you are looking for something very specific, with a long and complex query?</i> 
+				Results are most likely going to be suboptimal. In the next few months I will be <b>releasing an alternative search engine for scientific articles based on semantics — that is, what the article is actually about — rather than on keywords</b>. 
+				The idea is to <b>move away from keywords into a richer search space that allows looking for articles in a nuanced, deeper way</b>. Stay tuned!
+			</li>
+		  </ul>
         </div>
 		
 	  {/* Data retrieval and preparation */}
