@@ -1,181 +1,181 @@
 Cancer,Articles,Country
-Pancreatic cancer,15332,United States
-Pancreatic cancer,9987,China
-Pancreatic cancer,6727,Japan
-Pancreatic cancer,3242,Germany
-Pancreatic cancer,2202,Italy
-Mouth cancer,48,United Kingdom
+Cervical cancer,13699,China
+Cervical cancer,12661,United States
+Cervical cancer,3158,Japan
+Cervical cancer,2763,India
+Cervical cancer,2037,United Kingdom
+Kidney cancer,14930,United States
+Kidney cancer,9131,China
+Kidney cancer,5162,Japan
+Kidney cancer,2769,Germany
+Kidney cancer,2406,Italy
+Skin cancer,49517,United States
+Skin cancer,12196,China
+Skin cancer,8886,Germany
+Skin cancer,8500,Italy
+Skin cancer,6963,Japan
+Mesothelioma,4396,United States
+Mesothelioma,1795,Italy
+Mesothelioma,1654,Japan
+Mesothelioma,1024,United Kingdom
+Mesothelioma,735,China
+Thyroid cancer,7798,China
+Thyroid cancer,7397,United States
+Thyroid cancer,2653,Italy
+Thyroid cancer,2321,South Korea
+Thyroid cancer,1662,Japan
+Vulvar cancer,515,United States
+Vulvar cancer,213,Italy
+Vulvar cancer,185,Germany
+Vulvar cancer,143,United Kingdom
+Vulvar cancer,128,Netherlands
+Gallbladder cancer,1185,China
+Gallbladder cancer,858,Japan
+Gallbladder cancer,708,United States
+Gallbladder cancer,530,India
+Gallbladder cancer,335,South Korea
+Hodgkin lymphoma,6408,United States
+Hodgkin lymphoma,1483,China
+Hodgkin lymphoma,1301,Italy
+Hodgkin lymphoma,1255,Germany
+Hodgkin lymphoma,861,Japan
+Colorectal cancer,32939,China
+Colorectal cancer,28276,United States
+Colorectal cancer,11497,Japan
+Colorectal cancer,7994,United Kingdom
+Colorectal cancer,6640,Italy
+Bladder cancer,10006,United States
+Bladder cancer,9428,China
+Bladder cancer,3512,Japan
+Bladder cancer,2180,Germany
+Bladder cancer,1968,United Kingdom
+Rectal cancer,5627,China
+Rectal cancer,4582,United States
+Rectal cancer,3619,Japan
+Rectal cancer,1725,Italy
+Rectal cancer,1627,United Kingdom
+Anal cancer,1182,United States
+Anal cancer,241,United Kingdom
+Anal cancer,178,France
+Anal cancer,164,Germany
+Anal cancer,160,Australia
+Testicular cancer,1627,United States
+Testicular cancer,451,Germany
+Testicular cancer,443,United Kingdom
+Testicular cancer,374,Japan
+Testicular cancer,296,Italy
+Leukemia,63212,United States
+Leukemia,24231,China
+Leukemia,19053,Japan
+Leukemia,11639,Germany
+Leukemia,11181,Italy
+Stomach cancer,2685,China
+Stomach cancer,1906,United States
+Stomach cancer,1617,Japan
+Stomach cancer,1095,South Korea
+Stomach cancer,451,Italy
+Brain cancer,28398,United States
+Brain cancer,11947,China
+Brain cancer,6369,Japan
+Brain cancer,6356,Germany
+Brain cancer,4703,Italy
+Undetermined cancer,583928,United States
+Undetermined cancer,261998,China
+Undetermined cancer,125231,Japan
+Undetermined cancer,113701,United Kingdom
+Undetermined cancer,80254,Germany
+Kaposi sarcoma,1145,United States
+Kaposi sarcoma,182,Italy
+Kaposi sarcoma,168,France
+Kaposi sarcoma,109,United Kingdom
+Kaposi sarcoma,93,China
+Throat cancer,30,United States
+Throat cancer,16,China
+Throat cancer,9,United Kingdom
+Throat cancer,9,France
+Throat cancer,5,Australia
+Non-Hodgkin lymphoma,9799,United States
+Non-Hodgkin lymphoma,4578,China
+Non-Hodgkin lymphoma,3368,Japan
+Non-Hodgkin lymphoma,1753,Italy
+Non-Hodgkin lymphoma,1565,Germany
+Lung cancer,78309,China
+Lung cancer,31763,United States
+Lung cancer,22160,Japan
+Lung cancer,8663,South Korea
+Lung cancer,8299,Italy
+Vaginal cancer,264,United States
+Vaginal cancer,59,China
+Vaginal cancer,53,Japan
+Vaginal cancer,51,Italy
+Vaginal cancer,36,Germany
+Penile cancer,511,United States
+Penile cancer,228,China
+Penile cancer,194,United Kingdom
+Penile cancer,167,Germany
+Penile cancer,129,Italy
+Mouth cancer,49,United Kingdom
 Mouth cancer,30,United States
-Mouth cancer,25,India
+Mouth cancer,28,India
 Mouth cancer,13,Brazil
 Mouth cancer,11,Germany
-Thyroid cancer,6949,United States
-Thyroid cancer,6644,China
-Thyroid cancer,2522,Italy
-Thyroid cancer,2166,South Korea
-Thyroid cancer,1561,Japan
-Ovarian cancer,19050,United States
-Ovarian cancer,12596,China
-Ovarian cancer,3509,Japan
-Ovarian cancer,3331,United Kingdom
-Ovarian cancer,3298,Italy
-Colorectal cancer,28066,China
-Colorectal cancer,26480,United States
-Colorectal cancer,10796,Japan
-Colorectal cancer,7573,United Kingdom
-Colorectal cancer,6244,Italy
-Mesothelioma,4261,United States
-Mesothelioma,1723,Italy
-Mesothelioma,1597,Japan
-Mesothelioma,993,United Kingdom
-Mesothelioma,677,France
-Penile cancer,475,United States
-Penile cancer,204,China
-Penile cancer,181,United Kingdom
-Penile cancer,148,Germany
-Penile cancer,119,Italy
-Laryngeal cancer,1121,China
-Laryngeal cancer,854,United States
-Laryngeal cancer,442,Italy
-Laryngeal cancer,317,Japan
-Laryngeal cancer,240,Germany
-Kidney cancer,14200,United States
-Kidney cancer,8050,China
-Kidney cancer,4934,Japan
-Kidney cancer,2679,Germany
-Kidney cancer,2278,Italy
-Non-Hodgkin lymphoma,9234,United States
-Non-Hodgkin lymphoma,3914,China
-Non-Hodgkin lymphoma,3196,Japan
-Non-Hodgkin lymphoma,1650,Italy
-Non-Hodgkin lymphoma,1493,Germany
-Rectal cancer,4844,China
-Rectal cancer,4283,United States
-Rectal cancer,3337,Japan
-Rectal cancer,1621,Italy
-Rectal cancer,1538,United Kingdom
-Skin cancer,47287,United States
-Skin cancer,10743,China
-Skin cancer,8530,Germany
-Skin cancer,8123,Italy
-Skin cancer,6724,Japan
-Anal cancer,1082,United States
-Anal cancer,231,United Kingdom
-Anal cancer,166,France
-Anal cancer,151,Germany
-Anal cancer,150,Australia
-Multiple myeloma,13107,United States
-Multiple myeloma,4598,China
-Multiple myeloma,2747,Italy
-Multiple myeloma,2718,Japan
-Multiple myeloma,2002,Germany
-Stomach cancer,2450,China
-Stomach cancer,1800,United States
-Stomach cancer,1557,Japan
-Stomach cancer,1049,South Korea
-Stomach cancer,437,Italy
-Vulvar cancer,478,United States
-Vulvar cancer,193,Italy
-Vulvar cancer,163,Germany
-Vulvar cancer,136,United Kingdom
-Vulvar cancer,122,Netherlands
-Throat cancer,27,United States
-Throat cancer,14,China
-Throat cancer,9,France
-Throat cancer,8,United Kingdom
-Throat cancer,5,Australia
-Bladder cancer,9445,United States
-Bladder cancer,8236,China
-Bladder cancer,3287,Japan
-Bladder cancer,2064,Germany
-Bladder cancer,1868,United Kingdom
-Esophageal cancer,7514,China
-Esophageal cancer,5598,Japan
-Esophageal cancer,4152,United States
-Esophageal cancer,886,Germany
-Esophageal cancer,687,Netherlands
-Kaposi sarcoma,1055,United States
-Kaposi sarcoma,177,Italy
-Kaposi sarcoma,164,France
-Kaposi sarcoma,103,United Kingdom
-Kaposi sarcoma,87,Germany
-Colon cancer,14925,United States
-Colon cancer,9511,China
-Colon cancer,5810,Japan
-Colon cancer,2644,South Korea
-Colon cancer,2231,Italy
-Uterine cancer,6527,United States
-Uterine cancer,3539,China
-Uterine cancer,2104,Japan
-Uterine cancer,1361,Italy
-Uterine cancer,984,United Kingdom
-Hodgkin lymphoma,6080,United States
-Hodgkin lymphoma,1281,China
-Hodgkin lymphoma,1238,Italy
-Hodgkin lymphoma,1199,Germany
-Hodgkin lymphoma,830,Japan
-Liver cancer,47139,China
-Liver cancer,15432,United States
-Liver cancer,13871,Japan
-Liver cancer,5594,South Korea
-Liver cancer,4775,Italy
-Lung cancer,69369,China
-Lung cancer,29524,United States
-Lung cancer,21151,Japan
-Lung cancer,8141,South Korea
-Lung cancer,7846,Italy
-Testicular cancer,1540,United States
-Testicular cancer,432,Germany
-Testicular cancer,417,United Kingdom
-Testicular cancer,361,Japan
-Testicular cancer,275,Italy
-Gallbladder cancer,1050,China
-Gallbladder cancer,804,Japan
-Gallbladder cancer,657,United States
-Gallbladder cancer,461,India
-Gallbladder cancer,311,South Korea
-Breast cancer,94122,United States
-Breast cancer,45618,China
-Breast cancer,16076,United Kingdom
-Breast cancer,14646,Japan
-Breast cancer,14033,Italy
-Other cancer,200035,United States
-Other cancer,109366,China
-Other cancer,83725,Japan
-Other cancer,37022,Italy
-Other cancer,35666,Germany
-Salivary gland cancer,197,United States
-Salivary gland cancer,67,Japan
-Salivary gland cancer,50,Germany
-Salivary gland cancer,44,China
-Salivary gland cancer,33,South Korea
-Cervical cancer,12053,China
-Cervical cancer,11897,United States
-Cervical cancer,2977,Japan
-Cervical cancer,2463,India
-Cervical cancer,1933,South Korea
-Undetermined cancer,553410,United States
-Undetermined cancer,229069,China
-Undetermined cancer,120156,Japan
-Undetermined cancer,108556,United Kingdom
-Undetermined cancer,76491,Germany
-Brain cancer,27075,United States
-Brain cancer,10600,China
-Brain cancer,6139,Japan
-Brain cancer,6100,Germany
-Brain cancer,4479,Italy
-Leukemia,61061,United States
-Leukemia,22284,China
-Leukemia,18613,Japan
-Leukemia,11295,Germany
-Leukemia,10839,Italy
-Vaginal cancer,243,United States
-Vaginal cancer,49,China
-Vaginal cancer,49,Italy
-Vaginal cancer,49,Japan
-Vaginal cancer,33,Germany
-Prostate cancer,50952,United States
-Prostate cancer,14441,China
-Prostate cancer,7530,Japan
-Prostate cancer,6742,United Kingdom
-Prostate cancer,6349,Germany
+Uterine cancer,7003,United States
+Uterine cancer,4249,China
+Uterine cancer,2246,Japan
+Uterine cancer,1508,Italy
+Uterine cancer,1060,United Kingdom
+Salivary gland cancer,211,United States
+Salivary gland cancer,83,Japan
+Salivary gland cancer,57,Germany
+Salivary gland cancer,52,China
+Salivary gland cancer,36,South Korea
+Multiple myeloma,13871,United States
+Multiple myeloma,5204,China
+Multiple myeloma,2879,Italy
+Multiple myeloma,2814,Japan
+Multiple myeloma,2131,Germany
+Pancreatic cancer,16356,United States
+Pancreatic cancer,11511,China
+Pancreatic cancer,7227,Japan
+Pancreatic cancer,3416,Germany
+Pancreatic cancer,2381,Italy
+Esophageal cancer,8512,China
+Esophageal cancer,5958,Japan
+Esophageal cancer,4347,United States
+Esophageal cancer,938,Germany
+Esophageal cancer,736,Netherlands
+Other cancer,208597,United States
+Other cancer,121706,China
+Other cancer,86894,Japan
+Other cancer,38625,Italy
+Other cancer,37032,Germany
+Liver cancer,52735,China
+Liver cancer,16445,United States
+Liver cancer,14339,Japan
+Liver cancer,5928,South Korea
+Liver cancer,5017,Italy
+Laryngeal cancer,1255,China
+Laryngeal cancer,881,United States
+Laryngeal cancer,469,Italy
+Laryngeal cancer,331,Japan
+Laryngeal cancer,250,Germany
+Ovarian cancer,19933,United States
+Ovarian cancer,14220,China
+Ovarian cancer,3691,Japan
+Ovarian cancer,3538,Italy
+Ovarian cancer,3538,United Kingdom
+Prostate cancer,53262,United States
+Prostate cancer,16603,China
+Prostate cancer,8022,Japan
+Prostate cancer,7116,United Kingdom
+Prostate cancer,6771,Germany
+Colon cancer,15411,United States
+Colon cancer,10421,China
+Colon cancer,6060,Japan
+Colon cancer,2764,South Korea
+Colon cancer,2327,Italy
+Breast cancer,99024,United States
+Breast cancer,52585,China
+Breast cancer,16818,United Kingdom
+Breast cancer,15437,Japan
+Breast cancer,14916,Italy
