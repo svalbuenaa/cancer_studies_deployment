@@ -110,7 +110,7 @@ function App() {
           <p>
             Out of the 4.7M+ scientific articles contained in this dataset, more than 1M were published between 2019 and 2023. This corresponds to a
 			2X increase with respect to the same period 10 years before. The bar chart below shows the number of scientific studies on cancer published each year. 
-            An upward trend can be identified between 1984 and 2021, which has been halted probably as a consequence of COVID.<b><i>Note that data for 2025 are still incomplete and do
+            An upward trend can be identified between 1984 and 2021, which has been halted probably as a consequence of COVID.<b><i> Note that data for 2025 are still incomplete and do
 			not reflect final values for this year. Some articles which will be published in 2026 are already available in PubMed and have been incorporated to the dataset</i></b>. 
           </p>
         </div>
