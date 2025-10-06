@@ -59,6 +59,21 @@ p {
   text-align: left;
 }
 
+.text-content ol {
+  color: black;
+  padding-left: 1.2em;
+  list-style-position: outside;
+  text-align: left;
+}
+
+.text-content li {
+  margin-bottom: 1em;
+}
+
+.text-content ol li::marker {
+  color: black;
+}
+
 /* ------------------------ */
 /* Plotly Specific Styles   */
 /* ------------------------ */
