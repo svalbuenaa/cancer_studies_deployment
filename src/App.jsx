@@ -56,7 +56,7 @@ function App() {
 		  <p>
 			This project explores published scientific articles with the aim of understanding how cancer research has evolved over time, which cancer types receive more scientific attention, and how different countries contribute to cancer research. The entry point for the project is a
 			dataset containing <b>over 4.7 million scientific articles</b>, built from <a href="https://pubmed.ncbi.nlm.nih.gov/about" target="_blank" rel="noopener noreferrer">PubMed</a>, the scientific research database of the United States National Institutes of Health. The current version of this webpage contains scientific
-			articles published from July 1984 (currently up to September 2025) and will be regularly updated to include new research on cancer available in PubMed. 
+			information extracted from virtually all cancer research articles published from 1984 (currently up to September 2025) and will be regularly updated to include new research on cancer available in PubMed. 
 		  </p>
 		  
 		  <p>
@@ -282,13 +282,13 @@ function App() {
           </p>
 		  <ul className="text-content-list">
 			<li>
-				<b>Semantic search for scientific articles</b>: When you type a query in most search engines of scientific articles (including PubMed), the page uses a method called 
-				<a href="https://hslguides.osu.edu/pubmed/automatic-term-mapping" target="_blank" rel="noopener noreferrer">
+				<b>Semantic search for scientific articles</b>: When you type a query in most search engines of scientific articles (including PubMed), the page uses a method 
+				called <a href="https://hslguides.osu.edu/pubmed/automatic-term-mapping" target="_blank" rel="noopener noreferrer">
 				<b>Automatic Term Mapping (ATM)</b>
-				</a> 
-				to convert the words in your query to terms that can be searched for in their articles' databases. This method is fast and efficient, but not particularly flexible. 
-				<i>What if the terms you are looking for are not contained in their dictionaries? What if you are looking for something very specific, with a long and complex query?</i> 
-				Results are most likely going to be suboptimal. In the next few months I will be <b>releasing an alternative search engine for scientific articles based on semantics — that is, what the article is actually about — rather than on keywords</b>. 
+				</a> to 
+				convert the words in your query to terms that can be searched for in their articles' databases. This method is fast and efficient, but not particularly flexible. <i>What 
+				if the terms you are looking for are not contained in their dictionaries? What if you are looking for something very specific, with a long and complex query?</i> Then, the results 
+				are most likely going to be suboptimal. In the next few months I will be <b>releasing an alternative search engine for scientific articles based on semantics — that is, what the article is actually about — rather than on keywords</b>. 
 				The idea is to <b>move away from keywords into a richer search space that allows looking for articles in a nuanced, deeper way</b>. Stay tuned!
 			</li>
 		  </ul>
