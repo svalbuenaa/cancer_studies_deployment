@@ -4,16 +4,28 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/web_logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cancer research explorer</title>
-	<!-- Google tag (gtag.js) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=G-CF0E22K3P9"></script>
-	<script>
-	  window.dataLayer = window.dataLayer || [];
-	  function gtag(){dataLayer.push(arguments);}
-	  gtag('js', new Date());
+    <title>Cancer Research Explorer</title>
 
-	  gtag('config', 'G-CF0E22K3P9');
-	</script>
+    <script>
+      // Only load Google Analytics when not on localhost
+      if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
+        (function(){
+          const gaScript = document.createElement('script');
+          gaScript.async = true;
+          gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-CF0E22K3P9";
+          document.head.appendChild(gaScript);
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){ dataLayer.push(arguments); }
+          window.gtag = gtag;
+
+          gtag('js', new Date());
+          gtag('config', 'G-CF0E22K3P9');
+        })();
+      } else {
+        console.log("Google Analytics disabled on localhost");
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
