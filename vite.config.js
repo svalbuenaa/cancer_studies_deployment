@@ -6,5 +6,5 @@ export default defineConfig({
   resolve: {
     dedupe: ['react', 'react-dom'],
   },
-  base: '/cancer_studies_deployment/',   // REQUIRED for GitHub Pages
+  base: '/cancer_studies_deployment/',   
 });
