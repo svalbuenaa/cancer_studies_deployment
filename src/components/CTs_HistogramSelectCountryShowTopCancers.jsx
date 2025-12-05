@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 
-const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
+const CTs_HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
   const [data, setData] = useState([]);
   const [uniqueCountries, setUniqueCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("Switzerland");
@@ -296,7 +296,6 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
         </div>
       </div>
 
-      {/* FIX: Removed 'jsx' from the style tag */}
       <style>{` 
         .modebar {
           top: auto !important;
@@ -308,4 +307,4 @@ const HistogramSelectCountryShowTopCancers = ({ csvPath }) => {
   );
 };
 
-export default HistogramSelectCountryShowTopCancers;
+export default CTs_HistogramSelectCountryShowTopCancers;

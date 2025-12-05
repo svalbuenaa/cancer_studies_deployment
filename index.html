@@ -8,27 +8,34 @@
 
     <script>
       // Only load Google Analytics when not on localhost
-      if (window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1") {
-        (function(){
-          const gaScript = document.createElement('script');
+      if (
+        window.location.hostname !== "localhost" &&
+        window.location.hostname !== "127.0.0.1"
+      ) {
+        (function () {
+          const gaScript = document.createElement("script");
           gaScript.async = true;
-          gaScript.src = "https://www.googletagmanager.com/gtag/js?id=G-CF0E22K3P9";
+          gaScript.src =
+            "https://www.googletagmanager.com/gtag/js?id=G-CF0E22K3P9";
           document.head.appendChild(gaScript);
 
           window.dataLayer = window.dataLayer || [];
-          function gtag(){ dataLayer.push(arguments); }
+          function gtag() {
+            dataLayer.push(arguments);
+          }
           window.gtag = gtag;
 
-          gtag('js', new Date());
-          gtag('config', 'G-CF0E22K3P9');
+          gtag("js", new Date());
+          gtag("config", "G-CF0E22K3P9");
         })();
       } else {
         console.log("Google Analytics disabled on localhost");
       }
     </script>
   </head>
+
   <body>
     <div id="root"></div>
-    <script type="module" src="./src/main.jsx"></script>
+    <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

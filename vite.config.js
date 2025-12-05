@@ -1,7 +1,10 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  base: '/cancer_studies_deployment/', 
   plugins: [react()],
-})
+  resolve: {
+    dedupe: ['react', 'react-dom'],
+  },
+  base: '/cancer_studies_deployment/',   // REQUIRED for GitHub Pages
+});

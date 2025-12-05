@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 import Papa from "papaparse";
 
-const HistogramCummulativeArticlesYear = ({ csvPath }) => {
+const CTs_HistogramCummulativeArticlesYear = ({ csvPath }) => {
   const [data, setData] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -147,7 +147,6 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
         useResizeHandler={true}
         style={{ width: "100%", height: windowWidth <= 1080 ? 400 : 620 }}
       />
-      {/* 💥 FIX: Removed 'jsx' attribute to resolve final warning */}
       <style>{` 
         .modebar {
           top: auto !important;
@@ -159,4 +158,4 @@ const HistogramCummulativeArticlesYear = ({ csvPath }) => {
   );
 };
 
-export default HistogramCummulativeArticlesYear;
+export default CTs_HistogramCummulativeArticlesYear;

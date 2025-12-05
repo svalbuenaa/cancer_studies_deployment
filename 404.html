@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting…</title>
+    <script>
+      // GitHub Pages redirect for SPA in subfolder
+      const repo = "/cancer_studies_deployment";
+
+      const redirectTo =
+        repo +
+        "/" +
+        window.location.pathname.replace(repo, "").replace(/^\//, "") +
+        window.location.search +
+        window.location.hash;
+
+      window.location.replace(redirectTo);
+    </script>
+  </head>
+  <body></body>
+</html>

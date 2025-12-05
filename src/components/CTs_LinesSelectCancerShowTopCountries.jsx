@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Plot from "react-plotly.js";
 
-const LinesSelectCancerShowTopCountries = ({ csvPath }) => {
+const CTs_LinesSelectCancerShowTopCountries = ({ csvPath }) => {
   const [data, setData] = useState([]);
   const [uniqueCancers, setUniqueCancers] = useState([]);
   const [selectedCancer, setSelectedCancer] = useState("Breast cancer");
@@ -250,4 +250,4 @@ const LinesSelectCancerShowTopCountries = ({ csvPath }) => {
   );
 };
 
-export default LinesSelectCancerShowTopCountries;
+export default CTs_LinesSelectCancerShowTopCountries;

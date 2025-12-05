@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import Plot from "react-plotly.js";
 
-const HistogramSelectCountryAndCancer = ({ csvPath }) => {
+const CTs_HistogramSelectCountryAndCancer = ({ csvPath }) => {
   const [data, setData] = useState([]);
   const [uniqueCountries, setUniqueCountries] = useState([]);
   const [uniqueCancers, setUniqueCancers] = useState([]);
@@ -370,4 +370,4 @@ const HistogramSelectCountryAndCancer = ({ csvPath }) => {
   );
 };
 
-export default HistogramSelectCountryAndCancer;
+export default CTs_HistogramSelectCountryAndCancer;

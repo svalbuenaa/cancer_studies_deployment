@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useMemo } from "react";
 import Plot from "react-plotly.js";
 
-const ScatterSelectCountryShowCancersIncidenceStudies = ({ csvPath }) => {
+const CTs_ScatterSelectCountryShowCancersIncidenceStudies = ({ csvPath }) => {
   const [data, setData] = useState([]);
   const [uniqueCountries, setUniqueCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState("Switzerland");
@@ -229,4 +229,4 @@ const ScatterSelectCountryShowCancersIncidenceStudies = ({ csvPath }) => {
   );
 };
 
-export default ScatterSelectCountryShowCancersIncidenceStudies;
+export default CTs_ScatterSelectCountryShowCancersIncidenceStudies;
